@@ -1,0 +1,825 @@
+<!doctype html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="utf-8" />
+    <title>
+      勵馨基金會 × School 28 專案：核心因果議題樹與問題假說報告 (V5)
+    </title>
+    <style>
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, "Microsoft JhengHei", sans-serif;
+        background-color: #f5f7fa;
+        color: #333333;
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 30px auto;
+        padding: 30px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        border-radius: 8px;
+      }
+
+      /* 標題與基本資訊區 */
+      .header-block {
+        border-bottom: 3px double #e0e0e0;
+        padding-bottom: 24px;
+        margin-bottom: 30px;
+      }
+      h1 {
+        color: #2c3e50;
+        margin-top: 0;
+        font-size: 26px;
+        border-left: 6px solid #e74c3c;
+        padding-left: 12px;
+      }
+      .report-intro {
+        font-size: 14px;
+        color: #555555;
+        margin: 0;
+      }
+      .meta-box {
+        background-color: #fcfcfc;
+        border: 1px solid #eaeaea;
+        border-radius: 6px;
+        padding: 16px 20px;
+        margin-top: 15px;
+      }
+      .meta-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      @media (max-width: 768px) {
+        .meta-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .meta-item strong {
+        color: #2c3e50;
+        display: block;
+        margin-bottom: 6px;
+      }
+      .formula-box {
+        grid-column: 1 / -1;
+        background-color: #f8f9fa;
+        border-left: 4px solid #3498db;
+        padding: 12px 18px;
+        margin-top: 10px;
+        border-radius: 0 4px 4px 0;
+      }
+      .formula-line {
+        display: block;
+        margin-top: 6px;
+        font-family: "Courier New", Courier, monospace;
+      }
+      .formula-legend {
+        margin: 10px 0 0;
+        padding-left: 20px;
+        font-size: 13px;
+        color: #555555;
+      }
+      .formula-legend li {
+        margin-bottom: 2px;
+      }
+
+      /* 區塊標題 */
+      .section {
+        margin-bottom: 40px;
+      }
+      h2 {
+        color: #2c3e50;
+        font-size: 20px;
+        border-bottom: 2px solid #34495e;
+        padding-bottom: 8px;
+        margin-bottom: 20px;
+      }
+      .scroll-hint {
+        font-size: 13px;
+        color: #7f8c8d;
+        margin: 0 0 8px;
+      }
+
+      /* 議題樹 (Why Tree) 樹狀結構 CSS */
+      .tree {
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 40px 20px;
+        background: #fafbfc;
+        border: 1px solid #eef1f6;
+        border-radius: 8px;
+      }
+      .tree > ul {
+        /* 內容比容器寬時 width 生效（free space = 0，不會往左溢出捲不到）；
+         比容器窄時 min-width 生效，justify-content: center 才有作用 */
+        width: max-content;
+        min-width: 100%;
+        margin: 0;
+      }
+      .tree ul {
+        position: relative;
+        transition: all 0.5s;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin: 0;
+        padding: 20px 0 0; /* 清掉 UA stylesheet 預設的 padding-left: 40px */
+        list-style: none;
+      }
+      .tree li {
+        text-align: center;
+        list-style-type: none;
+        position: relative;
+        padding: 20px 5px 0 5px;
+        transition: all 0.5s;
+      }
+      .tree li::before,
+      .tree li::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 50%;
+        border-top: 1px solid #ccc;
+        width: 50%;
+        height: 20px;
+      }
+      .tree li::after {
+        right: auto;
+        left: 50%;
+        border-left: 1px solid #ccc;
+      }
+      .tree li:only-child::after,
+      .tree li:only-child::before {
+        display: none;
+      }
+      .tree li:only-child {
+        padding-top: 0;
+      }
+      .tree li:first-child::before,
+      .tree li:last-child::after {
+        border: 0 none;
+      }
+      .tree li:last-child::before {
+        border-right: 1px solid #ccc;
+        border-radius: 0 5px 0 0;
+      }
+      .tree li:first-child::after {
+        border-radius: 5px 0 0 0;
+      }
+      .tree ul ul::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        border-left: 1px solid #ccc;
+        width: 0;
+        height: 20px;
+      }
+
+      /* 節點樣式 */
+      .node {
+        border: 1px solid #ccc;
+        padding: 10px 14px;
+        text-decoration: none;
+        color: #333;
+        font-size: 13px;
+        display: inline-block;
+        border-radius: 5px;
+        transition: all 0.5s;
+        background: #fff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        line-height: 1.5;
+        text-align: left;
+        min-width: 140px;
+        /* V5 的因果敘事節點文字較長，限寬換行以免整棵樹過度橫向膨脹 */
+        max-width: 220px;
+        white-space: normal;
+        vertical-align: top;
+      }
+      .node.root {
+        background: #e74c3c;
+        color: #fff;
+        border-color: #c0392b;
+        font-weight: bold;
+        text-align: center;
+        max-width: 300px;
+      }
+      .node.level-1 {
+        background: #34495e;
+        color: #fff;
+        border-color: #2c3e50;
+        font-weight: bold;
+        max-width: 240px;
+      }
+      .node.level-2 {
+        background: #ecf0f1;
+        border-color: #bdc3c7;
+        font-size: 12px;
+      }
+      .node strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      /* 假說表格與外框樣式 */
+      .hypothesis-box {
+        border: 1px solid #3498db;
+        padding: 18px 22px;
+        margin-bottom: 20px;
+        border-radius: 6px;
+        background-color: #fafcfe;
+      }
+      .hypothesis-box h3 {
+        margin: 0 0 8px;
+        color: #2980b9;
+        font-size: 18px;
+        border-bottom: 1px dashed #3498db;
+        padding-bottom: 6px;
+      }
+      .hypothesis-box p {
+        margin: 0 0 14px;
+        line-height: 1.6;
+        font-size: 14px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        background-color: #ffffff;
+      }
+      th,
+      td {
+        border: 1px solid #eaeaea;
+        padding: 10px 12px;
+        text-align: left;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+      th {
+        background-color: #f4f7f9;
+        color: #2c3e50;
+        white-space: nowrap;
+        vertical-align: top;
+        width: 20%;
+      }
+
+      /* 評審指引樣式 ( collapsible details & summary styled dynamically ) */
+      .review-box {
+        background-color: #fffaf0;
+        border: 1px solid #f39c12;
+        border-radius: 8px;
+        padding: 20px 24px;
+        margin-top: 30px;
+      }
+      .review-details {
+        outline: none;
+      }
+      .review-summary {
+        font-size: 16px;
+        font-weight: bold;
+        color: #d35400;
+        cursor: pointer;
+        list-style: none; /* Hide default arrow in some browsers */
+        outline: none;
+        display: flex;
+        align-items: center;
+      }
+      .review-summary::-webkit-details-marker {
+        display: none; /* Hide default arrow in Chrome/Safari */
+      }
+      .review-summary::before {
+        content: "▶";
+        display: inline-block;
+        margin-right: 8px;
+        font-size: 12px;
+        transition: transform 0.2s;
+      }
+      details[open] .review-summary::before {
+        transform: rotate(90deg);
+      }
+      .review-content {
+        margin-top: 18px;
+        padding-top: 18px;
+        border-top: 1px dashed #f3d19c;
+      }
+      .human-intro {
+        font-size: 14px;
+        color: #5d4037;
+        line-height: 1.6;
+        margin-bottom: 15px;
+        text-align: left;
+      }
+      .attack-point {
+        background: #ffffff;
+        border-left: 4px solid #e67e22;
+        padding: 14px 18px;
+        margin-bottom: 16px;
+        border-radius: 0 6px 6px 0;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+        text-align: left;
+      }
+      .attack-point h4 {
+        margin: 0 0 8px 0;
+        color: #d35400;
+        font-size: 15px;
+      }
+      .attack-point p {
+        margin: 0;
+        font-size: 13px;
+        color: #555555;
+        line-height: 1.6;
+      }
+
+      /* 列印最佳化 */
+      @media print {
+        @page {
+          margin: 12mm;
+        }
+        * {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        body {
+          background-color: white;
+          margin: 0;
+          padding: 0;
+        }
+        .container {
+          box-shadow: none;
+          border: none;
+          border-radius: 0;
+          width: auto;
+          padding: 0;
+        }
+        h2 {
+          break-after: avoid;
+        }
+        .section {
+          margin-bottom: 22px;
+        }
+        .scroll-hint {
+          display: none;
+        }
+        .tree {
+          overflow: visible;
+          padding: 0;
+        }
+        .hypothesis-box {
+          break-inside: avoid;
+          padding: 12px 16px;
+          margin-bottom: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- 標題與基本資訊 -->
+      <div class="header-block">
+        <h1>
+          勵馨基金會 × School 28 專案：核心因果議題樹與問題假說報告 (V5)
+        </h1>
+        <p class="report-intro">
+          本報告為專案小組對「保護性社工行政減量」命題的系統性解構。V5
+          全面融合最新二手資料研究成果，包括<strong>國際社工工時黃金配比與燃盡紅線</strong>、台灣特有的<strong>「行政大山四大生命週期」</strong>，以及台北市社工工會
+          2026 年最新<strong>「社工職業安全心理衛生調查」</strong>數據；並全面改採
+          <strong>Why Tree（因果議題樹）</strong>
+          文法，將第一層（L1）與第二層（L2）節點改寫為「這是因為……」的因果敘事，直接回應核心提問。
+        </p>
+        <div class="meta-box">
+          <div class="meta-grid">
+            <div class="meta-item">
+              <strong>現況 (As-Is)</strong>
+              政府委託之保護性方案社工，行政與紀錄等間接服務工時約佔總工時
+              50%。社工被迫在三套互不相通的系統（衛福部保護系統、地方政府成果報告、內部會計核銷）間手動轉錄資料，並承擔繁重的請款核銷與實地評鑑備卷工作，導致普遍超時加班，且高達
+              78.18% 的社工面臨中度以上過勞，制度支持力僅 28.62 分死當。
+            </div>
+            <div class="meta-item">
+              <strong>目標 (To-Be)</strong>
+              轉化為「專業回歸」的敏捷社工組織，使社工能專注於核心助人價值與直接服務。在不損害司法責信前提下，將行政庶務工時佔比降低至
+              25%（達到國際 BASW 倡議之 20%–30% 健康黃金比例）。
+            </div>
+            <div class="formula-box">
+              <strong>【工時負擔核心物理公式 (Upgraded Operational Formula)】</strong>
+              <span class="formula-line">
+                行政總工時 = ∑ ( 任務量 N_i &times; 單件耗時 T_i &times; ( 1 +
+                退件重工率 R_i ) &times; 社工承擔比例 S_i )
+              </span>
+              <ul class="formula-legend">
+                <li>
+                  <strong>N (Volume)</strong
+                  >：任務件數（受案量、每案表單數、核銷與評鑑件數）
+                </li>
+                <li>
+                  <strong>T (Touch Time)</strong
+                  >：單次文書或資料處理之純打字／整理耗時
+                </li>
+                <li>
+                  <strong>R (Rework Rate)</strong
+                  >：退件重工率（督導文字糾錯退件、會計憑證退件之反覆循環）
+                </li>
+                <li>
+                  <strong>S (Ownership Ratio)</strong
+                  >：必須由專業社工親自承擔的比例
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 1: V5 核心因果 Why Tree -->
+      <div class="section">
+        <h2>Section 1: V5 核心因果 Why Tree (MECE 工作流驅動架構)</h2>
+        <p>
+          基於
+          <strong>MECE 原則</strong
+          >，以「工時負擔形成機制（Demand-Process-Allocation-Constraints）」進行結構拆解；每一節點皆以「這是因為……」直接回應上一層的
+          Why，確保因果鏈條完整可驗證：
+        </p>
+        <p class="scroll-hint">※ 樹狀圖較寬，可於框內左右捲動檢視完整四大分支。</p>
+
+        <div class="tree">
+          <ul>
+            <li>
+              <div class="node root">
+                <strong>Root Why（核心提問）</strong>
+                為什麼政府委託保護性方案社工的行政與紀錄工時佔比高達
+                50%，無法降低至 25%？
+              </div>
+              <ul>
+                <!-- A. 需求端 -->
+                <li>
+                  <div class="node level-1">
+                    <strong>A. 需求端 (Demand Volume)</strong>
+                    這是因為需求端的文書與庶務總量極其龐大，社工每天被排山倒海的行政任務壓垮。
+                  </div>
+                  <ul>
+                    <li>
+                      <div class="node level-2">
+                        <strong>A1. 人均案量</strong>
+                        這是因為台灣保護性服務比高達 1:1352（遠超美日的 3
+                        倍），超載的人均案量（Caseload）將任何微小的行政摩擦在分母端無限放大。
+                      </div>
+                    </li>
+                    <li>
+                      <div class="node level-2">
+                        <strong>A2. 生命週期</strong>
+                        這是因為行政庶務貫穿了「投標履約、日常個案、請款核銷、成果評鑑」四大生命週期，導致累積的文書與憑證整理總量極其驚人。
+                      </div>
+                    </li>
+                    <li>
+                      <div class="node level-2">
+                        <strong>A3. 外部索資</strong>
+                        這是因為外部網絡（如民代或行政機關）頻繁且無效地重複索要非標準化資料，迫使團隊必須花費額外時間處理重複索資。
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+                <!-- B. 流程端 -->
+                <li>
+                  <div class="node level-1">
+                    <strong>B. 流程端 (Process &amp; Flow)</strong>
+                    這是因為流程流轉與審查充滿多重摩擦，導致資料處理極度低效且退件重工頻繁。
+                  </div>
+                  <ul>
+                    <li>
+                      <div class="node level-2">
+                        <strong>B1. 系統孤島</strong>
+                        這是因為衛福部保護系統、地方政府成果報告與會內個管系統等「三大資訊孤島」互不相通，導致社工必須在多個破碎介面中手動重複轉錄相同欄位。
+                      </div>
+                    </li>
+                    <li>
+                      <div class="node level-2">
+                        <strong>B2. 審查重工</strong>
+                        這是因為審查機制流於文字細節與格式合規，督導字句糾錯與財務憑證微瑕退件的退件重工率（R）過高，拉長了修改與等待循環。
+                      </div>
+                    </li>
+                    <li>
+                      <div class="node level-2">
+                        <strong>B3. 影子系統</strong>
+                        這是因為官方系統介面難用且易斷線，迫使社工必須自建 Word 或
+                        Excel
+                        影子系統進行交接與自救，卻在無意中造成了二次輸入的重複浪費。
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+                <!-- C. 分工端 -->
+                <li>
+                  <div class="node level-1">
+                    <strong>C. 分工端 (Resource Allocation)</strong>
+                    這是因為缺乏專業與行政的合理分工，使得高成本的社工與督導人力被迫充當庶務承擔者。
+                  </div>
+                  <ul>
+                    <li>
+                      <div class="node level-2">
+                        <strong>C1. 兼任核銷</strong>
+                        這是因為會內缺乏行政或會計輔助人力，導致專業社工必須親自兼任貼憑證、算保費、填費用劃分表等低加值會計核銷庶務（S
+                        比例過高）。
+                      </div>
+                    </li>
+                    <li>
+                      <div class="node level-2">
+                        <strong>C2. 督導異化</strong>
+                        這是因為督導也面臨管理與審查超載，使其角色異化為「字句與合規稽核員」，而無暇對社工進行深度的專業督導與支持。
+                      </div>
+                    </li>
+                    <li>
+                      <div class="node level-2">
+                        <strong>C3. 社創組授權</strong>
+                        這是因為新設立的「社會創新組」在會內尚未獲得明確的工作流重塑（Work
+                        Redesign）與跨據點數位中繼工具推廣的正式制度化授權。
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+                <!-- D. 剛性約束 -->
+                <li>
+                  <div class="node level-1">
+                    <strong>D. 剛性約束 (Rigid Constraints)</strong>
+                    這是因為存在法律責信、經費科目與外部評鑑等剛性約束，導致組織與個人難以自主簡化或轉移流程。
+                  </div>
+                  <ul>
+                    <li>
+                      <div class="node level-2">
+                        <strong>D1. 防禦性書寫</strong>
+                        這是因為個案紀錄在法庭（如保護令、兒少安置）上常作為關鍵呈堂證供，在面臨法律風險與輿論公審下，社工被迫對紀錄進行鉅細靡遺的「防禦性書寫（Defensive
+                        Documentation）」以理性自保。
+                      </div>
+                    </li>
+                    <li>
+                      <div class="node level-2">
+                        <strong>D2. 經費科目剛性</strong>
+                        這是因為政府委託經費科目具有高度剛性限制（S1
+                        剛性），預算限定聘任專業社工，不允許編列專職行政或財務助理經費。
+                      </div>
+                    </li>
+                    <li>
+                      <div class="node level-2">
+                        <strong>D3. 評鑑過度防衛</strong>
+                        這是因為外部評鑑體制無法測出實務現況（工會調查評鑑實況指標僅
+                        14.64 分，政策變動僅 19.92
+                        分），逼使內部組織進行過度合規（Over-compliance）防衛，不敢簡化任何歷史表單。
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Section 2: 6 大核心問題假說 -->
+      <div class="section">
+        <h2>Section 2: 6 大核心問題假說與反向證偽驗證方法</h2>
+        <p>
+          我們拒絕對社工個人進行「歸因偏誤」，改以<strong>制度誘因與營運系統</strong>為核心，設計出
+          6 個可被科學證偽的戰略假說：
+        </p>
+
+        <!-- H1 -->
+        <div class="hypothesis-box">
+          <h3>假說 H1：需求與案量過載 (Demand &amp; Caseload)</h3>
+          <p>
+            社工行政負荷居高不下，核心驅動源自「人均案量（Caseload）過載」與「請款核銷／實地評鑑等非紀錄庶務過於繁瑣」，而非單純的個案紀錄打字慢或寫太長。
+          </p>
+          <table>
+            <tr>
+              <th>邏輯與數據基礎 (Why So?)</th>
+              <td>
+                台灣保護性社工服務比達
+                1:1352。一線時間大量被四大生命週期（特別是貼原始憑證、填收支結算表、準備評鑑財務帳冊等非專業核銷）侵蝕。
+              </td>
+            </tr>
+            <tr>
+              <th>反向證偽/檢驗方法 (How to Validate)</th>
+              <td>
+                透過工時紀錄，統計並排序一線社工在「直接服務」、「必要的專業個案紀錄」、「會計請款憑證整理」、「評鑑備卷」上的實際耗時與頻率，驗證核銷與備卷是否為真正時間黑洞。
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- H2 -->
+        <div class="hypothesis-box">
+          <h3>假說 H2：防禦性書寫與司法責信 (Defensive Documentation)</h3>
+          <p>
+            社工反覆字句修飾、不願縮減個案紀錄，是因為紀錄常作為法庭證物。這是一種理性的「防禦性書寫」自保行為，其背後的核心阻礙是「缺乏明確的組織風險偏好與容錯邊界」。
+          </p>
+          <table>
+            <tr>
+              <th>邏輯與數據基礎 (Why So?)</th>
+              <td>
+                保護性紀錄是法院核發保護令、司法偵審及兒少安置裁定的關鍵呈堂證供。面對可能的訴訟或輿論，社工必須營造極為詳實的書寫以求免責。
+              </td>
+            </tr>
+            <tr>
+              <th>反向證偽/檢驗方法 (How to Validate)</th>
+              <td>
+                <strong>反向風險測試 (Risk Test)</strong>：在 Case Walkthrough
+                中詢問社工：「如果此紀錄少寫 50% 或由 AI
+                自動摘要，您最擔心法庭或評鑑中發生的最壞情況是什麼？」，藉此精確鎖定法律與專業責任的最低合規防線。
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- H3 -->
+        <div class="hypothesis-box">
+          <h3>假說 H3：政府委託定價與經費科目剛性 (S1 Constraint)</h3>
+          <p>
+            社工無法將請款、貼憑證等非專業庶務移交給專任助理，根因在於「政府委託案經費科目不合理（限定社工，未計入核銷與行政成本）」，而非組織不願意進行分工。
+          </p>
+          <table>
+            <tr>
+              <th>邏輯與數據基礎 (Why So?)</th>
+              <td>
+                政府委託契約的人事費通常為指定用途資金，不允許聘任財務或行政，使行政轉移（S）在委託款範圍內存在硬壁壘。
+              </td>
+            </tr>
+            <tr>
+              <th>反向證偽/檢驗方法 (How to Validate)</th>
+              <td>
+                <strong>契約審查與揭示性偏好</strong
+                >：文件審查政府契約條文，釐清是否明文禁止行政人員協助整理核銷。同時檢索勵馨內部是否有非政府指定的「自籌彈性資金」，可用於聘請專任行政中繼。
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- H4 -->
+        <div class="hypothesis-box">
+          <h3>假說 H4：督導審查退件與文字重工 (R - Rework Loop)</h3>
+          <p>
+            個案紀錄流轉時間長，很大一部分來自於督導個人經驗導向、未明文化之字句與格式審查，導致退件重工率（R）過高，並陷入督導與社工雙重超載的惡性循環。
+          </p>
+          <table>
+            <tr>
+              <th>邏輯與數據基礎 (Why So?)</th>
+              <td>
+                報告在內部多層審核中來回修改，督導偏重文字細節與格式，無暇進行深度專業引導，使得修改工時成倍增長。
+              </td>
+            </tr>
+            <tr>
+              <th>反向證偽/檢驗方法 (How to Validate)</th>
+              <td>
+                <strong>流程統計驗證 (Iteration Count)</strong
+                >：追蹤一個案件紀錄，統計從社工寫完、送出、督導糾錯退件、修改、再送出直到最終簽結的實際修改次數與天數，並區分字句修改與專業處遇調整的佔比。
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- H5 -->
+        <div class="hypothesis-box">
+          <h3>假說 H5：影子系統 Workaround 現象 (Shadow Systems)</h3>
+          <p>
+            社工在官方系統外自建 Excel 或 Word
+            影子系統，並非數位素養不足，而是官方系統介面難用、容易斷線時，使用者為了統計、交接與自保而採取的「理性
+            Workaround 自救行為」。
+          </p>
+          <table>
+            <tr>
+              <th>邏輯與數據基礎 (Why So?)</th>
+              <td>
+                衛福部保護系統不開放 API
+                且介面破碎，社工為了確保交接流暢、自辦統計、防範斷線，不得不自製「影子系統」，但也帶來了二次轉錄的行政消耗。
+              </td>
+            </tr>
+            <tr>
+              <th>反向證偽/檢驗方法 (How to Validate)</th>
+              <td>
+                <strong>功能對照驗證</strong>：比對社工自建 Excel
+                的欄位與功能，對照衛福部保護系統、會內個管系統，找出哪些是官方系統未提供，因而逼使社工自建的剛性需求。
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- H6 -->
+        <div class="hypothesis-box">
+          <h3>假說 H6：社會創新組的變革授權阻力 (Change Enabling)</h3>
+          <p>
+            行政減量方案難以跨據點與方案複製，在於社會創新組作為新設組別，在會內缺乏推動跨據點、跨財務部門進行「工作流重塑與工具中繼介接」的跨部門正式授權。
+          </p>
+          <table>
+            <tr>
+              <th>邏輯與數據基礎 (Why So?)</th>
+              <td>
+                變革涉及部門權益、歷史工作習慣及財務核銷內規，若缺乏執行長由上而下的正式授權與權限界定，變革將停留在小規模試點。
+              </td>
+            </tr>
+            <tr>
+              <th>反向證偽/檢驗方法 (How to Validate)</th>
+              <td>
+                <strong>決策權限對齊</strong
+                >：專場訪談執行長，確認會內對於社會創新組在推廣去識別化 AI
+                工具或重塑核銷流程時，其決策權限、預算分配及跨部門協調權利的邊界。
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Section 3: 顧問團隊紅隊壓力測試指引 -->
+      <div class="section">
+        <div class="review-box">
+          <details class="review-details">
+            <summary class="review-summary">
+              <strong
+                >🔍
+                點擊展開：顧問團隊紅隊壓力測試指引（Red Team Critical Review
+                Instructions，建議收合，需要時再開啟挑戰）</strong
+              >
+            </summary>
+            <div class="review-content">
+              <p class="human-intro">
+                本區塊為專案小組與外部評審（如助教、老師或其他批判性
+                Agent）進行「邏輯漏洞壓力測試」時的辯證大綱，用以確保因果鏈條無懈可擊。
+              </p>
+              <p class="human-intro">
+                我們誠摯邀請評審、導師或任何協作者，用最嚴格、最挑剔的眼光對以下四個維度進行「漏洞攻擊」，這能幫我們在踏入田野與執行長深度會談前，把思維防線鍛造得無懈可擊：
+              </p>
+
+              <div class="attack-point">
+                <h4>
+                  💡 攻擊點 1：不可控變數之排除 —— 房間裡的大象 (The Caseload
+                  Elephant)
+                </h4>
+                <p>
+                  <em>質詢焦點</em
+                  >：案量與法規系統是政府說了算，勵馨內部再怎麼優化流程，也動不了案量這個分母。我們去優化這些不可控變數，是不是在緣木求魚？我們是否做好了「不可控變數的邊界排除」？
+                </p>
+              </div>
+
+              <div class="attack-point">
+                <h4>
+                  💡 攻擊點 2：司法實質責信與 AI 的零容錯博弈 (The
+                  Zero-Tolerance Legal Trap)
+                </h4>
+                <p>
+                  <em>質詢焦點</em>：社工多寫字是為了防禦性書寫。如果 AI
+                  語音轉摘要在提速（T）的過程中，遺漏了微小但攸關安全判定的暴力細節（例如加害人的眼神控訴、暗示性言語），導致法庭不採信或個案發生二次危機，這個法律與專業責任由誰來扛？這會不會導致
+                  AI 工具一落地，就因「零容錯」而被社工與督導出於自保本能拋棄？
+                </p>
+              </div>
+
+              <div class="attack-point">
+                <h4>
+                  💡 攻擊點 3：經費科目剛性 (S1) 的替代方案 —— 預算蜃樓 (The
+                  Budget Mirage)
+                </h4>
+                <p>
+                  <em>質詢焦點</em
+                  >：如果政府委託案在法規上就是不能核銷行政助理。我們假設「可以用彈性自籌資金」聘請專任行政或技術義工，這在財務與營運上真的具備長期的永續性嗎？還是這只是一場無法規模化複製的「短期試點實驗」？
+                </p>
+              </div>
+
+              <div class="attack-point">
+                <h4>
+                  💡 攻擊點 4：影子系統的因果方向 —— Workaround 的雙刃劍 (The
+                  Workaround Paradox)
+                </h4>
+                <p>
+                  <em>質詢焦點</em
+                  >：相較於極度破碎、易斷線且不開放 API
+                  的官方衛福部系統，社工自建的 Excel
+                  影子系統搞不好才是他們最省時間、最方便統計與交接的「救命稻草」？如果我們強行消滅影子系統，是否反而會降低工作效率？
+                </p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // 議題樹遠寬於容器：載入時把橫向捲軸移到正中央，讓根節點先入眼，左右皆可捲動
+      (function () {
+        var tree = document.querySelector(".tree");
+        if (!tree) return;
+        var userScrolled = false;
+        var midpoint = function () {
+          return (tree.scrollWidth - tree.clientWidth) / 2;
+        };
+        var center = function () {
+          if (!userScrolled) tree.scrollLeft = midpoint();
+        };
+        tree.addEventListener("scroll", function () {
+          // 只把「明顯偏離程式設定值」的捲動視為使用者操作
+          if (Math.abs(tree.scrollLeft - midpoint()) > 2) userScrolled = true;
+        });
+        center();
+        window.addEventListener("load", center); // 字體載入完成後再算一次
+        window.addEventListener("resize", center);
+      })();
+    </script>
+  </body>
+</html>
