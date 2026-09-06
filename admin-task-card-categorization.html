@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>社工行政庶務分類（保護性方案）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1B2426;
+  --ink-soft:#5C6A6B;
+  --paper:#E4E8E5;
+  --card:#FFFFFF;
+  --line:#C6CDC7;
+  --pool:#2A3B44;
+  --pro:#2F6F62;
+  --admin:#9C5B24;
+  --unsure:#575D7C;
+  --shadow:0 1px 2px rgba(27,36,38,.10), 0 8px 20px -12px rgba(27,36,38,.30);
+  --radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:"Noto Sans TC",-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Microsoft JhengHei",sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  overflow:hidden;
+}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:6px}
+
+.app{
+  height:100dvh;
+  display:grid;
+  grid-template-rows:auto minmax(200px,42fr) minmax(180px,58fr);
+  gap:12px;
+  padding:14px 16px 16px;
+  max-width:1240px;
+  margin:0 auto;
+}
+
+/* ── header ─────────────────────────── */
+header{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+h1{font-size:1.0625rem;font-weight:700;letter-spacing:.01em}
+.tally{font-size:.8125rem;color:var(--ink-soft);flex:1;min-width:110px}
+.tools{display:flex;gap:6px;align-items:center}
+.tool{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.8125rem;padding:6px 12px;border-radius:999px;
+  border:1px solid var(--line);color:var(--ink-soft);
+  transition:background .15s,color .15s,border-color .15s;
+}
+.tool:hover{background:#fff;color:var(--ink);border-color:var(--ink)}
+.tool--icon{padding:6px 10px;position:relative}
+.tool svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.badge{
+  position:absolute;top:-4px;right:-4px;min-width:17px;height:17px;
+  border-radius:999px;background:var(--admin);color:#fff;
+  font-size:.6875rem;line-height:17px;text-align:center;padding:0 4px;
+}
+.badge[hidden]{display:none}
+
+/* ── zones ──────────────────────────── */
+.zone{
+  position:relative;
+  border-radius:var(--radius);
+  padding:10px 12px 12px;
+  display:flex;flex-direction:column;min-height:0;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.35);
+  transition:background .18s,border-color .18s,box-shadow .18s;
+}
+.zone.over{border-color:var(--accent);background:#fff;box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.zone--pool{--accent:var(--pool);background:rgba(255,255,255,.55)}
+.zone--pro{--accent:var(--pro)}
+.zone--admin{--accent:var(--admin)}
+.zone--unsure{--accent:var(--unsure)}
+
+.zone__bar{display:flex;align-items:center;gap:8px;margin-bottom:8px;min-height:26px}
+.zone__title{font-size:.875rem;font-weight:500;color:var(--accent);line-height:1.3}
+.zone--pool .zone__title{font-size:.9375rem}
+.zone__count{
+  font-size:.75rem;color:var(--ink-soft);
+  border:1px solid var(--line);border-radius:999px;padding:1px 8px;white-space:nowrap;
+}
+.zone__bar .spacer{flex:1}
+.iconbtn{
+  width:30px;height:30px;border-radius:50%;
+  display:grid;place-items:center;color:var(--ink-soft);
+  border:1px solid transparent;transition:background .15s,color .15s,border-color .15s;
+}
+.iconbtn:hover{background:#fff;color:var(--accent);border-color:var(--line)}
+.iconbtn:disabled{opacity:.25;cursor:default;background:none;border-color:transparent;color:var(--ink-soft)}
+.iconbtn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── stack ──────────────────────────── */
+.stack{position:relative;flex:1;min-height:0}
+.card{
+  position:absolute;inset:0;margin:auto;
+  width:var(--card-size,180px);height:var(--card-size,180px);
+  background:var(--card);border-radius:12px;
+  box-shadow:var(--shadow);
+  display:grid;place-items:center;text-align:center;
+  padding:16px 14px 14px;
+  line-height:1.35;font-weight:500;
+  font-size:clamp(.8125rem, calc(var(--card-size,180px) * .105), 1.375rem);
+  transition:transform .2s cubic-bezier(.2,.7,.3,1),opacity .2s;
+  will-change:transform;
+  border-top:3px solid var(--accent);
+}
+.card span{max-width:11ch;word-break:break-word}
+.card.d1{transform:translateY(7px) scale(.96);opacity:.5;pointer-events:none}
+.card.d2{transform:translateY(14px) scale(.92);opacity:.26;pointer-events:none}
+.card.top{cursor:grab;touch-action:none;z-index:3}
+.card.lifted{cursor:grabbing;transition:none;z-index:50;box-shadow:0 18px 40px -14px rgba(27,36,38,.5);rotate:-1.4deg}
+
+/* card actions */
+.cardbtns{
+  position:absolute;top:5px;right:5px;display:flex;gap:1px;
+  opacity:0;pointer-events:none;transition:opacity .14s;
+}
+.card.top:hover .cardbtns,
+.card.top:focus-within .cardbtns{opacity:1;pointer-events:auto}
+body.dragging .cardbtns{opacity:0 !important;pointer-events:none !important}
+.cardbtn{
+  width:26px;height:26px;border-radius:7px;display:grid;place-items:center;
+  color:var(--ink-soft);transition:background .13s,color .13s;
+}
+.cardbtn:hover{background:var(--paper);color:var(--ink)}
+.cardbtn[data-act="del"]:hover{color:#A33B2A}
+.cardbtn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+@media (hover:none){
+  .cardbtns{opacity:.45;pointer-events:auto}
+}
+
+.empty{
+  position:absolute;inset:0;display:grid;place-items:center;text-align:center;
+  color:var(--ink-soft);font-size:.8125rem;line-height:1.6;padding:8px;
+}
+.empty span{max-width:24ch}
+
+.bottom{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;min-height:0}
+
+.hint{font-size:.75rem;color:var(--ink-soft);text-align:center;margin-top:6px}
+kbd{
+  font-family:inherit;font-size:.6875rem;border:1px solid var(--line);
+  border-bottom-width:2px;border-radius:5px;padding:0 5px;background:#fff;
+}
+
+/* ── dialog ─────────────────────────── */
+dialog{
+  border:none;border-radius:var(--radius);padding:22px;
+  width:min(420px,92vw);box-shadow:0 24px 60px -20px rgba(27,36,38,.5);
+  color:var(--ink);
+  inset:0;margin:auto;
+  max-height:calc(100dvh - 40px);
+}
+dialog::backdrop{background:rgba(27,36,38,.42)}
+dialog h2{font-size:1rem;font-weight:700;margin-bottom:12px}
+dialog input,dialog textarea{
+  width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line);
+  border-radius:9px;background:#fff;color:inherit;resize:vertical;
+}
+dialog input:focus,dialog textarea:focus{outline:2px solid var(--pool);outline-offset:-1px}
+.dlg-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px;flex-wrap:wrap}
+.btn{padding:8px 16px;border-radius:999px;font-size:.875rem;border:1px solid var(--line)}
+.btn:hover{background:var(--paper)}
+.btn--primary{background:var(--pool);color:#fff;border-color:var(--pool)}
+.btn--primary:hover{background:#1c2b33}
+.note{font-size:.75rem;color:var(--ink-soft);margin-top:10px;line-height:1.6}
+
+/* trash list */
+.trashlist{list-style:none;max-height:46vh;overflow:auto;margin-top:4px}
+.trashlist li{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 2px;border-bottom:1px solid var(--line);font-size:.9375rem;
+}
+.trashlist li:last-child{border-bottom:none}
+.trashlist .t{flex:1;word-break:break-word}
+.trashlist .from{font-size:.6875rem;color:var(--ink-soft);white-space:nowrap}
+.mini{
+  font-size:.75rem;padding:5px 11px;border:1px solid var(--line);border-radius:999px;
+  color:var(--ink-soft);white-space:nowrap;
+}
+.mini:hover{background:var(--paper);color:var(--ink)}
+
+.toast{
+  position:fixed;left:50%;bottom:22px;transform:translate(-50%,14px);
+  background:var(--ink);color:#fff;font-size:.8125rem;
+  padding:9px 16px;border-radius:999px;opacity:0;pointer-events:none;
+  transition:opacity .2s,transform .2s;z-index:99;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:640px){
+  .app{grid-template-rows:auto minmax(190px,40fr) minmax(230px,60fr);padding:10px 10px 12px}
+  .bottom{grid-template-columns:1fr;gap:8px}
+  .zone:not(.zone--pool) .stack{min-height:120px}
+  .hint{display:none}
+  h1{font-size:.9375rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition-duration:.01ms !important}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header>
+    <h1>社工行政庶務分類（保護性方案）</h1>
+    <p class="tally" id="tally"></p>
+    <div class="tools">
+      <button class="tool tool--icon" id="btnTrash" aria-label="回收桶">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>
+        <span class="badge" id="trashBadge" hidden>0</span>
+      </button>
+      <button class="tool" id="btnExport">匯出 Markdown</button>
+      <button class="tool" id="btnReset">重來</button>
+    </div>
+  </header>
+
+  <section class="zone zone--pool" data-zone="pool">
+    <div class="zone__bar">
+      <h2 class="zone__title">待分類</h2>
+      <span class="zone__count" data-count="pool"></span>
+      <span class="spacer"></span>
+      <button class="iconbtn" data-nav="pool" data-dir="-1" aria-label="上一張">
+        <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <button class="iconbtn" data-nav="pool" data-dir="1" aria-label="下一張">
+        <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+      <button class="iconbtn" id="btnAdd" aria-label="新增卡片">
+        <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+    </div>
+    <div class="stack" data-stack="pool"></div>
+    <p class="hint">把卡片拖到下面任一區，或按 <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> 分類、<kbd>←</kbd> <kbd>→</kbd> 換卡</p>
+  </section>
+
+  <div class="bottom">
+    <section class="zone zone--pro" data-zone="pro">
+      <div class="zone__bar">
+        <h2 class="zone__title">社工專業本身需要</h2>
+        <span class="zone__count" data-count="pro"></span>
+        <span class="spacer"></span>
+        <button class="iconbtn" data-nav="pro" data-dir="-1" aria-label="上一張">
+          <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <button class="iconbtn" data-nav="pro" data-dir="1" aria-label="下一張">
+          <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <div class="stack" data-stack="pro"></div>
+    </section>
+
+    <section class="zone zone--admin" data-zone="admin">
+      <div class="zone__bar">
+        <h2 class="zone__title">形式、稽核、核銷、報告等用途</h2>
+        <span class="zone__count" data-count="admin"></span>
+        <span class="spacer"></span>
+        <button class="iconbtn" data-nav="admin" data-dir="-1" aria-label="上一張">
+          <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <button class="iconbtn" data-nav="admin" data-dir="1" aria-label="下一張">
+          <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <div class="stack" data-stack="admin"></div>
+    </section>
+
+    <section class="zone zone--unsure" data-zone="unsure">
+      <div class="zone__bar">
+        <h2 class="zone__title">很難說</h2>
+        <span class="zone__count" data-count="unsure"></span>
+        <span class="spacer"></span>
+        <button class="iconbtn" data-nav="unsure" data-dir="-1" aria-label="上一張">
+          <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <button class="iconbtn" data-nav="unsure" data-dir="1" aria-label="下一張">
+          <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <div class="stack" data-stack="unsure"></div>
+    </section>
+  </div>
+</div>
+
+<dialog id="dlgEdit">
+  <h2 id="editTitle">新增卡片</h2>
+  <input id="inpEdit" type="text" placeholder="例如：家防中心月報" autocomplete="off">
+  <p class="note" id="editNote">受訪者當場提到、清單上沒有的文件或任務，直接加進來。</p>
+  <div class="dlg-actions">
+    <button class="btn" id="editCancel">取消</button>
+    <button class="btn btn--primary" id="editOk">加入待分類</button>
+  </div>
+</dialog>
+
+<dialog id="dlgTrash">
+  <h2>回收桶</h2>
+  <ul class="trashlist" id="trashList"></ul>
+  <div class="dlg-actions">
+    <button class="btn" id="trashClose">關閉</button>
+  </div>
+</dialog>
+
+<dialog id="dlgExport">
+  <h2>匯出結果</h2>
+  <textarea id="txtExport" rows="14" readonly></textarea>
+  <div class="dlg-actions">
+    <button class="btn" id="expClose">關閉</button>
+    <button class="btn" id="expCopy">複製</button>
+    <button class="btn btn--primary" id="expDownload">下載 .md</button>
+  </div>
+</dialog>
+
+<dialog id="dlgReset">
+  <h2>重來？</h2>
+  <p class="note" style="margin-top:0">目前的分類與回收桶會全部清空，回到原始 15 張卡片。自己加的卡片也會一併移除。</p>
+  <div class="dlg-actions">
+    <button class="btn" id="resetCancel">取消</button>
+    <button class="btn btn--primary" id="resetOk">清空重來</button>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  const ZONES = {
+    pool:   { label: '待分類' },
+    pro:    { label: '社工專業本身需要' },
+    admin:  { label: '形式、稽核、核銷、報告等用途' },
+    unsure: { label: '很難說' },
+    trash:  { label: '回收桶' }
+  };
+  const STACKS = ['pool','pro','admin','unsure'];
+  const ORDER  = ['pro','admin','unsure'];
+  const MAX_CARD = 200;
+  const SEED = [
+    '開案表','TIPVDA 危險評估','SDM 安全與風險評估','個別化家庭處遇計畫（ISP）',
+    '跨網絡轉介單','結案表','社安網系統登錄','會內個管系統登錄',
+    '政府臨時統計報表','核銷單據與憑證','網絡會議紀錄','公文往返',
+    '交接紀錄','督導紀錄','出庭準備資料'
+  ];
+  const KEY = 'cardsort.v2';
+
+  let cards = [];
+  let idx = { pool:0, pro:0, admin:0, unsure:0 };
+  let uid = 0;
+  let editingId = null;
+
+  const $  = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+  const esc = s => s.replace(/[&<>"']/g, m =>
+    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+
+  /* ── state ─────────────────────── */
+  function fresh(){
+    uid = 0;
+    cards = SEED.map(t => ({ id: uid++, text: t, zone:'pool' }));
+    idx = { pool:0, pro:0, admin:0, unsure:0 };
+  }
+  function load(){
+    try {
+      const d = JSON.parse(localStorage.getItem(KEY) || 'null');
+      if (d && Array.isArray(d.cards) && d.cards.length) {
+        cards = d.cards; idx = { ...idx, ...(d.idx||{}) };
+        uid = cards.reduce((m,c)=>Math.max(m,c.id),0)+1;
+        return;
+      }
+    } catch(e){}
+    fresh();
+  }
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify({ cards, idx })); } catch(e){} };
+  const inZone = z => cards.filter(c => c.zone === z);
+  function clampIdx(z){
+    const n = inZone(z).length;
+    idx[z] = n === 0 ? 0 : Math.min(Math.max(idx[z],0), n-1);
+  }
+
+  /* ── card sizing: square, capped, never wider than its stack ── */
+  function sizeStacks(){
+    STACKS.forEach(z => {
+      const s = document.querySelector(`[data-stack="${z}"]`);
+      const px = Math.max(60, Math.floor(Math.min(s.clientWidth, s.clientHeight, MAX_CARD)));
+      s.style.setProperty('--card-size', px + 'px');
+    });
+  }
+
+  /* ── render ────────────────────── */
+  const ICON_EDIT = '<svg viewBox="0 0 24 24"><path d="M4 20h4l10-10-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg>';
+  const ICON_DEL  = '<svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V5h6v2M7 7l1 13h8l1-13"/></svg>';
+
+  function render(){
+    STACKS.forEach(z => {
+      clampIdx(z);
+      const list = inZone(z);
+      const stack = document.querySelector(`[data-stack="${z}"]`);
+      stack.innerHTML = '';
+
+      if (!list.length) {
+        const e = document.createElement('div');
+        e.className = 'empty';
+        e.innerHTML = `<span>${z === 'pool' ? '都分完了。用右上角的 ＋ 加入新卡片。' : '把卡片拖來這裡'}</span>`;
+        stack.appendChild(e);
+      } else {
+        for (let d = 2; d >= 0; d--) {
+          if (d > 0 && list.length <= d) continue;
+          const c = list[(idx[z] + d) % list.length];
+          const el = document.createElement('div');
+          el.className = 'card' + (d ? ' d'+d : ' top');
+          el.dataset.id = c.id;
+          el.innerHTML = `<span>${esc(c.text)}</span>` + (d ? '' : `
+            <div class="cardbtns">
+              <button class="cardbtn" data-act="edit" aria-label="編輯這張卡">${ICON_EDIT}</button>
+              <button class="cardbtn" data-act="del" aria-label="刪除這張卡">${ICON_DEL}</button>
+            </div>`);
+          if (!d) {
+            el.tabIndex = 0;
+            el.setAttribute('role','group');
+            el.setAttribute('aria-label', `${c.text}，第 ${idx[z]+1} 張，共 ${list.length} 張`);
+          }
+          stack.appendChild(el);
+        }
+      }
+
+      document.querySelector(`[data-count="${z}"]`).textContent =
+        list.length ? `${idx[z]+1} / ${list.length}` : '0';
+      $$(`[data-nav="${z}"]`).forEach(b => b.disabled = list.length < 2);
+    });
+
+    const left = inZone('pool').length;
+    const sorted = cards.filter(c => ORDER.includes(c.zone)).length;
+    $('#tally').textContent = left ? `還有 ${left} 張待分類` : `已分類 ${sorted} 張`;
+
+    const tn = inZone('trash').length;
+    const badge = $('#trashBadge');
+    badge.hidden = !tn; badge.textContent = tn;
+
+    sizeStacks();
+    save();
+  }
+
+  function nav(z, dir){
+    const n = inZone(z).length;
+    if (n < 2) return;
+    idx[z] = (idx[z] + dir + n) % n;
+    render();
+  }
+
+  function move(cardId, toZone, quiet){
+    const c = cards.find(c => c.id === cardId);
+    if (!c || c.zone === toZone) return;
+    const from = c.zone;
+    if (toZone === 'trash') c.prev = from;
+    c.zone = toZone;
+    if (idx[toZone] !== undefined) idx[toZone] = inZone(toZone).findIndex(x => x.id === cardId);
+    if (idx[from] !== undefined) clampIdx(from);
+    render();
+    if (!quiet) toast(`「${c.text}」→ ${ZONES[toZone].label}`);
+  }
+
+  /* ── drag ──────────────────────── */
+  let drag = null;
+
+  document.addEventListener('pointerdown', e => {
+    if (e.target.closest('.cardbtn')) return;          // action buttons never start a drag
+    const card = e.target.closest('.card.top');
+    if (!card || e.button !== 0) return;
+    drag = {
+      el: card, id: +card.dataset.id, from: card.closest('.zone').dataset.zone,
+      x0: e.clientX, y0: e.clientY, active: false,
+      zones: $$('.zone').map(z => ({ name: z.dataset.zone, el: z, r: z.getBoundingClientRect() }))
+    };
+    card.setPointerCapture(e.pointerId);
+  });
+
+  document.addEventListener('pointermove', e => {
+    if (!drag) return;
+    const dx = e.clientX - drag.x0, dy = e.clientY - drag.y0;
+    if (!drag.active) {
+      if (Math.hypot(dx,dy) < 7) return;
+      drag.active = true;
+      drag.el.classList.add('lifted');
+      document.body.classList.add('dragging');
+    }
+    drag.el.style.transform = `translate(${dx}px, ${dy}px)`;
+    const hit = drag.zones.find(z => e.clientX >= z.r.left && e.clientX <= z.r.right
+                                  && e.clientY >= z.r.top  && e.clientY <= z.r.bottom);
+    drag.zones.forEach(z => z.el.classList.toggle('over', !!hit && z === hit && z.name !== drag.from));
+  });
+
+  function endDrag(e){
+    if (!drag) return;
+    const d = drag; drag = null;
+    d.zones.forEach(z => z.el.classList.remove('over'));
+    d.el.classList.remove('lifted');
+    d.el.style.transform = '';
+    document.body.classList.remove('dragging');
+    if (!d.active) return;
+    const hit = d.zones.find(z => e.clientX >= z.r.left && e.clientX <= z.r.right
+                                && e.clientY >= z.r.top  && e.clientY <= z.r.bottom);
+    if (hit && hit.name !== d.from) move(d.id, hit.name);
+  }
+  document.addEventListener('pointerup', endDrag);
+  document.addEventListener('pointercancel', endDrag);
+
+  /* ── card actions ──────────────── */
+  document.addEventListener('click', e => {
+    const b = e.target.closest('.cardbtn');
+    if (!b) return;
+    const id = +b.closest('.card').dataset.id;
+    if (b.dataset.act === 'edit') openEdit(id);
+    else {
+      const c = cards.find(c => c.id === id);
+      move(id, 'trash', true);
+      toast(`已刪除「${c.text}」，可從回收桶放回`);
+    }
+  });
+
+  /* ── add / edit dialog ─────────── */
+  const dlgEdit = $('#dlgEdit'), inpEdit = $('#inpEdit');
+  function openAdd(){
+    editingId = null;
+    $('#editTitle').textContent = '新增卡片';
+    $('#editNote').textContent = '受訪者當場提到、清單上沒有的文件或任務，直接加進來。';
+    $('#editOk').textContent = '加入待分類';
+    inpEdit.value = '';
+    dlgEdit.showModal(); inpEdit.focus();
+  }
+  function openEdit(id){
+    const c = cards.find(c => c.id === id);
+    editingId = id;
+    $('#editTitle').textContent = '編輯卡片';
+    $('#editNote').textContent = '改成受訪者實際使用的名稱，匯出時就是這個名字。';
+    $('#editOk').textContent = '儲存';
+    inpEdit.value = c.text;
+    dlgEdit.showModal(); inpEdit.focus(); inpEdit.select();
+  }
+  function commitEdit(){
+    const t = inpEdit.value.trim();
+    if (!t) { inpEdit.focus(); return; }
+    if (editingId === null) {
+      cards.push({ id: uid++, text: t, zone:'pool' });
+      idx.pool = inZone('pool').length - 1;
+      dlgEdit.close(); render(); toast('已加入待分類');
+    } else {
+      cards.find(c => c.id === editingId).text = t;
+      dlgEdit.close(); render(); toast('已更新');
+    }
+  }
+  $('#btnAdd').addEventListener('click', openAdd);
+  $('#editCancel').addEventListener('click', () => dlgEdit.close());
+  $('#editOk').addEventListener('click', commitEdit);
+  inpEdit.addEventListener('keydown', e => { if (e.key === 'Enter') commitEdit(); });
+
+  /* ── trash ─────────────────────── */
+  const dlgTrash = $('#dlgTrash');
+  function renderTrash(){
+    const list = inZone('trash');
+    const ul = $('#trashList');
+    ul.innerHTML = list.length
+      ? list.map(c => `<li>
+            <span class="t">${esc(c.text)}</span>
+            <span class="from">原本在 ${ZONES[c.prev] ? ZONES[c.prev].label : '待分類'}</span>
+            <button class="mini" data-back="${c.id}">放回</button>
+          </li>`).join('')
+      : '<li style="color:var(--ink-soft);font-size:.8125rem">回收桶是空的。</li>';
+  }
+  $('#btnTrash').addEventListener('click', () => { renderTrash(); dlgTrash.showModal(); });
+  $('#trashClose').addEventListener('click', () => dlgTrash.close());
+  $('#trashList').addEventListener('click', e => {
+    const b = e.target.closest('[data-back]');
+    if (!b) return;
+    const id = +b.dataset.back;
+    const c = cards.find(c => c.id === id);
+    const back = STACKS.includes(c.prev) ? c.prev : 'pool';
+    delete c.prev;
+    move(id, back, true);
+    toast(`「${c.text}」已放回${ZONES[back].label}`);
+    renderTrash();
+  });
+
+  /* ── export ────────────────────── */
+  const dlgExp = $('#dlgExport'), txt = $('#txtExport');
+  function markdown(){
+    const d = new Date();
+    const p = n => String(n).padStart(2,'0');
+    let out = `# 社工行政庶務分類（保護性方案）\n\n分類日期：${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}\n`;
+    ['pro','admin','unsure','pool','trash'].forEach(z => {
+      const list = inZone(z);
+      if ((z === 'pool' || z === 'trash') && !list.length) return;
+      out += `\n## ${ZONES[z].label}（${list.length}）\n\n`;
+      out += list.length ? list.map(c => `- ${c.text}`).join('\n') + '\n' : '（無）\n';
+    });
+    return out;
+  }
+  $('#btnExport').addEventListener('click', () => { txt.value = markdown(); dlgExp.showModal(); });
+  $('#expClose').addEventListener('click', () => dlgExp.close());
+  $('#expCopy').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(txt.value); toast('已複製'); }
+    catch(e){ txt.select(); document.execCommand('copy'); toast('已複製'); }
+  });
+  $('#expDownload').addEventListener('click', () => {
+    const blob = new Blob([txt.value], { type:'text/markdown;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `card-sort-${Date.now()}.md`;
+    a.click(); URL.revokeObjectURL(a.href);
+  });
+
+  /* ── reset ─────────────────────── */
+  const dlgReset = $('#dlgReset');
+  $('#btnReset').addEventListener('click', () => dlgReset.showModal());
+  $('#resetCancel').addEventListener('click', () => dlgReset.close());
+  $('#resetOk').addEventListener('click', () => {
+    fresh(); dlgReset.close(); render(); toast('已重來');
+  });
+
+  /* ── nav + keyboard ────────────── */
+  $$('[data-nav]').forEach(b =>
+    b.addEventListener('click', () => nav(b.dataset.nav, +b.dataset.dir)));
+
+  document.addEventListener('keydown', e => {
+    if (e.target.matches('input,textarea') || document.querySelector('dialog[open]')) return;
+    const z = document.activeElement?.closest?.('.zone')?.dataset.zone || 'pool';
+    if (e.key === 'ArrowLeft')  { nav(z,-1); e.preventDefault(); }
+    if (e.key === 'ArrowRight') { nav(z, 1); e.preventDefault(); }
+    if (['1','2','3'].includes(e.key)) {
+      const list = inZone(z);
+      if (list.length) move(list[idx[z]].id, ORDER[+e.key-1]);
+    }
+  });
+
+  /* ── toast ─────────────────────── */
+  let tTimer;
+  function toast(msg){
+    const el = $('#toast');
+    el.textContent = msg; el.classList.add('show');
+    clearTimeout(tTimer); tTimer = setTimeout(() => el.classList.remove('show'), 2100);
+  }
+
+  window.addEventListener('resize', sizeStacks);
+  load(); render();
+})();
+</script>
+</body>
+</html>
