@@ -1,0 +1,1998 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>勵馨基金會 × School 28：五大核心根因議題樹與影響力矩陣 (V6)</title>
+<meta name="description" content="以五大核心根因重構之 Why Tree、五項待驗證核心假說，以及 17 個第二層議題的影響力 × 可解性矩陣。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600&display=swap">
+<style>
+:root {
+  color-scheme: light;
+
+  --plane:       #eef1f5;
+  --surface:     #ffffff;
+  --sunk:        #f5f7fa;
+  --sunk-2:      #eaeef3;
+
+  --ink:         #1f2a37;
+  --ink-2:       #4b5563;
+  --ink-3:       #79838f;
+
+  --rule:        #e4e8ee;
+  --rule-strong: #c8d0da;
+  --axis:        #aab4c0;
+
+  --root:        #b5342a;
+  --focus:       #2b6cb0;
+
+  /* 新第一層（五大核心根因）— all-pairs 驗證於白底 */
+  --b1: #be842d;
+  --b2: #5194d6;
+  --b3: #27a573;
+  --b4: #5151d6;
+  --b5: #d651ae;
+
+  /* 舊第一層（總會／分所 × 能力／意願） */
+  --o1: #b68c2b;
+  --o2: #309fcf;
+  --o3: #7951d6;
+  --o4: #d65187;
+
+  --fact:  #2f7d55;
+  --hypo:  #b06a12;
+
+  --font-display: "Noto Serif TC", "Songti TC", Georgia, serif;
+  --font-body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --shadow: 0 1px 2px rgba(31,42,55,.05), 0 14px 32px -20px rgba(31,42,55,.35);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--plane);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 1240px;
+  margin: 28px auto 60px;
+  padding: 34px 36px 44px;
+  background: var(--surface);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+@media (max-width: 760px) { .container { margin: 0; padding: 22px 18px 34px; border-radius: 0; } }
+
+a { color: var(--focus); }
+
+:where(button, select, input, a, [tabindex]):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .16em;
+  color: var(--ink-3);
+  margin: 0 0 8px;
+}
+
+/* ---------- header ---------- */
+
+.header-block { border-bottom: 1px solid var(--rule); padding-bottom: 26px; margin-bottom: 8px; }
+
+h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(22px, 2.5vw, 29px);
+  line-height: 1.4;
+  letter-spacing: .01em;
+  margin: 0 0 12px;
+  word-break: keep-all;
+  text-wrap: balance;
+  max-width: 34ch;
+}
+
+.report-intro { font-size: 14px; color: var(--ink-2); margin: 0; max-width: 68ch; }
+
+.meta-box {
+  margin-top: 20px;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.root-why {
+  padding: 16px 20px;
+  background: var(--sunk);
+  border-bottom: 1px solid var(--rule);
+}
+.root-why .label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .14em;
+  color: var(--root);
+  display: block;
+  margin-bottom: 4px;
+}
+.root-why p {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.meta-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 860px) { .meta-grid { grid-template-columns: 1fr; } }
+.meta-item { padding: 14px 20px; border-right: 1px solid var(--rule); }
+.meta-item:last-child { border-right: 0; }
+@media (max-width: 860px) {
+  .meta-item { border-right: 0; border-bottom: 1px solid var(--rule); }
+  .meta-item:last-child { border-bottom: 0; }
+}
+.meta-item strong {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  color: var(--ink-3);
+  margin-bottom: 6px;
+}
+.meta-item .big { font-family: var(--font-mono); font-size: 22px; color: var(--ink); }
+.meta-item p { margin: 2px 0 0; font-size: 12.5px; color: var(--ink-2); line-height: 1.6; }
+
+/* ---------- section nav ---------- */
+
+.section-nav {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  padding: 10px 0;
+  margin-bottom: 28px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--rule);
+}
+.section-nav a {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: .06em;
+  text-decoration: none;
+  color: var(--ink-3);
+  padding: 5px 11px;
+  border-radius: 5px;
+}
+.section-nav a:hover { color: var(--ink); background: var(--sunk); }
+.section-nav a.is-current { color: var(--ink); background: var(--sunk-2); }
+
+/* ---------- sections ---------- */
+
+.section { margin-bottom: 48px; scroll-margin-top: 64px; }
+
+h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 21px;
+  margin: 0 0 8px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--ink);
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+h2 .idx { font-family: var(--font-mono); font-size: 12px; letter-spacing: .1em; color: var(--ink-3); font-weight: 400; }
+.section-lede { margin: 14px 0 18px; color: var(--ink-2); max-width: 70ch; }
+
+/* ---------- tree canvas ---------- */
+
+.canvas-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 10px 12px;
+  background: var(--sunk);
+  border: 1px solid var(--rule);
+  border-bottom: 0;
+  border-radius: 8px 8px 0 0;
+}
+.tool-btn {
+  font: inherit;
+  font-size: 12.5px;
+  color: var(--ink-2);
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  border-radius: 5px;
+  padding: 4px 11px;
+  cursor: pointer;
+  line-height: 1.5;
+}
+.tool-btn:hover { border-color: var(--ink-3); color: var(--ink); }
+.tool-btn.icon { font-family: var(--font-mono); min-width: 32px; padding: 4px 0; text-align: center; }
+.zoom-readout {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-2);
+  min-width: 52px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.tool-sep { width: 1px; align-self: stretch; background: var(--rule-strong); margin: 0 4px; }
+.tool-hint { font-size: 11.5px; color: var(--ink-3); margin-left: auto; }
+@media (max-width: 760px) { .tool-hint { display: none; } }
+
+.canvas-viewport {
+  position: relative;
+  height: min(74vh, 760px);
+  min-height: 460px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 1px 1px, var(--sunk-2) 1px, transparent 0) 0 0 / 22px 22px,
+    var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 0 0 8px 8px;
+  cursor: grab;
+  touch-action: none;
+}
+.canvas-viewport.is-panning { cursor: grabbing; }
+.canvas-viewport:fullscreen { height: 100vh; border-radius: 0; }
+
+.canvas-layer { position: absolute; top: 0; left: 0; transform-origin: 0 0; will-change: transform; }
+#tree-edges { position: absolute; top: 0; left: 0; overflow: visible; pointer-events: none; }
+
+.tnode {
+  position: absolute;
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  border-radius: 7px;
+  padding: 11px 13px;
+  text-align: left;
+  box-shadow: 0 1px 3px rgba(31,42,55,.07);
+}
+.tnode.root {
+  background: var(--root);
+  border-color: var(--root);
+  color: #fff;
+  text-align: center;
+  padding: 15px 17px;
+}
+.tnode.root .t-kicker { color: rgba(255,255,255,.78); }
+.tnode.root .t-text { color: #fff; font-family: var(--font-display); font-size: 15px; line-height: 1.6; }
+
+.tnode.l1 { border-width: 2px; }
+.tnode.l1 .t-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.tnode.l1 .t-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #fff;
+  border-radius: 4px;
+  padding: 0 6px;
+  line-height: 18px;
+}
+.tnode.l1 .t-short { font-weight: 700; font-size: 14px; }
+.tnode.l1 .t-text { font-size: 12.5px; color: var(--ink-2); line-height: 1.65; }
+
+.t-kicker {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .12em;
+  color: var(--ink-3);
+  display: block;
+  margin-bottom: 5px;
+}
+.tnode.l2 .t-tag {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .06em;
+  color: var(--ink-3);
+}
+.tnode.l2 .t-text { font-size: 12.5px; line-height: 1.65; margin: 3px 0 8px; }
+.t-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.t-link {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .04em;
+  color: var(--ink-2);
+  background: var(--sunk);
+  border: 1px solid var(--rule-strong);
+  border-radius: 4px;
+  padding: 0 7px;
+  line-height: 18px;
+  cursor: pointer;
+}
+.t-link:hover { color: var(--ink); border-color: var(--ink-3); }
+.tnode.is-flash { box-shadow: 0 0 0 3px var(--flash-color, var(--focus)); transition: box-shadow .3s; }
+.t-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .04em;
+  border-radius: 4px;
+  padding: 1px 7px;
+  margin-bottom: 7px;
+}
+.t-state.fact { color: var(--fact); background: #eaf5ee; }
+.t-state.hypo { color: var(--hypo); background: #fdf3e3; }
+.t-state.mixed { color: var(--hypo); background: #fdf3e3; }
+.t-basis { font-size: 12px; color: var(--ink-2); line-height: 1.65; margin: 0; }
+.t-basis b { font-weight: 500; color: var(--ink); }
+.t-test {
+  font-size: 12px;
+  color: var(--ink-2);
+  line-height: 1.65;
+  margin: 7px 0 0;
+  padding-top: 7px;
+  border-top: 1px dotted var(--rule-strong);
+}
+.t-test b { font-weight: 500; color: var(--hypo); }
+
+.t-toggle {
+  position: absolute;
+  right: -11px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid var(--rule-strong);
+  background: var(--surface);
+  color: var(--ink-2);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+.t-toggle:hover { border-color: var(--ink-3); color: var(--ink); }
+
+.canvas-hint { font-size: 11.5px; color: var(--ink-3); margin: 8px 0 0; }
+
+/* ---------- outline fallback ---------- */
+
+.outline { margin-top: 16px; border: 1px solid var(--rule); border-radius: 8px; padding: 12px 16px; }
+.outline > summary {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: .08em;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.outline ol { padding-left: 22px; }
+.outline > ol { margin: 14px 0 4px; }
+.outline li { margin-bottom: 8px; font-size: 13px; }
+.outline .o-branch > span { font-weight: 700; }
+.outline .o-meta { color: var(--ink-2); font-size: 12.5px; }
+
+/* ---------- hypotheses ---------- */
+
+.hypothesis-box {
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 18px 22px 20px;
+  margin-bottom: 16px;
+  background: var(--surface);
+}
+.hypothesis-box h3 {
+  margin: 0 0 4px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 17px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.h-id {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .06em;
+  color: #fff;
+  background: var(--ink);
+  border-radius: 4px;
+  padding: 1px 8px;
+  font-weight: 400;
+}
+.h-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 12px; }
+.branch-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .04em;
+  color: var(--ink-2);
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  padding: 2px 9px 2px 7px;
+}
+.branch-chip .swatch { width: 8px; height: 8px; border-radius: 2px; flex: none; }
+.hypothesis-box > p { margin: 0 0 14px; font-size: 14px; line-height: 1.75; }
+
+table { width: 100%; border-collapse: collapse; background: var(--surface); }
+.h-table th, .h-table td { border: 1px solid var(--rule); padding: 9px 13px; text-align: left; font-size: 13px; line-height: 1.65; vertical-align: top; }
+.h-table th { background: var(--sunk); color: var(--ink); white-space: nowrap; width: 190px; font-weight: 500; }
+
+/* ---------- matrix ---------- */
+
+.mx-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 22px;
+  padding: 12px 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 18px;
+}
+.ctl-label { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .12em; color: var(--ink-3); white-space: nowrap; }
+.ctl-group { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+.segmented { display: inline-flex; border: 1px solid var(--rule-strong); border-radius: 6px; overflow: hidden; }
+.segmented button {
+  font: inherit;
+  font-size: 12.5px;
+  color: var(--ink-2);
+  background: var(--surface);
+  border: 0;
+  border-right: 1px solid var(--rule-strong);
+  padding: 5px 13px;
+  cursor: pointer;
+}
+.segmented button:last-child { border-right: 0; }
+.segmented button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+
+input[type="number"] {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  border-radius: 5px;
+  padding: 4px 7px;
+  width: 60px;
+  text-align: right;
+}
+
+.mx-stage { display: grid; grid-template-columns: minmax(0, 1fr) 346px; gap: 20px; align-items: start; }
+@media (max-width: 1040px) { .mx-stage { grid-template-columns: minmax(0, 1fr); } }
+
+.mx-panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 9px; }
+.mx-plot { padding: 14px 14px 10px; position: relative; }
+
+#mx-svg { display: block; width: 100%; height: auto; }
+#mx-svg text { font-family: var(--font-mono); }
+.mx-grid { stroke: var(--rule); stroke-width: 1; }
+.mx-frame { stroke: var(--axis); stroke-width: 1; fill: none; }
+.mx-thresh { stroke: var(--rule-strong); stroke-width: 1.5; }
+.mx-bracket { stroke: var(--ink-3); stroke-width: 1.5; fill: none; }
+.mx-zone { fill: rgba(31,42,55,.035); }
+.mx-tick { font-size: 10.5px; fill: var(--ink-3); }
+.mx-axis-title { font-size: 11px; letter-spacing: .12em; fill: var(--ink-2); }
+.mx-zone-name { font-size: 11px; letter-spacing: .1em; fill: var(--ink-3); }
+.mx-zone-name.is-focus { fill: var(--ink); }
+.mx-zone-count { font-size: 10.5px; fill: var(--ink-3); }
+.mx-leader { stroke: var(--axis); stroke-width: 1; opacity: .5; }
+.mx-dot-label { font-size: 10px; fill: var(--ink-2); pointer-events: none; }
+
+.mx-mark { cursor: pointer; }
+.mx-mark .glyph {
+  stroke: var(--surface);
+  stroke-width: 2;
+  transition: transform .16s cubic-bezier(.2,.7,.3,1);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.mx-mark .halo { fill: none; stroke: currentColor; stroke-width: 0; opacity: 0; transition: stroke-width .16s, opacity .16s; }
+.mx-mark.is-active .glyph { transform: scale(1.42); }
+.mx-mark.is-active .halo { stroke-width: 1.5; opacity: .5; }
+/* 固定：實線外環 + 深色描邊，與 hover 的淡光暈區隔 */
+.mx-mark .pin-ring { fill: none; stroke: var(--ink); stroke-width: 0; opacity: 0; transition: stroke-width .16s, opacity .16s; }
+.mx-mark.is-pinned .glyph { transform: scale(1.42); stroke: var(--ink); stroke-width: 1.5; }
+.mx-mark.is-pinned .halo { stroke-width: 3; opacity: .35; }
+.mx-mark.is-pinned .pin-ring { stroke-width: 1.5; opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .mx-mark .glyph, .mx-mark .halo, .mx-mark .pin-ring { transition: none; } }
+/* 矩陣內不顯示瀏覽器的 focus 藍框；鍵盤聚焦時由 hover 樣式代為標示 */
+#mx-svg:focus, #mx-svg :focus, #mx-svg :focus-visible,
+#mx-table tr:focus, #mx-table tr:focus-visible,
+#mx-table th:focus, #mx-table th:focus-visible { outline: none; }
+#mx-table tbody tr:focus-visible { background: var(--sunk); }
+
+.mx-tooltip {
+  position: absolute;
+  z-index: 8;
+  min-width: 190px;
+  max-width: 272px;
+  padding: 10px 12px;
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .12s;
+}
+.mx-tooltip[data-show="1"] { opacity: 1; }
+.tt-head { display: flex; align-items: baseline; gap: 7px; margin-bottom: 5px; }
+.tt-key { width: 14px; height: 2px; border-radius: 1px; flex: none; transform: translateY(-4px); }
+.tt-id { font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); }
+.tt-title { font-weight: 700; font-size: 14px; line-height: 1.4; }
+.tt-scores { display: flex; gap: 14px; font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); }
+.tt-scores b { font-size: 15px; font-weight: 500; color: var(--ink); }
+.tt-zone { margin-top: 5px; font-size: 11.5px; color: var(--ink-2); }
+.tt-hint { margin-top: 6px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .08em; color: var(--ink-3); }
+
+.mx-legend { display: flex; flex-wrap: wrap; gap: 6px 4px; margin-top: 10px; padding-top: 11px; border-top: 1px solid var(--rule); }
+.legend-label { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .12em; color: var(--ink-3); align-self: center; margin-right: 4px; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 11px 4px 8px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink-2);
+  font: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+.chip:hover { border-color: var(--ink-3); color: var(--ink); }
+.chip[aria-pressed="false"] { opacity: .42; }
+.chip svg { display: block; overflow: visible; }
+.mx-note { margin: 8px 0 0; font-size: 11px; color: var(--ink-3); line-height: 1.55; }
+
+.mx-rail { padding: 17px 18px 19px; display: flex; flex-direction: column; gap: 13px; position: sticky; top: 62px; }
+@media (max-width: 1040px) { .mx-rail { position: static; } }
+.rail-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.rail-eyebrow { display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); }
+.rail-eyebrow .badge { font-size: 11px; letter-spacing: .06em; color: var(--ink); border: 1px solid var(--rule-strong); border-radius: 4px; padding: 1px 6px; }
+.pin-btn { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .08em; }
+.pin-btn[aria-pressed="true"] { color: var(--ink); border-color: var(--ink-3); }
+.mx-rail h3 { font-family: var(--font-display); font-weight: 600; font-size: 18px; line-height: 1.45; margin: 0; text-wrap: balance; }
+.rail-statement { margin: 0; font-size: 13px; color: var(--ink-2); line-height: 1.75; }
+.zone-tag { align-self: flex-start; font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; color: var(--ink-2); background: var(--sunk); border-radius: 4px; padding: 3px 9px; }
+.metric { display: flex; flex-direction: column; gap: 6px; }
+.metric-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.metric-name { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .12em; color: var(--ink-3); }
+.metric-val { font-family: var(--font-mono); font-size: 25px; line-height: 1; }
+.meter { position: relative; height: 5px; border-radius: 3px; background: var(--sunk-2); }
+.meter-fill { position: absolute; inset: 0 auto 0 0; border-radius: 3px; background: var(--ink-2); }
+.meter-thresh { position: absolute; top: -3px; bottom: -3px; width: 1px; background: var(--axis); }
+.metric-why { margin: 0; font-size: 12.5px; color: var(--ink-2); line-height: 1.72; }
+.rail-foot { border-top: 1px solid var(--rule); padding-top: 11px; display: flex; flex-direction: column; gap: 4px; }
+.foot-row { display: flex; gap: 10px; font-size: 12.5px; }
+.foot-row dt { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; color: var(--ink-3); min-width: 58px; padding-top: 2px; }
+.foot-row dd { margin: 0; color: var(--ink-2); }
+.foot-row .note { color: var(--ink-3); font-size: 11.5px; }
+.tree-jump {
+  font: inherit;
+  font-size: 12.5px;
+  color: var(--focus);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+.tree-jump:hover { text-decoration: underline; }
+
+.mx-table-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin: 26px 0 10px; }
+.mx-table-head h3 { font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: .16em; color: var(--ink-3); margin: 0; }
+.mx-table-head span { font-size: 11.5px; color: var(--ink-3); }
+.table-scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 9px; }
+#mx-table { font-size: 13px; }
+#mx-table th, #mx-table td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+#mx-table thead th {
+  font-family: var(--font-mono); font-weight: 500; font-size: 10.5px; letter-spacing: .1em;
+  color: var(--ink-3); white-space: nowrap; border-bottom-color: var(--rule-strong); background: var(--sunk);
+}
+#mx-table thead th.sortable { cursor: pointer; user-select: none; }
+#mx-table thead th.sortable:hover { color: var(--ink); }
+#mx-table thead th[aria-sort="ascending"]::after { content: " ↑"; }
+#mx-table thead th[aria-sort="descending"]::after { content: " ↓"; }
+#mx-table tbody tr { cursor: pointer; }
+#mx-table tbody tr:hover, #mx-table tbody tr.is-active { background: var(--sunk); }
+#mx-table tbody tr.is-pinned { background: var(--sunk-2); box-shadow: inset 3px 0 0 var(--ink); }
+#mx-table tbody tr:last-child td { border-bottom: 0; }
+#mx-table td.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+#mx-table td.id { font-family: var(--font-mono); color: var(--ink-3); white-space: nowrap; }
+#mx-table td.topic { min-width: 200px; }
+.cat-cell { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+
+/* ---------- footer ---------- */
+
+.report-foot {
+  margin-top: 44px;
+  padding-top: 18px;
+  border-top: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .04em;
+  color: var(--ink-3);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+}
+
+/* ---------- print ---------- */
+
+@media print {
+  @page { margin: 12mm; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { background: #fff; }
+  .container { box-shadow: none; margin: 0; padding: 0; max-width: none; }
+  .section-nav, .canvas-toolbar, .canvas-viewport, .canvas-hint, .mx-controls, .tool-hint { display: none !important; }
+  .outline { border: 0; padding: 0; }
+  .outline > summary { display: none; }
+  .outline > ol { display: block !important; }
+  .section { margin-bottom: 22px; break-inside: auto; }
+  h2 { break-after: avoid; }
+  .hypothesis-box { break-inside: avoid; padding: 12px 14px; margin-bottom: 12px; }
+  .mx-stage { grid-template-columns: 1fr; }
+  .mx-rail { display: none; }
+  .table-scroll { overflow: visible; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="header-block">
+    <p class="eyebrow">勵馨基金會 × SCHOOL 28 · V6 · 2026-09-22</p>
+    <h1>以五大核心根因重構之議題樹與影響力矩陣</h1>
+    <p class="report-intro">
+      本版將 0919 版議題樹由「總會／分所 × 能力／意願」的四象限切法，重構為
+      <strong>五大核心根因</strong>的 MECE 架構：外部門禁、業務規格、IT 技術驅動、人力產能、組織治理。
+      全樹 17 個第二層節點逐一標註「已證實之事實」或「尚待驗證之假說」，並在第三區塊以
+      影響力 × 可解性矩陣定位每一個節點的處理優先序。三個區塊共用同一組根因色碼。
+    </p>
+
+    <div class="meta-box">
+      <div class="root-why">
+        <span class="label">ROOT WHY（核心提問）</span>
+        <p>在不增加社工工時的情況下，為什麼勵馨總會無法每個月收到全分所的服務資料？</p>
+      </div>
+      <div class="meta-grid">
+        <div class="meta-item">
+          <strong>樹狀規模</strong>
+          <span class="big">5 × 17</span>
+          <p>五大核心根因分支，展開 17 個第二層因果節點。</p>
+        </div>
+        <div class="meta-item">
+          <strong>證據狀態</strong>
+          <span class="big" id="meta-states">—</span>
+          <p>已證實之事實 ／ 尚待驗證之假說（含部份待驗證）。</p>
+        </div>
+        <div class="meta-item">
+          <strong>核心待驗證假說</strong>
+          <span class="big">5</span>
+          <p>從全樹提煉、最需優先進場驗證的高影響力假說。</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="section-nav" aria-label="區塊導覽">
+    <a href="#sec-tree" data-nav="sec-tree">Section 1 · Why Tree</a>
+    <a href="#sec-hypo" data-nav="sec-hypo">Section 2 · 核心假說</a>
+    <a href="#sec-matrix" data-nav="sec-matrix">Section 3 · 影響力 × 可解性矩陣</a>
+  </nav>
+
+  <!-- ================= Section 1 ================= -->
+  <section class="section" id="sec-tree">
+    <h2><span class="idx">SECTION 1</span>巢狀因果議題樹 (Why Tree)</h2>
+    <p class="section-lede">
+      由左而右閱讀：根提問 → 五大核心根因 → 第二層因果節點。每個第二層節點都標示證據狀態，
+      「尚待驗證之假說」另附驗證關鍵。畫布可拖曳平移與縮放，點分支節點右側的圓鈕可收合該分支。
+    </p>
+
+    <div class="canvas-toolbar">
+      <button class="tool-btn icon" id="zoom-out" aria-label="縮小">−</button>
+      <span class="zoom-readout" id="zoom-readout">100%</span>
+      <button class="tool-btn icon" id="zoom-in" aria-label="放大">＋</button>
+      <span class="tool-sep" aria-hidden="true"></span>
+      <button class="tool-btn" id="zoom-fit">適合畫面</button>
+      <button class="tool-btn" id="zoom-reset">100%</button>
+      <span class="tool-sep" aria-hidden="true"></span>
+      <button class="tool-btn" id="expand-all">全部展開</button>
+      <button class="tool-btn" id="collapse-all">只看根因</button>
+      <button class="tool-btn" id="go-fullscreen">全螢幕</button>
+      <span class="tool-hint">拖曳平移 · ⌘/Ctrl + 滾輪或觸控板縮放 · 雙擊放大</span>
+    </div>
+
+    <div class="canvas-viewport" id="tree-viewport" tabindex="0" role="application"
+         aria-label="可平移縮放的議題樹畫布；完整文字內容請見下方文字大綱">
+      <div class="canvas-layer" id="tree-layer" aria-hidden="true">
+        <svg id="tree-edges"></svg>
+        <div id="tree-nodes"></div>
+      </div>
+    </div>
+    <p class="canvas-hint">※ 畫布為視覺呈現；完整可複製、可列印的文字內容請展開下方大綱。</p>
+
+    <details class="outline" id="tree-outline">
+      <summary>以文字大綱檢視（可複製、列印用）</summary>
+      <ol id="outline-body"></ol>
+    </details>
+  </section>
+
+  <!-- ================= Section 2 ================= -->
+  <section class="section" id="sec-hypo">
+    <h2><span class="idx">SECTION 2</span>核心關鍵假說與驗證狀態清單</h2>
+    <p class="section-lede">
+      以下五項，是從全樹提煉出、<strong>影響力最高且最需後續驗證</strong>的核心假說。
+      每項標示其歸屬的根因分支（色塊對應 Section 1 與 Section 3 的分支色）與下一步的驗證行動。
+    </p>
+    <div id="hypo-list"></div>
+  </section>
+
+  <!-- ================= Section 3 ================= -->
+  <section class="section" id="sec-matrix">
+    <h2><span class="idx">SECTION 3</span>影響力 × 可解性矩陣</h2>
+    <p class="section-lede">
+      17 個第二層議題在「影響力」與「可解性」兩軸上的定位，用來決定先做什麼、先實驗什麼、先剪掉什麼。
+      標記方式可切換：<strong>舊第一層</strong>為 0919 版的「總會／分所 × 能力／意願」四分類；
+      <strong>新第一層</strong>為本版的五大核心根因。
+    </p>
+
+    <div class="mx-controls">
+      <div class="ctl-group">
+        <span class="ctl-label">標記方式</span>
+        <div class="segmented" id="mode-switch" role="group" aria-label="標記方式">
+          <button type="button" data-mode="old" aria-pressed="false">舊第一層（總會／分所）</button>
+          <button type="button" data-mode="new" aria-pressed="true">新第一層（五大根因）</button>
+        </div>
+      </div>
+      <div class="ctl-group">
+        <span class="ctl-label">門檻</span>
+        <label class="ctl-label" for="th-impact" style="letter-spacing:0">影響力</label>
+        <input type="number" id="th-impact" min="0" max="100" step="5" value="60">
+        <label class="ctl-label" for="th-solve" style="letter-spacing:0">可解性</label>
+        <input type="number" id="th-solve" min="0" max="100" step="5" value="60">
+      </div>
+    </div>
+
+    <div class="mx-stage">
+      <div class="mx-panel mx-plot">
+        <svg id="mx-svg" viewBox="0 0 652 652" aria-labelledby="mx-title"></svg>
+        <div class="mx-tooltip" id="mx-tooltip" role="status" aria-live="polite"></div>
+        <div class="mx-legend" id="mx-legend"></div>
+        <p class="mx-note" id="mx-note"></p>
+      </div>
+      <aside class="mx-panel mx-rail" id="mx-rail" aria-live="polite"></aside>
+    </div>
+
+    <div class="mx-table-head">
+      <h3>完整資料表</h3>
+      <span>點任一列可在右側展開完整評分理由</span>
+    </div>
+    <div class="table-scroll">
+      <table id="mx-table">
+        <thead><tr id="mx-thead"></tr></thead>
+        <tbody id="mx-tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="report-foot">
+    <span>勵馨基金會 × School 28 專案</span>
+    <span>V6 · 2026-09-22</span>
+    <span>來源：issue_tree_0922.md ／ 0919_level2_impact_solveability_matrix.json</span>
+  </footer>
+</div>
+
+<script id="matrix-data" type="application/json">{"metadata":{"title":"勵馨基金會議題樹 0919 整合版 (切法二) - Level 2 影響力與可解性評估矩陣","version":"1.0.0","total_items":17,"scoring_scale":"0-100","description":"針對 0919 整合版 (總會分所維度 x 能力意願維度) 的 17 個第二層議題節點，評估其『影響力 (Impact)』與『可解性 (Solvability)』分數，作為後續專案優先順序 (Prioritization) 與假說驗證 (Hypothesis Testing) 之可視化數據庫。","quadrant_definitions":{"Quick_Wins":"高影響力 (>=60) / 高可解性 (>=60)：核心突破口，最優先執行之專案範疇 (Quick Wins / Core Initiatives)","Strategic_Pivots":"高影響力 (>=60) / 低可解性 (<60)：戰略槓桿點，需進行低成本 MVP / POC 實驗或繞道解法 (Strategic Pivots)","Fill_ins":"低影響力 (<60) / 高可解性 (>=60)：次要補充項目，可順帶處理或自動化改善 (Fill-ins / Easy Fixes)","Hard_Knocks":"低影響力 (<60) / 低可解性 (<60)：次要卡點，暫緩處理或直接剪枝 (Hard Knocks / Deprioritize)"}},"items":[{"id":"A1","level1_category":"A 總會沒有能力取得","level2_item":"因為總會沒有權限讀取各分所在政府系統裡的資料","short_title":"政府系統權限封閉","impact_score":90,"impact_rationale":"受暴保護性業務約占勵馨六成資料量，政府系統封閉導致總會月度數據直接斷流，致命性極高。","solvability_score":35,"solvability_rationale":"衛福部舊系統未開放 API，直接要求政府開放權限難度極高；但可透過分所督導帳號導出或模仿伊甸模式間接突破。","quadrant":"Strategic_Pivots","quadrant_label":"戰略槓桿點 (高影響力 / 低可解性)","root_cause_tag":"外部門禁與權限障礙"},{"id":"A2","level1_category":"A 總會沒有能力取得","level2_item":"因為總會沒有符合需求的資訊系統","short_title":"總會缺乏承接數據系統","impact_score":85,"impact_rationale":"缺乏內部數據中樞（Data Repository / Dashboard），即使分所導出資料也無處承接與自動彙整。","solvability_score":75,"solvability_rationale":"總會擁有 100% 內部決策主導權，可透過低程式碼 (Low-code) 或升級既有自籌系統（如青少女懷孕系統）快速建立。","quadrant":"Quick_Wins","quadrant_label":"快速贏家 (高影響力 / 高可解性)","root_cause_tag":"IT技術與工具驅動不足"},{"id":"A3","level1_category":"A 總會沒有能力取得","level2_item":"因為總會沒有人力去各分所撈資料","short_title":"總會缺乏人工撈資料人力","impact_score":40,"impact_rationale":"依靠人工到 14+ 分所實地/手動撈資料本身即非可永續擴展之模式，非根本卡點。","solvability_score":30,"solvability_rationale":"總會倡議團隊僅 2 人、IT 僅 4 人，且執行長明令控制組織規模，不可能補充專責人工撈資料人力。","quadrant":"Hard_Knocks","quadrant_label":"次要卡點 / 剪枝 (低影響力 / 低可解性)","root_cause_tag":"產能飽和與人力資源極限"},{"id":"A4","level1_category":"A 總會沒有能力取得","level2_item":"因為資訊解決方案沒有給出明確的資料格式需求","short_title":"資訊方案缺乏明確規格需求","impact_score":80,"impact_rationale":"資訊端若未給出標準 Schema 與資料字典，研發與分所即無從配合統一格式。","solvability_score":80,"solvability_rationale":"屬總會研發與資訊組內部對齊範疇，只要釐清業務與 IT 需求即可完成規格定義。","quadrant":"Quick_Wins","quadrant_label":"快速贏家 (高影響力 / 高可解性)","root_cause_tag":"業務規格與標準未定"},{"id":"B1","level1_category":"B 總會沒有意願索取","level2_item":"因為總會不希望拉工作量提升（社工福祉）","short_title":"體恤社工不願增加行政負擔","impact_score":85,"impact_rationale":"總會因為心疼社工重工而主動選擇不發起索取，是每月數據收集停擺的核心決策心態。","solvability_score":70,"solvability_rationale":"一旦提供『零新增工時』的自動化導出或預填工具，總會索取意願將瞬間解凍。","quadrant":"Quick_Wins","quadrant_label":"快速贏家 (高影響力 / 高可解性)","root_cause_tag":"組織治理與價值閉環斷裂"},{"id":"B2","level1_category":"B 總會沒有意願索取","level2_item":"因為推動跨分所協調的成本很高（溝通成本）","short_title":"跨分所協調與溝通成本高","impact_score":65,"impact_rationale":"地方分權導致 7 個法院服務處努力 5-10 年仍無法統合表單，協調摩擦極大。","solvability_score":50,"solvability_rationale":"可採『最小共通核心欄位 (Master Data)』策略或由自籌服務（青少女懷孕）切入，避開全表單 100% 統合摩擦。","quadrant":"Strategic_Pivots","quadrant_label":"戰略槓桿點 (高影響力 / 中低可解性)","root_cause_tag":"業務規格與標準未定"},{"id":"B3","level1_category":"B 總會沒有意願索取","level2_item":"因為總會尚未確定蒐集來的資料要如何運用","short_title":"總會數據運用戰略與目的未定","impact_score":75,"impact_rationale":"若總會不清楚資料能產出何種倡議效益，索取行為便缺乏正當性，淪為形式作業。","solvability_score":85,"solvability_rationale":"純屬總會管理層與研發組內部共識範疇，明確數據倡議主題（如電子腳鐐、數位性暴力）即可解決。","quadrant":"Quick_Wins","quadrant_label":"快速贏家 (高影響力 / 高可解性)","root_cause_tag":"組織治理與價值閉環斷裂"},{"id":"C1","level1_category":"C 分所沒有能力提供","level2_item":"因為分所拿不到政府系統裡已經算好的統計","short_title":"無法匯出政府系統現成統計","impact_score":70,"impact_rationale":"政府系統內部已有計算結果，但分所不會/無法導出，被迫人工重新計算重工。","solvability_score":55,"solvability_rationale":"需透過教育訓練（教分所操作固定報表指令）或與地方政府協調開放統計導出權限。","quadrant":"Strategic_Pivots","quadrant_label":"戰略槓桿點 (高影響力 / 中低可解性)","root_cause_tag":"外部門禁與權限障礙"},{"id":"C2","level1_category":"C 分所沒有能力提供","level2_item":"因為分所不知道怎麼產出總會要的資料","short_title":"分所缺乏產出資料 Know-how","impact_score":75,"impact_rationale":"欄位定義模糊、無統一數據字典、找不到詢問窗口，導致分所無所適從。","solvability_score":85,"solvability_rationale":"編撰明確 SOP、建立數據字典與指定研發/IT 單一窗口，可快速消除 Know-how 障礙。","quadrant":"Quick_Wins","quadrant_label":"快速贏家 (高影響力 / 高可解性)","root_cause_tag":"業務規格與標準未定"},{"id":"C3","level1_category":"C 分所沒有能力提供","level2_item":"因為分所交出來的資料品質參差不齊","short_title":"交出資料品質參差不齊","impact_score":60,"impact_rationale":"資料品質不一（如定義不同、算頭不算尾）導致總會不敢直接使用，增添稽核成本。","solvability_score":80,"solvability_rationale":"建立前端表單邏輯檢核（Validation）與品管流程，可大幅提升資料品質。","quadrant":"Quick_Wins","quadrant_label":"快速贏家 (高影響力 / 高可解性)","root_cause_tag":"業務規格與標準未定"},{"id":"C4","level1_category":"C 分所沒有能力提供","level2_item":"因為社工作業量多","short_title":"社工直接服務工時飽和","impact_score":95,"impact_rationale":"個案服務工時已被填滿，屬最核心的客觀產能瓶頸（Capacity Bottleneck）。","solvability_score":25,"solvability_rationale":"無法透過增加社工人力解決（NPO 缺工與預算限制），必須透過『減法管理/自動化』釋放工時。","quadrant":"Strategic_Pivots","quadrant_label":"戰略槓桿點 (極高影響力 / 低可解性)","root_cause_tag":"產能飽和與人力資源極限"},{"id":"C5","level1_category":"C 分所沒有能力提供","level2_item":"因為無法用行政助理補充工時供給","short_title":"行政助理補充機制失效","impact_score":55,"impact_rationale":"政府委託案不給行政助理預算、自籌成本高、且教學與信任成本過高，無法靠助理分擔。","solvability_score":40,"solvability_rationale":"受限於政府採購法規與勵馨 HR 制度，短時間內難以全面補充行政助理。","quadrant":"Hard_Knocks","quadrant_label":"次要卡點 (低影響力 / 低可解性)","root_cause_tag":"產能飽和與人力資源極限"},{"id":"C6","level1_category":"C 分所沒有能力提供","level2_item":"因為工作被重複工與不良流程墊高","short_title":"重複填報與不良流程耗能","impact_score":90,"impact_rationale":"手動去識別化、重複填寫多份表單、介面不友善，極大化地浪費了社工有限的工時。","solvability_score":75,"solvability_rationale":"高槓桿切入點！透過自動化去識別化程式、低代碼表單整合與流程優化，可大幅消除重工。","quadrant":"Quick_Wins","quadrant_label":"核心快速贏家 (極高影響力 / 高可解性)","root_cause_tag":"IT技術與工具驅動不足"},{"id":"C7","level1_category":"C 分所沒有能力提供","level2_item":"因為考核時間與系統建檔天數限制造成月內尖峰堆疊","short_title":"考核天數限制致月內尖峰堆疊","impact_score":50,"impact_rationale":"月底建檔與評鑑時間點重疊，造成月內作業工作量暴增集中。","solvability_score":65,"solvability_rationale":"可調整總會內部平時收集頻率（如週度微紀錄/彈性填報窗口）平滑化工作尖峰。","quadrant":"Fill_ins","quadrant_label":"次要補充 (低影響力 / 高可解性)","root_cause_tag":"產能飽和與人力資源極限"},{"id":"D1","level1_category":"D 分所沒有意願提供","level2_item":"因為不交資料不會有任何損失","short_title":"缺少考核與監督驅動機制","impact_score":65,"impact_rationale":"未納入考核、無追蹤機制，導致分所將數據提交列為最低優先級。","solvability_score":85,"solvability_rationale":"總會可自主建立輕量定期追蹤與主管考核指標，制度建立難度低。","quadrant":"Quick_Wins","quadrant_label":"快速贏家 (中高影響力 / 高可解性)","root_cause_tag":"組織治理與價值閉環斷裂"},{"id":"D2","level1_category":"D 分所沒有意願提供","level2_item":"因為分所看不到交資料的價值","short_title":"缺乏數據價值感知與反饋閉環","impact_score":90,"impact_rationale":"總會未反饋倡議成果，分所感受不到資料價值，強烈認知為『被騷擾/增加雜事』。","solvability_score":80,"solvability_rationale":"極高槓桿！研發組建立雙向數據反饋機制，讓分所看到數據贏得法案或資源的成果。","quadrant":"Quick_Wins","quadrant_label":"核心快速贏家 (極高影響力 / 高可解性)","root_cause_tag":"組織治理與價值閉環斷裂"},{"id":"D3","level1_category":"D 分所沒有意願提供","level2_item":"因為交資料可能造成風險","short_title":"個資洩漏疑慮與跨分所比較壓力","impact_score":70,"impact_rationale":"擔心違反個資法或數據被總會拿來做分所間的不公平績效評比，產生防禦心態。","solvability_score":75,"solvability_rationale":"明確宣告數據僅用於總會倡議與資源爭取、不作分所懲罰性評比，並提供自動去識別化安全承諾。","quadrant":"Quick_Wins","quadrant_label":"快速贏家 (高影響力 / 高可解性)","root_cause_tag":"組織治理與價值閉環斷裂"}]}</script>
+
+<script>
+(function () {
+  "use strict";
+
+  /* =======================================================================
+     Shared data
+     ======================================================================= */
+
+  // 五大核心根因。tag 必須與矩陣 JSON 的 root_cause_tag 完全一致。
+  var BRANCHES = [
+    { n: 1, short: "外部門禁", tag: "外部門禁與權限障礙", color: "var(--b1)", hex: "#be842d",
+      text: "因為外部門禁與權限障礙，導致資料在源頭與傳輸出口直接斷流" },
+    { n: 2, short: "業務規格", tag: "業務規格與標準未定", color: "var(--b2)", hex: "#5194d6",
+      text: "因為業務規格與標準未定，導致跨分所資料缺乏統一語言與定義" },
+    { n: 3, short: "技術驅動", tag: "IT技術與工具驅動不足", color: "var(--b3)", hex: "#27a573",
+      text: "因為 IT 技術與工具驅動不足，導致數據傳輸缺乏自動化管線與中樞" },
+    { n: 4, short: "人力產能", tag: "產能飽和與人力資源極限", color: "var(--b4)", hex: "#5151d6",
+      text: "因為產能飽和與人力資源極限，導致社工與 IT 皆無法承受額外手動負擔" },
+    { n: 5, short: "組織治理", tag: "組織治理與價值閉環斷裂", color: "var(--b5)", hex: "#d651ae",
+      text: "因為組織治理與價值閉環斷裂，導致總分所缺乏數據驅動之雙向誘因" }
+  ];
+
+  var ROOT_TEXT = "在不增加社工工時的情況下，為什麼勵馨總會無法每個月收到全分所的服務資料？";
+
+  var LEAVES = {
+    "外部門禁與權限障礙": [
+      { tag: "系統出口限制", mx: "A1", text: "因為政府保護性系統權限封閉且資安限制嚴格，未開放 API 或批次匯出",
+        state: "hypo", stateLabel: "尚待驗證之假說", basisLabel: "假說內容",
+        basis: "舊版保護性系統（家暴／性侵）無法透過技術外掛或行政授權（如縣市督導權限）導出去識別化數據。",
+        test: "政府行政授權意願、舊系統外掛腳本或批次 CSV 匯出的技術可行性。" },
+      { tag: "操作權限限制", mx: "C1", text: "因為分所無政府系統後台數據導出權限或不熟悉撈取指令",
+        state: "fact", stateLabel: "已明確證實之事實", basisLabel: "事實依據",
+        basis: "分所社工僅具備日常個案資料輸入權限，無後台統計資料庫導出權，且公部門與分所皆欠缺進階撈取指令。" }
+    ],
+    "業務規格與標準未定": [
+      { tag: "欄位規格缺失", mx: "B2", text: "因為跨分所同質與異質業務之表單未統一，缺乏全會 Master Data 數據字典",
+        state: "mixed", stateLabel: "已證實之事實（部份待驗證）", basisLabel: "事實依據",
+        basis: "研發組曾嘗試統合 7 個法院服務處（同質方案）表單，努力 5～10 年後放棄。",
+        test: "跨異質方案（家暴 vs 移工）是否能抽離出 10～20% 的「最小共通數據字典」（如服務人次、轉折階段）。" },
+      { tag: "外部特規拉力", text: "因為地方分所須配合地方政府金主之特規委託契約表單",
+        state: "fact", stateLabel: "已明確證實之事實", basisLabel: "事實依據",
+        basis: "分所直言有「兩個老闆」，因地方政府提供委託經費，分所優先維護地方政府表單格式。" },
+      { tag: "產出指引缺失", mx: "C2", text: "因為總會需求與欄位定義模糊，分所不知如何產出合規數據",
+        state: "fact", stateLabel: "已明確證實之事實", basisLabel: "事實依據",
+        basis: "總會未給予明確的月度數據產出定義與標準 SOP，導致各分所理解迥異、交上來的資料格式參差不齊。" },
+      { tag: "範疇覆蓋限制", text: "因為現行政府系統欄位僅限法定項目，無法涵蓋新興議題數據",
+        state: "fact", stateLabel: "已明確證實之事實", basisLabel: "事實依據",
+        basis: "政府系統無「數位性暴力」等新興議題欄位，一線填不進去導致倡議端數據出現天花板。" }
+    ],
+    "IT技術與工具驅動不足": [
+      { tag: "接收中樞缺失", mx: "A2", text: "因為總會缺乏符合需求之資訊系統與自動化數據接收中樞",
+        state: "fact", stateLabel: "已明確證實之事實", basisLabel: "事實依據",
+        basis: "勵馨缺乏專屬的月度服務數據自動接收平台，過度依賴手動 Excel 信件往返。" },
+      { tag: "轉換工具缺失", mx: "C6", text: "因為資料去識別化與轉換流程繁瑣，缺乏自動化工具導致重複耗能",
+        state: "mixed", stateLabel: "已證實之事實（部份待驗證）", basisLabel: "事實依據",
+        basis: "分所需耗費大量時間手動剔除個資以符合規範。",
+        test: "勵馨能否在僅 4 名 IT 的資源下，透過 Low-code 或輕量 Python／RPA 腳本複製「伊甸 90% 重疊資料自動轉換模式」。" }
+    ],
+    "產能飽和與人力資源極限": [
+      { tag: "IT 產能瓶頸", mx: "A3", text: "因為總會 IT 人力極度匱乏（全會僅 4 人），且被日常 Helpdesk 維運排障擠爆",
+        state: "hypo", stateLabel: "尚待驗證之假說（核心待驗證點）", basisLabel: "假說內容",
+        basis: "現有 4 名 IT 人員因時間被「修螢幕／喇叭」等排障打碎，若將 Helpdesk 外包或分流，即能進行系統開發。",
+        test: "現有 IT 團隊的真實技能圖譜（Skill Sets）是否具備現代化 ETL 自動化管線與軟體 PM 開發能力。" },
+      { tag: "社工工時飽和", mx: "C4", text: "因為分所個案量飽和，社工直接服務工時已達硬性產能極限",
+        state: "fact", stateLabel: "已明確證實之事實", basisLabel: "事實依據",
+        basis: "一線社工直接服務與個案紀錄已填滿 100% 工時，無任何邊際時間手動處理總會行政報表（需靠減法管理解套）。" },
+      { tag: "替代人力失能", mx: "C5", text: "因為缺乏行政助理專職協助數據整理，或助理教學與權限維護成本過高",
+        state: "fact", stateLabel: "已明確證實之事實", basisLabel: "事實依據",
+        basis: "政府委託案未編列助理預算；且社工反映教導助理整理數據的溝通成本反而高於自己做。" },
+      { tag: "收集流程錯位", mx: "C7", text: "因為現行數據收集機制（年度報表、半年團督）缺乏月度動態流程設計",
+        state: "fact", stateLabel: "已明確證實之事實", basisLabel: "事實依據",
+        basis: "現行收集頻率為一年一次年報；半年一次的團督偏向總會單向宣導，未發揮月度數據流轉功能。" }
+    ],
+    "組織治理與價值閉環斷裂": [
+      { tag: "總會發起意願", mx: "B1", text: "因為總會恪守「體恤社工不願重工」底線，缺乏強制要求之政策決心",
+        state: "fact", stateLabel: "已明確證實之事實", basisLabel: "事實依據",
+        basis: "執行長與總會明確宣示「不讓社工填兩次／重複手動填報」為底線，無自動化工具前不強制索取。" },
+      { tag: "戰略用途不明", mx: "B3", text: "因為總會管理層對數據收集後之戰略用途與倡議目標尚未形成共識",
+        state: "fact", stateLabel: "已明確證實之事實", basisLabel: "事實依據",
+        basis: "總會對於「收集數據後的倡議回饋與政策目標」缺乏明確規劃，致使 ROI 評估失衡（認為不值得打擾社工）。" },
+      { tag: "制度激勵缺失", mx: "D1", text: "因為工作考核與評鑑皆未納入數據提供，欠缺制度約束力與激勵誘因",
+        state: "fact", stateLabel: "已明確證實之事實", basisLabel: "事實依據",
+        basis: "政府評鑑與內部考績皆未包含月度數據繳交，不提供資料無任何後果或追蹤。" },
+      { tag: "價值感知斷裂", mx: "D2", text: "因為雙向數據反饋閉環斷裂，分所感受不到資料價值，感知為「填雜事／騷擾」",
+        state: "hypo", stateLabel: "尚待驗證之假說", basisLabel: "假說內容",
+        basis: "若總會研發倡議端能建立「數據反饋機制」（如每月提供在地倡議圖卡），分所的填報抗拒感將顯著降低。",
+        test: "數據影響力反饋能否抵銷額外行政阻力，建立分所社工的內在填報動機。" },
+      { tag: "心理防禦機制", mx: "D3", text: "因為分所對跨分所數據評比缺乏安全感，或擔心違反個資規範",
+        state: "fact", stateLabel: "已明確證實之事實", basisLabel: "事實依據",
+        basis: "分所害怕數據被總會拿來做跨分所績效評比，且對個資外洩有心理恐懼。" }
+    ]
+  };
+
+  var HYPOTHESES = [
+    { id: "H-1", name: "IT 團隊技術能力與時間分流假說", branches: [3, 4],
+      body: "若將 Helpdesk（修螢幕／排障）外包分流，現有 4 名 IT 即具備獨立開發 ETL 自動化管線與軟體 PM 之能力。",
+      action: "IT 技能圖譜盤點：訪談資訊組長與工程師，評估其現有程式能力（Python／API／SQL／Low-code）與系統架構經驗。" },
+    { id: "H-2", name: "保護性系統技術／行政破局假說", branches: [1],
+      body: "舊版保護性系統可透過外掛腳本批次導出 CSV，或向衛福部爭取縣市督導層級帳號以獲取去識別化數據。",
+      action: "POC 小規模測試：挑選 1 家友好分所，測試以現有督導權限匯出 CSV 之可行性；評估衛福部資安政策溝通空間。" },
+    { id: "H-3", name: "伊甸模式輕量複製假說", branches: [3],
+      body: "勵馨能以極低 IT 工時（Low-code／自動化腳本），複製伊甸「導出政府 90% 重疊資料、僅補填 10% 差額」之模式。",
+      action: "資料重疊度審計：對比勵馨內部需求表單與政府保護性系統欄位，計算真實重疊率（是否達 80–90%）。" },
+    { id: "H-4", name: "最小共通數據字典 (Master Data) 抽離假說", branches: [2],
+      body: "異質服務（家暴、性侵、移工）間能抽離出 10～20% 的「最小共通核心欄位」，無須 100% 表單一致。",
+      action: "跨方案欄位對齊研討：抽樣 3 種異質服務表單，進行核心欄位（人次、服務階段、轉折點）之交集比對。" },
+    { id: "H-5", name: "雙向數據反饋賦能假說", branches: [5],
+      body: "若總會將數據分析轉化為在地倡議素材並回饋分所，分所的「被騷擾感」將大幅轉化為「填報動機」。",
+      action: "原型反饋測試：由研發組製作 1 份數據倡議簡報回饋給試辦分所，觀察分所主任與社工之態度轉變。" }
+  ];
+
+  var OLD_COLORS = ["var(--o1)", "var(--o2)", "var(--o3)", "var(--o4)"];
+
+  /* =======================================================================
+     Generic helpers
+     ======================================================================= */
+
+  var SVGNS = "http://www.w3.org/2000/svg";
+
+  function svgEl(tag, attrs) {
+    var n = document.createElementNS(SVGNS, tag);
+    for (var k in attrs) if (attrs[k] !== undefined && attrs[k] !== null) n.setAttribute(k, attrs[k]);
+    return n;
+  }
+  function svgText(tag, attrs, s) {
+    var n = svgEl(tag, attrs);
+    n.appendChild(document.createTextNode(s));
+    return n;
+  }
+  function h(tag, cls, s) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (s !== undefined && s !== null && s !== "") n.textContent = s;
+    return n;
+  }
+  function toNum(v) {
+    var n = typeof v === "string" ? parseFloat(v) : v;
+    return typeof n === "number" && isFinite(n) ? n : null;
+  }
+  function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+  /* Glyph shapes — the secondary encoding that carries category identity
+     without relying on hue alone. */
+  function shapePath(kind, r) {
+    var f = function (x) { return x.toFixed(2); };
+    if (kind === 1) { var s = r * 0.886; return "M" + f(-s) + "," + f(-s) + "H" + f(s) + "V" + f(s) + "H" + f(-s) + "Z"; }
+    if (kind === 2) { var b = r * 1.3468, u = r * 1.555, d = r * 0.7775; return "M0," + f(-u) + "L" + f(b) + "," + f(d) + "L" + f(-b) + "," + f(d) + "Z"; }
+    if (kind === 3) { var a = r * 1.2533; return "M0," + f(-a) + "L" + f(a) + ",0L0," + f(a) + "L" + f(-a) + ",0Z"; }
+    if (kind === 4) { var b2 = r * 1.3468, u2 = r * 1.555, d2 = r * 0.7775; return "M0," + f(u2) + "L" + f(b2) + "," + f(-d2) + "L" + f(-b2) + "," + f(-d2) + "Z"; }
+    return "M" + f(-r) + ",0a" + f(r) + "," + f(r) + " 0 1,0 " + f(2 * r) + ",0a" + f(r) + "," + f(r) + " 0 1,0 " + f(-2 * r) + ",0";
+  }
+  function glyphSwatch(idx, color, r) {
+    var side = r * 3.4;
+    var s = svgEl("svg", { width: side, height: side, viewBox: (-side / 2) + " " + (-side / 2) + " " + side + " " + side, "aria-hidden": "true" });
+    var p = svgEl("path", { d: shapePath(idx % 5, r) });
+    p.style.fill = color;
+    s.appendChild(p);
+    return s;
+  }
+
+  /* =======================================================================
+     Section 1 — tree canvas (tidy left-to-right layout + pan/zoom)
+     ======================================================================= */
+
+  var W_ROOT = 300, W_L1 = 250, W_L2 = 404;
+  var H_GAP = 84, V_GAP = 14, GROUP_GAP = 34, CANVAS_PAD = 56;
+
+  var viewport = document.getElementById("tree-viewport");
+  var layer = document.getElementById("tree-layer");
+  var edgesSvg = document.getElementById("tree-edges");
+  var nodesBox = document.getElementById("tree-nodes");
+  var zoomReadout = document.getElementById("zoom-readout");
+
+  var view = { x: 0, y: 0, k: 1 };
+  var collapsed = {};
+  var treeNodes = [];
+  var canvasSize = { w: 1200, h: 800 };
+
+  function buildTreeNodes() {
+    nodesBox.textContent = "";
+    treeNodes = [];
+
+    var rootEl = h("div", "tnode root");
+    rootEl.style.width = W_ROOT + "px";
+    rootEl.appendChild(h("span", "t-kicker", "ROOT WHY"));
+    rootEl.appendChild(h("div", "t-text", ROOT_TEXT));
+    nodesBox.appendChild(rootEl);
+    var root = { el: rootEl, depth: 0, children: [] };
+    treeNodes.push(root);
+
+    BRANCHES.forEach(function (br) {
+      var el = h("div", "tnode l1");
+      el.style.width = W_L1 + "px";
+      el.style.borderColor = br.color;
+
+      var head = h("div", "t-head");
+      var numEl = h("span", "t-num", String(br.n));
+      numEl.style.background = br.color;
+      head.appendChild(numEl);
+      head.appendChild(h("span", "t-short", br.short));
+      el.appendChild(head);
+      el.appendChild(h("div", "t-text", br.text));
+
+      var kids = LEAVES[br.tag] || [];
+      var toggle = h("button", "t-toggle", collapsed[br.tag] ? "+" : "−");
+      toggle.type = "button";
+      toggle.setAttribute("aria-expanded", collapsed[br.tag] ? "false" : "true");
+      toggle.setAttribute("aria-label", (collapsed[br.tag] ? "展開" : "收合") + br.short + "分支，共 " + kids.length + " 個節點");
+      toggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        collapsed[br.tag] = !collapsed[br.tag];
+        renderTree(false);
+      });
+      el.appendChild(toggle);
+      nodesBox.appendChild(el);
+
+      var node = { el: el, depth: 1, branch: br, children: [] };
+      treeNodes.push(node);
+      root.children.push(node);
+
+      if (collapsed[br.tag]) return;
+
+      kids.forEach(function (leaf) {
+        var le = h("div", "tnode l2");
+        le.style.width = W_L2 + "px";
+        var row = h("div", "t-row");
+        row.appendChild(h("span", "t-tag", leaf.tag));
+        if (leaf.mx) {
+          var link = h("button", "t-link", "矩陣 " + leaf.mx + " →");
+          link.type = "button";
+          link.setAttribute("aria-label", "在影響力矩陣中查看 " + leaf.mx);
+          link.addEventListener("click", function (e) { e.stopPropagation(); jumpToMatrix(leaf.mx); });
+          row.appendChild(link);
+        }
+        le.appendChild(row);
+        le.appendChild(h("div", "t-text", leaf.text));
+
+        var st = h("span", "t-state " + leaf.state, (leaf.state === "fact" ? "✓ " : "⚠ ") + leaf.stateLabel);
+        le.appendChild(st);
+
+        var basis = h("p", "t-basis");
+        basis.appendChild(h("b", null, "【" + leaf.basisLabel + "】"));
+        basis.appendChild(document.createTextNode(leaf.basis));
+        le.appendChild(basis);
+
+        if (leaf.test) {
+          var test = h("p", "t-test");
+          test.appendChild(h("b", null, "【驗證關鍵】"));
+          test.appendChild(document.createTextNode(leaf.test));
+          le.appendChild(test);
+        }
+
+        nodesBox.appendChild(le);
+        var ln = { el: le, depth: 2, branch: br, leaf: leaf, children: [] };
+        treeNodes.push(ln);
+        node.children.push(ln);
+      });
+    });
+
+    return root;
+  }
+
+  function layoutTree(root) {
+    var xRoot = CANVAS_PAD;
+    var xL1 = xRoot + W_ROOT + H_GAP;
+    var xL2 = xL1 + W_L1 + H_GAP;
+
+    var cursor = CANVAS_PAD;
+    root.children.forEach(function (b1, i) {
+      if (i > 0) cursor += GROUP_GAP;
+      if (b1.children.length) {
+        var start = cursor;
+        b1.children.forEach(function (l2, j) {
+          if (j > 0) cursor += V_GAP;
+          l2.x = xL2;
+          l2.y = cursor;
+          l2.h = l2.el.offsetHeight;
+          cursor += l2.h;
+        });
+        b1.h = b1.el.offsetHeight;
+        b1.y = start + (cursor - start) / 2 - b1.h / 2;
+      } else {
+        b1.h = b1.el.offsetHeight;
+        b1.y = cursor;
+        cursor += b1.h;
+      }
+      b1.x = xL1;
+    });
+
+    var first = root.children[0], last = root.children[root.children.length - 1];
+    root.h = root.el.offsetHeight;
+    root.x = xRoot;
+    root.y = (first.y + (last.y + last.h)) / 2 - root.h / 2;
+
+    // keep everything inside positive space
+    var minY = Infinity;
+    treeNodes.forEach(function (n) { if (n.y < minY) minY = n.y; });
+    var shift = minY < CANVAS_PAD ? CANVAS_PAD - minY : 0;
+    var maxY = 0;
+    treeNodes.forEach(function (n) {
+      n.y += shift;
+      n.el.style.left = n.x + "px";
+      n.el.style.top = n.y + "px";
+      if (n.y + n.h > maxY) maxY = n.y + n.h;
+    });
+
+    canvasSize.w = xL2 + W_L2 + CANVAS_PAD;
+    canvasSize.h = maxY + CANVAS_PAD;
+    layer.style.width = canvasSize.w + "px";
+    layer.style.height = canvasSize.h + "px";
+  }
+
+  function drawEdges(root) {
+    edgesSvg.textContent = "";
+    edgesSvg.setAttribute("width", canvasSize.w);
+    edgesSvg.setAttribute("height", canvasSize.h);
+
+    function edge(from, to, color) {
+      var x1 = from.x + (from.depth === 0 ? W_ROOT : W_L1);
+      var y1 = from.y + from.h / 2;
+      var x2 = to.x;
+      var y2 = to.y + to.h / 2;
+      var mid = x1 + (x2 - x1) / 2;
+      var p = svgEl("path", {
+        d: "M" + x1 + "," + y1 + "C" + mid + "," + y1 + " " + mid + "," + y2 + " " + x2 + "," + y2,
+        fill: "none", "stroke-width": from.depth === 0 ? 2 : 1.5, "stroke-linecap": "round"
+      });
+      p.style.stroke = color;
+      p.style.opacity = from.depth === 0 ? "0.9" : "0.65";
+      edgesSvg.appendChild(p);
+    }
+
+    root.children.forEach(function (b1) {
+      edge(root, b1, b1.branch.color);
+      b1.children.forEach(function (l2) { edge(b1, l2, b1.branch.color); });
+    });
+  }
+
+  function applyView() {
+    layer.style.transform = "translate(" + view.x + "px," + view.y + "px) scale(" + view.k + ")";
+    zoomReadout.textContent = Math.round(view.k * 100) + "%";
+  }
+
+  function fitView() {
+    var vw = viewport.clientWidth, vh = viewport.clientHeight;
+    var k = clamp(Math.min(vw / canvasSize.w, vh / canvasSize.h) * 0.98, 0.15, 1);
+    view.k = k;
+    view.x = (vw - canvasSize.w * k) / 2;
+    view.y = (vh - canvasSize.h * k) / 2;
+    applyView();
+  }
+
+  function zoomAt(cx, cy, factor) {
+    var k = clamp(view.k * factor, 0.15, 2.5);
+    if (k === view.k) return;
+    var ratio = k / view.k;
+    view.x = cx - (cx - view.x) * ratio;
+    view.y = cy - (cy - view.y) * ratio;
+    view.k = k;
+    applyView();
+  }
+
+  function zoomCenter(factor) {
+    zoomAt(viewport.clientWidth / 2, viewport.clientHeight / 2, factor);
+  }
+
+  function renderTree(refit) {
+    var root = buildTreeNodes();
+    layoutTree(root);
+    drawEdges(root);
+    if (refit) fitView(); else applyView();
+  }
+
+  // --- pan / zoom interaction ---
+
+  var pointers = new Map();
+  var panStart = null;
+  var pinchStart = null;
+
+  viewport.addEventListener("pointerdown", function (e) {
+    if (e.target.closest(".t-toggle, .t-link")) return;
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    viewport.setPointerCapture(e.pointerId);
+    if (pointers.size === 1) {
+      panStart = { px: e.clientX, py: e.clientY, vx: view.x, vy: view.y };
+      viewport.classList.add("is-panning");
+    } else if (pointers.size === 2) {
+      panStart = null;
+      var pts = Array.from(pointers.values());
+      pinchStart = {
+        dist: Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y),
+        k: view.k
+      };
+    }
+  });
+
+  viewport.addEventListener("pointermove", function (e) {
+    if (!pointers.has(e.pointerId)) return;
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+    if (pointers.size === 2 && pinchStart) {
+      var pts = Array.from(pointers.values());
+      var dist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+      if (pinchStart.dist > 0) {
+        var rect = viewport.getBoundingClientRect();
+        var mx = (pts[0].x + pts[1].x) / 2 - rect.left;
+        var my = (pts[0].y + pts[1].y) / 2 - rect.top;
+        var target = clamp(pinchStart.k * (dist / pinchStart.dist), 0.15, 2.5);
+        zoomAt(mx, my, target / view.k);
+      }
+      return;
+    }
+    if (panStart) {
+      view.x = panStart.vx + (e.clientX - panStart.px);
+      view.y = panStart.vy + (e.clientY - panStart.py);
+      applyView();
+    }
+  });
+
+  function endPointer(e) {
+    pointers.delete(e.pointerId);
+    if (pointers.size < 2) pinchStart = null;
+    if (pointers.size === 0) {
+      panStart = null;
+      viewport.classList.remove("is-panning");
+    }
+  }
+  viewport.addEventListener("pointerup", endPointer);
+  viewport.addEventListener("pointercancel", endPointer);
+
+  // ⌘/Ctrl + wheel zooms (this is also what a trackpad pinch emits);
+  // a plain wheel is left alone so the page keeps scrolling normally.
+  viewport.addEventListener("wheel", function (e) {
+    if (!e.ctrlKey && !e.metaKey) return;
+    e.preventDefault();
+    var rect = viewport.getBoundingClientRect();
+    zoomAt(e.clientX - rect.left, e.clientY - rect.top, Math.exp(-e.deltaY * 0.01));
+  }, { passive: false });
+
+  viewport.addEventListener("dblclick", function (e) {
+    if (e.target.closest(".t-toggle, .t-link")) return;
+    var rect = viewport.getBoundingClientRect();
+    zoomAt(e.clientX - rect.left, e.clientY - rect.top, 1.35);
+  });
+
+  viewport.addEventListener("keydown", function (e) {
+    var step = 60;
+    var handled = true;
+    if (e.key === "ArrowLeft") view.x += step;
+    else if (e.key === "ArrowRight") view.x -= step;
+    else if (e.key === "ArrowUp") view.y += step;
+    else if (e.key === "ArrowDown") view.y -= step;
+    else if (e.key === "+" || e.key === "=") zoomCenter(1.2);
+    else if (e.key === "-" || e.key === "_") zoomCenter(1 / 1.2);
+    else if (e.key === "0") fitView();
+    else handled = false;
+    if (handled) { e.preventDefault(); applyView(); }
+  });
+
+  document.getElementById("zoom-in").addEventListener("click", function () { zoomCenter(1.2); });
+  document.getElementById("zoom-out").addEventListener("click", function () { zoomCenter(1 / 1.2); });
+  document.getElementById("zoom-fit").addEventListener("click", fitView);
+  document.getElementById("zoom-reset").addEventListener("click", function () {
+    var vw = viewport.clientWidth, vh = viewport.clientHeight;
+    var ratio = 1 / view.k;
+    view.x = vw / 2 - (vw / 2 - view.x) * ratio;
+    view.y = vh / 2 - (vh / 2 - view.y) * ratio;
+    view.k = 1;
+    applyView();
+  });
+  document.getElementById("expand-all").addEventListener("click", function () {
+    collapsed = {};
+    renderTree(true);
+  });
+  document.getElementById("collapse-all").addEventListener("click", function () {
+    BRANCHES.forEach(function (b) { collapsed[b.tag] = true; });
+    renderTree(true);
+  });
+  document.getElementById("go-fullscreen").addEventListener("click", function () {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else if (viewport.requestFullscreen) viewport.requestFullscreen();
+  });
+  document.addEventListener("fullscreenchange", function () {
+    var btn = document.getElementById("go-fullscreen");
+    btn.textContent = document.fullscreenElement ? "離開全螢幕" : "全螢幕";
+    setTimeout(fitView, 60);
+  });
+
+  var treeResizeTimer = null;
+  window.addEventListener("resize", function () {
+    clearTimeout(treeResizeTimer);
+    treeResizeTimer = setTimeout(fitView, 140);
+  });
+
+  // --- cross-links between tree and matrix ---
+
+  function leafForMatrixId(id) {
+    for (var t in LEAVES) {
+      for (var i = 0; i < LEAVES[t].length; i++) {
+        if (LEAVES[t][i].mx === id) return { branch: BRANCHES.filter(function (b) { return b.tag === t; })[0], leaf: LEAVES[t][i] };
+      }
+    }
+    return null;
+  }
+
+  var flashTimer = null;
+  function jumpToTree(id) {
+    var hit = leafForMatrixId(id);
+    if (!hit) return;
+    if (collapsed[hit.branch.tag]) { collapsed[hit.branch.tag] = false; renderTree(false); }
+    var node = treeNodes.filter(function (n) { return n.leaf === hit.leaf; })[0];
+    if (!node) return;
+
+    document.getElementById("sec-tree").scrollIntoView({ behavior: "smooth", block: "start" });
+    var k = Math.max(view.k, 0.9);
+    view.k = clamp(k, 0.15, 2.5);
+    view.x = viewport.clientWidth / 2 - (node.x + W_L2 / 2) * view.k;
+    view.y = viewport.clientHeight / 2 - (node.y + node.h / 2) * view.k;
+    applyView();
+
+    treeNodes.forEach(function (n) { n.el.classList.remove("is-flash"); });
+    node.el.style.setProperty("--flash-color", hit.branch.color);
+    node.el.classList.add("is-flash");
+    clearTimeout(flashTimer);
+    flashTimer = setTimeout(function () { node.el.classList.remove("is-flash"); }, 2400);
+  }
+
+  function jumpToMatrix(id) {
+    var it = data.items.filter(function (x) { return x.id === id; })[0];
+    if (!it) return;
+    var key = mode + "|" + groupOf(it);
+    if (hidden[key]) { hidden[key] = false; renderLegend(); renderPlot(); renderTable(); }
+    pinned = true;
+    selectItem(id);
+    document.getElementById("sec-matrix").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  // --- text outline (accessible + printable twin of the canvas) ---
+
+  function renderOutline() {
+    var ol = document.getElementById("outline-body");
+    ol.textContent = "";
+    var facts = 0, hypos = 0;
+
+    BRANCHES.forEach(function (br) {
+      var li = h("li", "o-branch");
+      li.appendChild(h("span", null, br.n + ". " + br.short + "：" + br.text));
+      var sub = document.createElement("ol");
+      (LEAVES[br.tag] || []).forEach(function (leaf) {
+        if (leaf.state === "fact") facts++; else hypos++;
+        var sli = document.createElement("li");
+        sli.appendChild(h("div", null, leaf.text + "（" + leaf.tag + (leaf.mx ? "・矩陣 " + leaf.mx : "") + "）"));
+        sli.appendChild(h("div", "o-meta", "【狀態】" + leaf.stateLabel));
+        sli.appendChild(h("div", "o-meta", "【" + leaf.basisLabel + "】" + leaf.basis));
+        if (leaf.test) sli.appendChild(h("div", "o-meta", "【驗證關鍵】" + leaf.test));
+        sub.appendChild(sli);
+      });
+      li.appendChild(sub);
+      ol.appendChild(li);
+    });
+
+    document.getElementById("meta-states").textContent = facts + " ／ " + hypos;
+  }
+
+  /* =======================================================================
+     Section 2 — hypotheses
+     ======================================================================= */
+
+  function renderHypotheses() {
+    var box = document.getElementById("hypo-list");
+    box.textContent = "";
+
+    HYPOTHESES.forEach(function (hy) {
+      var card = h("div", "hypothesis-box");
+
+      var head = h("h3");
+      head.appendChild(h("span", "h-id", hy.id));
+      head.appendChild(document.createTextNode(hy.name));
+      card.appendChild(head);
+
+      var chips = h("div", "h-chips");
+      hy.branches.forEach(function (n) {
+        var br = BRANCHES[n - 1];
+        var chip = h("span", "branch-chip");
+        var sw = h("span", "swatch");
+        sw.style.background = br.color;
+        chip.appendChild(sw);
+        chip.appendChild(document.createTextNode(br.n + ". " + br.short));
+        chips.appendChild(chip);
+      });
+      var status = h("span", "branch-chip");
+      status.style.color = "var(--hypo)";
+      status.appendChild(document.createTextNode("⚠ 尚待驗證"));
+      chips.appendChild(status);
+      card.appendChild(chips);
+
+      card.appendChild(h("p", null, hy.body));
+
+      var table = document.createElement("table");
+      table.className = "h-table";
+      var tr = document.createElement("tr");
+      tr.appendChild(h("th", null, "待驗證關鍵與行動"));
+      tr.appendChild(h("td", null, hy.action));
+      table.appendChild(tr);
+      card.appendChild(table);
+
+      box.appendChild(card);
+    });
+  }
+
+  /* =======================================================================
+     Section 3 — impact × solvability matrix
+     ======================================================================= */
+
+  var PAD = { l: 62, r: 30, t: 30, b: 62 }, SIZE = 560, R = 7.5, HIT = 17;
+  var CELL_FALLBACK = { HH: "高影響 · 高可解", HL: "高影響 · 低可解", LH: "低影響 · 高可解", LL: "低影響 · 低可解" };
+
+  var mx = {
+    svg: document.getElementById("mx-svg"),
+    tooltip: document.getElementById("mx-tooltip"),
+    legend: document.getElementById("mx-legend"),
+    note: document.getElementById("mx-note"),
+    rail: document.getElementById("mx-rail"),
+    thead: document.getElementById("mx-thead"),
+    tbody: document.getElementById("mx-tbody"),
+    thI: document.getElementById("th-impact"),
+    thS: document.getElementById("th-solve")
+  };
+
+  var data = null;
+  var mode = "new";
+  var thImpact = 60, thSolve = 60;
+  var hidden = {};
+  var sortKey = "impact", sortDir = -1;
+  var selectedId = null, pinned = false;
+  var marks = [];
+
+  function shortLabel(s) { return String(s).split(/[(（]/)[0].replace(/[\s·、]+$/, "").trim(); }
+  function mostCommon(list) {
+    var c = {}, best = null, bn = 0;
+    list.forEach(function (v) { if (!v) return; c[v] = (c[v] || 0) + 1; if (c[v] > bn) { bn = c[v]; best = v; } });
+    return best;
+  }
+  function cellOf(imp, sol) { return (imp >= thImpact ? "H" : "L") + (sol >= thSolve ? "H" : "L"); }
+
+  function loadMatrix(raw) {
+    var meta = raw.metadata || {};
+    var oldCats = [], oldIndex = {};
+
+    var items = raw.items.map(function (row, i) {
+      var cat = String(row.level1_category || "未分類");
+      if (!(cat in oldIndex)) { oldIndex[cat] = oldCats.length; oldCats.push(cat); }
+      return {
+        id: String(row.id || (i + 1)),
+        oldCat: cat,
+        oldIdx: oldIndex[cat],
+        newCat: String(row.root_cause_tag || "未分類"),
+        title: String(row.short_title || row.level2_item || ("項目 " + (i + 1))),
+        statement: row.level2_item || null,
+        impact: toNum(row.impact_score),
+        // 舊版 JSON 欄位拼成 solveability_*，兩種都接受
+        solve: toNum(row.solvability_score != null ? row.solvability_score : row.solveability_score),
+        impactWhy: row.impact_rationale || null,
+        solveWhy: row.solvability_rationale || row.solveability_rationale || null,
+        srcLabel: row.quadrant_label || null
+      };
+    });
+
+    // branch order for the "new L1" mode follows the tree, not first-seen order
+    var newCats = BRANCHES.map(function (b) { return b.tag; });
+    items.forEach(function (it) {
+      var k = newCats.indexOf(it.newCat);
+      it.newIdx = k < 0 ? newCats.length : k;
+      if (k < 0 && newCats.indexOf(it.newCat) < 0) newCats.push(it.newCat);
+    });
+
+    var byCell = { HH: [], HL: [], LH: [], LL: [] };
+    items.forEach(function (it) {
+      byCell[(it.impact >= 60 ? "H" : "L") + (it.solve >= 60 ? "H" : "L")].push(it.srcLabel ? shortLabel(it.srcLabel) : null);
+    });
+    var cellNames = {};
+    Object.keys(CELL_FALLBACK).forEach(function (c) { cellNames[c] = mostCommon(byCell[c]) || CELL_FALLBACK[c]; });
+
+    data = {
+      title: meta.title || "",
+      scale: { min: 0, max: 100 },
+      items: items,
+      oldCats: oldCats,
+      newCats: newCats,
+      cellNames: cellNames
+    };
+  }
+
+  function groupOf(it) { return mode === "old" ? it.oldCat : it.newCat; }
+  function groupIdx(it) { return mode === "old" ? it.oldIdx : it.newIdx; }
+  function groupList() { return mode === "old" ? data.oldCats : data.newCats; }
+  function colorFor(idx) {
+    if (mode === "old") return OLD_COLORS[idx] || "var(--ink-3)";
+    return (BRANCHES[idx] && BRANCHES[idx].color) || "var(--ink-3)";
+  }
+  function colorForItem(it) { return colorFor(groupIdx(it)); }
+
+  function visibleItems() {
+    return data.items.filter(function (it) { return !hidden[mode + "|" + groupOf(it)]; });
+  }
+
+  var sx = function (v) { return PAD.l + (v - data.scale.min) / (data.scale.max - data.scale.min) * SIZE; };
+  var sy = function (v) { return PAD.t + SIZE - (v - data.scale.min) / (data.scale.max - data.scale.min) * SIZE; };
+
+  function layoutMarks(items) {
+    var ns = items.map(function (it, i) {
+      var x0 = sx(it.solve), y0 = sy(it.impact);
+      return { it: it, x0: x0, y0: y0, x: x0, y: y0, i: i };
+    });
+    var minD = 2 * R + 3;
+    for (var pass = 0; pass < 220; pass++) {
+      for (var a = 0; a < ns.length; a++) {
+        for (var b = a + 1; b < ns.length; b++) {
+          var dx = ns[b].x - ns[a].x, dy = ns[b].y - ns[a].y;
+          var d = Math.sqrt(dx * dx + dy * dy);
+          if (d >= minD) continue;
+          if (d < 0.001) { var ang = a * 2.39996; dx = Math.cos(ang) * 0.5; dy = Math.sin(ang) * 0.5; d = 0.5; }
+          var push = ((minD - d) / d) * 0.3;
+          ns[a].x -= dx * push; ns[a].y -= dy * push;
+          ns[b].x += dx * push; ns[b].y += dy * push;
+        }
+      }
+      for (var k = 0; k < ns.length; k++) {
+        ns[k].x += (ns[k].x0 - ns[k].x) * 0.045;
+        ns[k].y += (ns[k].y0 - ns[k].y) * 0.045;
+        ns[k].x = clamp(ns[k].x, PAD.l + R, PAD.l + SIZE - R);
+        ns[k].y = clamp(ns[k].y, PAD.t + R, PAD.t + SIZE - R);
+      }
+    }
+    placeMarkLabels(ns);
+    return ns;
+  }
+
+  function placeMarkLabels(ns) {
+    var boxes = [];
+    var order = ns.slice().sort(function (p, q) { return q.it.impact - p.it.impact; });
+    var GAP = R + 5;
+    order.forEach(function (n) {
+      var w = n.it.id.length * 6.1 + 2, hh = 11;
+      var cands = [
+        { x: n.x + GAP, y: n.y + 3.6, anchor: "start" },
+        { x: n.x - GAP, y: n.y + 3.6, anchor: "end" },
+        { x: n.x, y: n.y - GAP - 1, anchor: "middle" },
+        { x: n.x, y: n.y + GAP + 8, anchor: "middle" }
+      ];
+      for (var c = 0; c < cands.length; c++) {
+        var cd = cands[c];
+        var bx = cd.anchor === "start" ? cd.x : cd.anchor === "end" ? cd.x - w : cd.x - w / 2;
+        var box = { x: bx - 1, y: cd.y - hh + 1, w: w + 2, h: hh + 2 };
+        if (box.x < PAD.l - 6 || box.x + box.w > PAD.l + SIZE + 6) continue;
+        if (box.y < PAD.t - 6 || box.y + box.h > PAD.t + SIZE + 6) continue;
+        var clash = boxes.some(function (o) {
+          return !(box.x + box.w < o.x || o.x + o.w < box.x || box.y + box.h < o.y || o.y + o.h < box.y);
+        }) || ns.some(function (o) {
+          if (o === n) return false;
+          var cx = clamp(o.x, box.x, box.x + box.w), cy = clamp(o.y, box.y, box.y + box.h);
+          return (o.x - cx) * (o.x - cx) + (o.y - cy) * (o.y - cy) < (R + 1) * (R + 1);
+        });
+        if (!clash) { n.label = cd; boxes.push(box); return; }
+      }
+      n.label = null;
+    });
+  }
+
+  function renderPlot() {
+    var svg = mx.svg;
+    svg.textContent = "";
+
+    var items = visibleItems();
+    marks = layoutMarks(items);
+
+    svg.appendChild(svgText("title", { id: "mx-title" },
+      "以可解性為橫軸、影響力為縱軸的散佈矩陣，共 " + items.length + " 個議題節點。"));
+
+    var x0 = PAD.l, x1 = PAD.l + SIZE, y0 = PAD.t, y1 = PAD.t + SIZE;
+    var tx = sx(thSolve), ty = sy(thImpact);
+
+    svg.appendChild(svgEl("rect", { class: "mx-zone", x: tx, y: y0, width: Math.max(0, x1 - tx), height: Math.max(0, ty - y0) }));
+
+    for (var i = 0; i <= 5; i++) {
+      var v = data.scale.min + (data.scale.max - data.scale.min) * (i / 5);
+      var gx = sx(v), gy = sy(v);
+      svg.appendChild(svgEl("line", { class: "mx-grid", x1: gx, y1: y0, x2: gx, y2: y1 }));
+      svg.appendChild(svgEl("line", { class: "mx-grid", x1: x0, y1: gy, x2: x1, y2: gy }));
+      svg.appendChild(svgText("text", { class: "mx-tick", x: gx, y: y1 + 18, "text-anchor": "middle" }, String(Math.round(v))));
+      svg.appendChild(svgText("text", { class: "mx-tick", x: x0 - 10, y: gy + 3.5, "text-anchor": "end" }, String(Math.round(v))));
+    }
+
+    svg.appendChild(svgEl("rect", { class: "mx-frame", x: x0, y: y0, width: SIZE, height: SIZE }));
+    svg.appendChild(svgEl("line", { class: "mx-thresh", x1: tx, y1: y0, x2: tx, y2: y1 }));
+    svg.appendChild(svgEl("line", { class: "mx-thresh", x1: x0, y1: ty, x2: x1, y2: ty }));
+    svg.appendChild(svgEl("path", { class: "mx-bracket", d: "M" + (x1 - 22) + "," + (y0 + 9) + "H" + (x1 - 9) + "V" + (y0 + 22) }));
+
+    var counts = { HH: 0, HL: 0, LH: 0, LL: 0 };
+    items.forEach(function (it) { counts[cellOf(it.impact, it.solve)]++; });
+    [
+      { cell: "HH", x: x1 - 16, y: y0 + 22, anchor: "end", focus: true },
+      { cell: "HL", x: x0 + 16, y: y0 + 22, anchor: "start", focus: false },
+      { cell: "LH", x: x1 - 16, y: y1 - 29, anchor: "end", focus: false },
+      { cell: "LL", x: x0 + 16, y: y1 - 29, anchor: "start", focus: false }
+    ].forEach(function (z) {
+      svg.appendChild(svgText("text", { class: "mx-zone-name" + (z.focus ? " is-focus" : ""), x: z.x, y: z.y, "text-anchor": z.anchor }, data.cellNames[z.cell]));
+      svg.appendChild(svgText("text", { class: "mx-zone-count", x: z.x, y: z.y + 15, "text-anchor": z.anchor }, counts[z.cell] + " 項"));
+    });
+
+    svg.appendChild(svgText("text", { class: "mx-axis-title", x: x0 + SIZE / 2, y: y1 + 44, "text-anchor": "middle" }, "可解性 SOLVABILITY →"));
+    svg.appendChild(svgText("text", {
+      class: "mx-axis-title", x: 0, y: 0, "text-anchor": "middle",
+      transform: "translate(" + (x0 - 40) + "," + (y0 + SIZE / 2) + ") rotate(-90)"
+    }, "影響力 IMPACT →"));
+
+    var moved = 0;
+    marks.forEach(function (n) {
+      if (Math.hypot(n.x - n.x0, n.y - n.y0) > 1.6) {
+        moved++;
+        svg.appendChild(svgEl("line", { class: "mx-leader", x1: n.x0, y1: n.y0, x2: n.x, y2: n.y }));
+      }
+    });
+
+    marks.forEach(function (n) {
+      if (!n.label) return;
+      svg.appendChild(svgText("text", { class: "mx-dot-label", x: n.label.x, y: n.label.y, "text-anchor": n.label.anchor }, n.it.id));
+    });
+
+    marks.forEach(function (n) {
+      var color = colorForItem(n.it);
+      var g = svgEl("g", {
+        class: "mx-mark",
+        transform: "translate(" + n.x.toFixed(2) + "," + n.y.toFixed(2) + ")",
+        tabindex: "0", role: "button", "data-id": n.it.id,
+        "aria-label": n.it.id + " " + n.it.title + "，影響力 " + n.it.impact + "，可解性 " + n.it.solve
+      });
+      g.style.color = color;
+      g.appendChild(svgEl("circle", { class: "halo", r: R + 5 }));
+      g.appendChild(svgEl("circle", { class: "pin-ring", r: R + 7 }));
+      var glyph = svgEl("path", { class: "glyph", d: shapePath(groupIdx(n.it) % 5, R) });
+      glyph.style.fill = color;
+      g.appendChild(glyph);
+      g.appendChild(svgEl("circle", { class: "hit", r: HIT, fill: "transparent" }));
+      n.g = g;
+      svg.appendChild(g);
+    });
+
+    mx.note.textContent = moved ? "重疊的點已做最小位移，細線指回實際座標；精確分數見下方資料表。" : "";
+    syncActive();
+  }
+
+  function markById(id) {
+    for (var i = 0; i < marks.length; i++) if (marks[i].it.id === id) return marks[i];
+    return null;
+  }
+
+  function syncActive() {
+    marks.forEach(function (n) {
+      var on = n.it.id === selectedId;
+      n.g.classList.toggle("is-active", on && !pinned);
+      n.g.classList.toggle("is-pinned", on && pinned);
+    });
+    Array.prototype.forEach.call(mx.tbody.children, function (tr) {
+      var on = tr.getAttribute("data-id") === selectedId;
+      tr.classList.toggle("is-active", on && !pinned);
+      tr.classList.toggle("is-pinned", on && pinned);
+    });
+  }
+
+  function selectItem(id) { selectedId = id; renderRail(); syncActive(); }
+
+  function showTooltip(n, clientX, clientY) {
+    var t = mx.tooltip;
+    t.textContent = "";
+
+    var head = h("div", "tt-head");
+    var key = h("span", "tt-key");
+    key.style.background = colorForItem(n.it);
+    head.appendChild(key);
+    var col = h("div");
+    col.appendChild(h("div", "tt-id", n.it.id + " · " + groupOf(n.it)));
+    col.appendChild(h("div", "tt-title", n.it.title));
+    head.appendChild(col);
+    t.appendChild(head);
+
+    var scores = h("div", "tt-scores");
+    var a = h("span"); a.appendChild(h("b", null, String(n.it.impact))); a.appendChild(document.createTextNode(" 影響力"));
+    var b = h("span"); b.appendChild(h("b", null, String(n.it.solve))); b.appendChild(document.createTextNode(" 可解性"));
+    scores.appendChild(a); scores.appendChild(b);
+    t.appendChild(scores);
+    t.appendChild(h("div", "tt-zone", data.cellNames[cellOf(n.it.impact, n.it.solve)]));
+    if (!pinned) t.appendChild(h("div", "tt-hint", "點擊固定於右側"));
+
+    var host = mx.svg.parentNode.getBoundingClientRect();
+    t.setAttribute("data-show", "1");
+    var tw = t.offsetWidth, th = t.offsetHeight, px, py;
+    if (clientX === undefined) {
+      var r = n.g.getBoundingClientRect();
+      px = r.left + r.width / 2 - host.left;
+      py = r.top - host.top;
+    } else {
+      px = clientX - host.left;
+      py = clientY - host.top;
+    }
+    var left = px + 16, top = py - th - 12;
+    if (left + tw > host.width - 6) left = px - tw - 16;
+    if (left < 6) left = 6;
+    if (top < 6) top = py + 22;
+    t.style.left = left + "px";
+    t.style.top = top + "px";
+  }
+  function hideTooltip() { mx.tooltip.setAttribute("data-show", "0"); }
+
+  mx.svg.addEventListener("pointerover", function (e) {
+    var g = e.target.closest && e.target.closest(".mx-mark");
+    if (!g) return;
+    var n = markById(g.getAttribute("data-id"));
+    if (!n) return;
+    g.classList.add("is-active");
+    showTooltip(n, e.clientX, e.clientY);
+    if (!pinned) selectItem(n.it.id);
+  });
+  mx.svg.addEventListener("pointermove", function (e) {
+    var g = e.target.closest && e.target.closest(".mx-mark");
+    if (!g) return;
+    var n = markById(g.getAttribute("data-id"));
+    if (n) showTooltip(n, e.clientX, e.clientY);
+  });
+  mx.svg.addEventListener("pointerout", function (e) {
+    var g = e.target.closest && e.target.closest(".mx-mark");
+    if (!g) return;
+    if (g.getAttribute("data-id") !== selectedId) g.classList.remove("is-active");
+    hideTooltip();
+  });
+  mx.svg.addEventListener("click", function (e) {
+    var g = e.target.closest && e.target.closest(".mx-mark");
+    if (!g) return;
+    var id = g.getAttribute("data-id");
+    if (pinned && id === selectedId) pinned = false; else { pinned = true; selectItem(id); }
+    renderRail();
+  });
+  mx.svg.addEventListener("focusin", function (e) {
+    var g = e.target.closest && e.target.closest(".mx-mark");
+    if (!g) return;
+    var n = markById(g.getAttribute("data-id"));
+    if (!n) return;
+    // 滑鼠點擊也會先觸發 focusin；固定狀態下不在這裡換選取，交給 click 判斷
+    if (!pinned) selectItem(n.it.id);
+    showTooltip(n);
+  });
+  mx.svg.addEventListener("focusout", hideTooltip);
+  mx.svg.addEventListener("keydown", function (e) {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    var g = e.target.closest && e.target.closest(".mx-mark");
+    if (!g) return;
+    e.preventDefault();
+    var id = g.getAttribute("data-id");
+    if (pinned && id === selectedId) pinned = false; else { pinned = true; selectItem(id); }
+    renderRail();
+  });
+
+  function metricBlock(name, value, why, thresholdValue) {
+    var box = h("div", "metric");
+    var head = h("div", "metric-head");
+    head.appendChild(h("span", "metric-name", name));
+    head.appendChild(h("span", "metric-val", String(value)));
+    box.appendChild(head);
+
+    var meter = h("div", "meter");
+    var fill = h("div", "meter-fill");
+    fill.style.width = clamp((value - data.scale.min) / (data.scale.max - data.scale.min) * 100, 0, 100) + "%";
+    meter.appendChild(fill);
+    var tick = h("div", "meter-thresh");
+    tick.style.left = ((thresholdValue - data.scale.min) / (data.scale.max - data.scale.min) * 100) + "%";
+    meter.appendChild(tick);
+    box.appendChild(meter);
+
+    if (why) box.appendChild(h("p", "metric-why", why));
+    return box;
+  }
+
+  function renderRail() {
+    var r = mx.rail;
+    r.textContent = "";
+
+    var it = null;
+    data.items.some(function (x) { if (x.id === selectedId) { it = x; return true; } return false; });
+    syncActive();
+    if (!it) {
+      r.appendChild(h("p", "rail-statement", "把游標移到任何一個點上，這裡會顯示該議題的完整評分理由。"));
+      return;
+    }
+
+    var top = h("div", "rail-top");
+    var eyebrow = h("div", "rail-eyebrow");
+    eyebrow.appendChild(glyphSwatch(groupIdx(it), colorForItem(it), 5));
+    eyebrow.appendChild(h("span", "badge", it.id));
+    eyebrow.appendChild(h("span", null, groupOf(it)));
+    top.appendChild(eyebrow);
+    var pin = h("button", "tool-btn pin-btn", pinned ? "已固定" : "固定");
+    pin.type = "button";
+    pin.setAttribute("aria-pressed", pinned ? "true" : "false");
+    pin.addEventListener("click", function () { pinned = !pinned; renderRail(); });
+    top.appendChild(pin);
+    r.appendChild(top);
+
+    r.appendChild(h("h3", null, it.title));
+    if (it.statement) r.appendChild(h("p", "rail-statement", it.statement));
+    r.appendChild(h("span", "zone-tag", data.cellNames[cellOf(it.impact, it.solve)]));
+    r.appendChild(metricBlock("影響力 IMPACT", it.impact, it.impactWhy, thImpact));
+    r.appendChild(metricBlock("可解性 SOLVABILITY", it.solve, it.solveWhy, thSolve));
+
+    var foot = h("dl", "rail-foot");
+    function footRow(label, dd) {
+      var row = h("div", "foot-row");
+      row.appendChild(h("dt", null, label));
+      row.appendChild(dd);
+      foot.appendChild(row);
+    }
+
+    var hit = leafForMatrixId(it.id);
+    var treeDd = h("dd");
+    if (hit) {
+      var jump = h("button", "tree-jump", "← " + hit.branch.short + " › " + hit.leaf.tag);
+      jump.type = "button";
+      jump.addEventListener("click", function () { jumpToTree(it.id); });
+      treeDd.appendChild(jump);
+    } else {
+      treeDd.appendChild(h("span", "note", "新版議題樹無一對一對應節點"));
+    }
+    footRow("議題樹", treeDd);
+
+    footRow("舊第一層", h("dd", null, it.oldCat));
+    footRow("新第一層", h("dd", null, it.newCat));
+    if (it.srcLabel) {
+      // 原始標註是以 60／60 門檻評定；門檻改動後可能與目前象限不同
+      var srcDd = h("dd", null, it.srcLabel);
+      if (thImpact !== 60 || thSolve !== 60) srcDd.appendChild(h("span", "note", "（依 60／60 門檻評定）"));
+      footRow("原始標註", srcDd);
+    }
+    r.appendChild(foot);
+  }
+
+  function renderLegend() {
+    var box = mx.legend;
+    box.textContent = "";
+    box.appendChild(h("span", "legend-label", (mode === "old" ? "舊第一層" : "新第一層") + " · 點選以篩選"));
+    groupList().forEach(function (name, i) {
+      var b = h("button", "chip");
+      b.type = "button";
+      var key = mode + "|" + name;
+      b.setAttribute("aria-pressed", hidden[key] ? "false" : "true");
+      b.appendChild(glyphSwatch(i, colorFor(i), 5));
+      b.appendChild(h("span", null, mode === "new" ? (i + 1) + ". " + name : name));
+      b.addEventListener("click", function () {
+        hidden[key] = !hidden[key];
+        renderLegend(); renderPlot(); renderTable();
+      });
+      box.appendChild(b);
+    });
+  }
+
+  var COLS = [
+    { key: "id", label: "ID" },
+    { key: "group", label: "分類" },
+    { key: "title", label: "議題" },
+    { key: "impact", label: "影響力", num: true },
+    { key: "solve", label: "可解性", num: true },
+    { key: "cell", label: "象限" }
+  ];
+
+  function renderTableHead() {
+    var tr = mx.thead;
+    tr.textContent = "";
+    COLS.forEach(function (c) {
+      var th = h("th", "sortable", c.label);
+      if (c.num) th.style.textAlign = "right";
+      th.setAttribute("aria-sort", sortKey === c.key ? (sortDir > 0 ? "ascending" : "descending") : "none");
+      th.setAttribute("tabindex", "0");
+      th.setAttribute("role", "button");
+      var go = function () {
+        if (sortKey === c.key) sortDir = -sortDir; else { sortKey = c.key; sortDir = c.num ? -1 : 1; }
+        renderTableHead(); renderTable();
+      };
+      th.addEventListener("click", go);
+      th.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+      tr.appendChild(th);
+    });
+  }
+
+  function renderTable() {
+    var tb = mx.tbody;
+    tb.textContent = "";
+    var rows = visibleItems().slice();
+    var valOf = function (it) {
+      if (sortKey === "cell") return data.cellNames[cellOf(it.impact, it.solve)];
+      if (sortKey === "group") return groupIdx(it);
+      return it[sortKey];
+    };
+    rows.sort(function (a, b) {
+      var va = valOf(a), vb = valOf(b);
+      if (typeof va === "number" && typeof vb === "number") return (va - vb) * sortDir;
+      return String(va).localeCompare(String(vb), "zh-Hant") * sortDir;
+    });
+
+    rows.forEach(function (it) {
+      var tr = document.createElement("tr");
+      tr.setAttribute("data-id", it.id);
+      tr.setAttribute("tabindex", "0");
+      tr.appendChild(h("td", "id", it.id));
+
+      var tdCat = h("td");
+      var span = h("span", "cat-cell");
+      span.appendChild(glyphSwatch(groupIdx(it), colorForItem(it), 4));
+      span.appendChild(h("span", null, groupOf(it)));
+      tdCat.appendChild(span);
+      tr.appendChild(tdCat);
+
+      tr.appendChild(h("td", "topic", it.title));
+      tr.appendChild(h("td", "num", String(it.impact)));
+      tr.appendChild(h("td", "num", String(it.solve)));
+      tr.appendChild(h("td", null, data.cellNames[cellOf(it.impact, it.solve)]));
+
+      var go = function () { pinned = true; selectItem(it.id); renderRail(); };
+      tr.addEventListener("click", go);
+      tr.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+      tb.appendChild(tr);
+    });
+    syncActive();
+  }
+
+  function renderMatrix() { renderLegend(); renderPlot(); renderTableHead(); renderTable(); renderRail(); }
+
+  Array.prototype.forEach.call(document.querySelectorAll("#mode-switch button"), function (btn) {
+    btn.addEventListener("click", function () {
+      mode = btn.getAttribute("data-mode");
+      Array.prototype.forEach.call(document.querySelectorAll("#mode-switch button"), function (b) {
+        b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+      });
+      renderMatrix();
+    });
+  });
+
+  function onThreshold() {
+    var i = toNum(mx.thI.value), s = toNum(mx.thS.value);
+    if (i !== null) thImpact = clamp(i, data.scale.min, data.scale.max);
+    if (s !== null) thSolve = clamp(s, data.scale.min, data.scale.max);
+    renderPlot(); renderTable(); renderRail();
+  }
+  mx.thI.addEventListener("change", onThreshold);
+  mx.thS.addEventListener("change", onThreshold);
+
+  var mxResizeTimer = null;
+  window.addEventListener("resize", function () {
+    clearTimeout(mxResizeTimer);
+    mxResizeTimer = setTimeout(hideTooltip, 60);
+  });
+
+  /* =======================================================================
+     Section nav highlighting
+     ======================================================================= */
+
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll(".section-nav a"));
+  if ("IntersectionObserver" in window) {
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        navLinks.forEach(function (a) {
+          a.classList.toggle("is-current", a.getAttribute("data-nav") === en.target.id);
+        });
+      });
+    }, { rootMargin: "-20% 0px -70% 0px" });
+    ["sec-tree", "sec-hypo", "sec-matrix"].forEach(function (id) {
+      var s = document.getElementById(id);
+      if (s) obs.observe(s);
+    });
+  }
+
+  /* =======================================================================
+     Boot
+     ======================================================================= */
+
+  renderOutline();
+  renderHypotheses();
+  renderTree(true);
+  // fonts land after first paint and change node heights — lay out again
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { renderTree(true); });
+
+  loadMatrix(JSON.parse(document.getElementById("matrix-data").textContent));
+  var top = data.items.slice().sort(function (a, b) { return b.impact - a.impact; })[0];
+  selectedId = top ? top.id : null;
+  renderMatrix();
+})();
+</script>
+</body>
+</html>
