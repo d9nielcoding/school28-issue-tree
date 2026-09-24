@@ -252,7 +252,9 @@ h2 .idx { font-family: var(--font-mono); font-size: 12px; letter-spacing: .1em; 
 .canvas-viewport.is-panning { cursor: grabbing; }
 .canvas-viewport:fullscreen { height: 100vh; border-radius: 0; }
 
-.canvas-layer { position: absolute; top: 0; left: 0; transform-origin: 0 0; will-change: transform; }
+/* will-change 只在拖曳／縮放期間由 JS 加上；常駐會讓瀏覽器以 100% 點陣化後放大，導致放大後模糊 */
+.canvas-layer { position: absolute; top: 0; left: 0; transform-origin: 0 0; }
+.canvas-layer.is-moving { will-change: transform; }
 #tree-edges { position: absolute; top: 0; left: 0; overflow: visible; pointer-events: none; }
 
 .tnode {
@@ -1137,9 +1139,14 @@ input[type="number"] {
     });
   }
 
+  // 移動中開 GPU 圖層保持流暢；停下後拿掉，讓瀏覽器以目前倍率重新繪製文字與線條
+  var settleTimer = null;
   function applyView() {
+    layer.classList.add("is-moving");
     layer.style.transform = "translate(" + view.x + "px," + view.y + "px) scale(" + view.k + ")";
     zoomReadout.textContent = Math.round(view.k * 100) + "%";
+    clearTimeout(settleTimer);
+    settleTimer = setTimeout(function () { layer.classList.remove("is-moving"); }, 150);
   }
 
   function fitView() {
