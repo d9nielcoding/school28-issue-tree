@@ -133,6 +133,9 @@ h1 {
   line-height: 1.6;
   color: var(--ink);
 }
+.root-why p.root-why-update { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--rule-strong); font-family: var(--font-body); font-size: 13.5px; color: var(--ink-2); }
+.root-why-update b { color: var(--root); font-weight: 700; }
+.root-why-update span { color: var(--ink-3); font-size: 12px; }
 
 .meta-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
 @media (max-width: 860px) { .meta-grid { grid-template-columns: 1fr; } }
@@ -703,165 +706,37 @@ input[type="number"] {
 .action-plan li { margin-bottom: 4px; }
 .action-plan li b { font-weight: 500; }
 
-/* ---------- theory of change ---------- */
+/* ---------- theory of change（v3：五大根因之間誰影響誰） ---------- */
 
-.toc-core {
-  border: 1px solid var(--rule);
-  border-radius: 8px;
-  background: var(--sunk);
-  padding: 14px 20px;
-  margin-bottom: 16px;
-}
-.toc-core .label { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .14em; color: var(--root); display: block; margin-bottom: 4px; }
-.toc-core p { margin: 0; font-family: var(--font-display); font-size: 16px; line-height: 1.6; }
-
-/* 現狀惡性循環：一列根因色塊 */
-.toc-vicious {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px 4px;
-  margin: 0 0 16px;
-  padding: 10px 14px;
-  border: 1px dashed var(--rule-strong);
-  border-radius: 8px;
-}
-.toc-vicious .lbl { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .12em; color: var(--ink-3); margin-right: 8px; }
-.toc-vicious .step { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; padding: 2px 10px 2px 8px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--c) 45%, var(--surface)); background: color-mix(in srgb, var(--c) 9%, var(--surface)); }
-.toc-vicious .step .sw { width: 8px; height: 8px; border-radius: 2px; background: var(--c); }
-.toc-vicious .arr { color: var(--axis); font-size: 12px; }
-.toc-vicious .end { font-size: 12.5px; font-weight: 700; color: var(--root); }
-
-.toc-scroll {
+.hypothesis-box { scroll-margin-top: 70px; }
+.toc3 { margin: 0; }
+.toc3-scroll {
   overflow-x: auto;
   border: 1px solid var(--rule);
   border-radius: 8px;
-  background:
-    radial-gradient(circle at 1px 1px, var(--sunk-2) 1px, transparent 0) 0 0 / 22px 22px,
-    var(--surface);
+  background: var(--surface);
+  padding: 14px 10px 8px;
 }
-.toc-stage {
-  position: relative;
-  min-width: 1120px;
-  padding: 18px 24px 26px;
-  display: grid;
-  /* 根因 | 槓桿 | 成果 | 飛輪標籤通道 | 影響力 */
-  grid-template-columns: 180px minmax(0, 1fr) minmax(0, 1fr) 110px 210px;
-  grid-template-rows: auto auto auto auto;
-  column-gap: 40px;
-  row-gap: 16px;
-}
-#toc-edges { position: absolute; top: 0; left: 0; pointer-events: none; overflow: visible; z-index: 2; }
-#toc-edges path { fill: none; stroke: var(--axis); stroke-width: 1.4; opacity: .75; transition: opacity .16s, stroke-width .16s; }
-#toc-edges path.fly { stroke: var(--ink-3); stroke-width: 2; opacity: .9; }
-#toc-edges path.is-lit { stroke: var(--edge); stroke-width: 2.4; opacity: 1; }
-.toc-stage.has-focus #toc-edges path:not(.is-lit) { opacity: .12; }
-#toc-edges polygon { fill: var(--axis); opacity: .75; transition: opacity .16s; }
-#toc-edges polygon.fly { fill: var(--ink-3); opacity: .9; }
-#toc-edges polygon.is-lit { fill: var(--edge); opacity: 1; }
-.toc-stage.has-focus #toc-edges polygon:not(.is-lit) { opacity: .12; }
-.hypothesis-box { scroll-margin-top: 70px; }
-
-.toc-fly-label {
-  position: absolute;
-  z-index: 3;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  line-height: 1.45;
-  letter-spacing: .02em;
+.toc3-svg { display: block; width: 100%; min-width: 1000px; height: auto; }
+.toc3-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 22px;
+  margin: 10px 0 0;
+  font-size: 12px;
   color: var(--ink-2);
-  background: var(--surface);
-  border: 1px solid var(--rule-strong);
-  border-radius: 5px;
-  padding: 2px 7px;
-  max-width: 150px;
-  pointer-events: none;
-  transition: opacity .16s;
 }
-.toc-fly-label b { color: var(--ink); font-weight: 500; }
-.toc-stage.has-focus .toc-fly-label:not(.is-lit) { opacity: .25; }
-
-.toc-col-head { display: flex; align-items: center; gap: 8px; padding-bottom: 8px; border-bottom: 2px solid var(--stage); align-self: end; }
-.toc-col-head .n { font-family: var(--font-mono); font-size: 11px; color: #fff; background: var(--stage); border-radius: 4px; padding: 0 6px; line-height: 18px; }
-.toc-col-head .t { font-weight: 700; font-size: 13.5px; }
-.toc-col-head .en { font-family: var(--font-mono); font-size: 10px; letter-spacing: .08em; color: var(--ink-3); margin-left: auto; }
-
-/* 泳道：列 = 利害關係人樞紐，跨「槓桿」「成果」兩欄 */
-.toc-lane {
-  grid-column: 2 / 4;
-  margin: 0 -14px;
-  border-radius: 14px;
-  border: 1px solid color-mix(in srgb, var(--p) 22%, var(--surface));
-  background: color-mix(in srgb, var(--p) 4%, var(--surface));
-  position: relative;
-  z-index: 0;
-}
-.toc-lane .lane-lbl { position: absolute; top: 8px; left: 14px; display: flex; align-items: baseline; gap: 8px; }
-.toc-lane .lane-lbl .t { font-weight: 700; font-size: 12.5px; color: var(--p); }
-.toc-lane .lane-lbl .en { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .1em; color: var(--ink-3); }
-.toc-impact-lane {
-  grid-column: 5;
-  grid-row: 2 / 5;
-  border-radius: 14px;
-  border: 1px solid color-mix(in srgb, var(--root) 25%, var(--surface));
-  background: color-mix(in srgb, var(--root) 5%, var(--surface));
-  margin: 0 -10px;
-  position: relative;
-  z-index: 0;
-}
-.toc-impact-lane .lane-lbl { position: absolute; top: 8px; left: 12px; font-weight: 700; font-size: 12.5px; color: var(--root); }
-
-.toc-cell { position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; gap: 12px; padding: 34px 0 14px; }
-.toc-cell.rc { grid-column: 1; grid-row: 2 / 5; justify-content: space-around; padding: 6px 0; }
-.toc-cell.imp { grid-column: 5; }
-
-.toc-node {
-  position: relative;
-  text-align: center;
-  background: var(--surface);
-  border: 1px solid var(--rule-strong);
-  border-radius: 12px;
-  padding: 10px 12px 11px;
-  box-shadow: 0 1px 3px rgba(31,42,55,.07);
-  cursor: pointer;
-  transition: opacity .16s, box-shadow .16s;
-}
-.toc-node:focus, .toc-node:focus-visible { outline: none; }
-.toc-node .k { font-family: var(--font-mono); font-size: 10px; letter-spacing: .08em; color: var(--ink-3); display: block; margin-bottom: 2px; }
-.toc-node .t { font-weight: 700; font-size: 13px; line-height: 1.5; display: block; text-wrap: balance; }
-.toc-node .d { font-size: 12px; color: var(--ink-2); line-height: 1.6; margin: 4px 0 0; text-wrap: pretty; }
-.toc-node .hy { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; margin-top: 7px; }
-.toc-node .hy .branch-chip { font-size: 10px; padding: 0 7px 0 5px; background: var(--surface); }
-
-/* 由左至右色彩漸強：根因（淡）→ 槓桿 → 成果 → 影響力（實色） */
-.toc-node.rc { padding: 8px 10px 9px; border-color: color-mix(in srgb, var(--c) 40%, var(--surface)); background: color-mix(in srgb, var(--c) 8%, var(--surface)); }
-.toc-node.rc .k { color: var(--c); font-weight: 500; }
-.toc-node.rc .t { font-size: 12.5px; }
-.toc-node.rc .d { font-size: 11.5px; }
-.toc-node.lever { border-color: color-mix(in srgb, var(--p) 35%, var(--surface)); background: color-mix(in srgb, var(--p) 11%, var(--surface)); }
-.toc-node.lever .k { color: var(--p); }
-.toc-node.result { border: 1.5px solid color-mix(in srgb, var(--p) 70%, var(--surface)); background: color-mix(in srgb, var(--p) 24%, var(--surface)); }
-.toc-node.result .k { color: color-mix(in srgb, var(--p) 80%, var(--ink)); }
-.toc-node.result .d { color: var(--ink); }
-.toc-node.hub { background: var(--p); border-color: var(--p); color: #fff; }
-.toc-node.hub .k { color: rgba(255,255,255,.8); }
-.toc-node.hub .d { color: rgba(255,255,255,.92); }
-.toc-node.impact { background: var(--root); border-color: var(--root); color: #fff; padding: 14px 14px 15px; }
-.toc-node.impact .k { color: rgba(255,255,255,.8); }
-.toc-node.impact .t { font-size: 14px; }
-.toc-node.impact .d { color: rgba(255,255,255,.92); }
-
-.toc-stage.has-focus .toc-node:not(.is-lit) { opacity: .3; }
-.toc-node.is-lit { box-shadow: 0 0 0 1px var(--ink-3), 0 6px 16px -8px rgba(31,42,55,.35); }
-.toc-node.is-pinned { box-shadow: 0 0 0 2px var(--ink), 0 6px 16px -8px rgba(31,42,55,.35); }
-
-.toc-hint { font-size: 11.5px; color: var(--ink-3); margin: 8px 0 0; }
-.toc-sub { font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: .16em; color: var(--ink-3); margin: 26px 0 10px; }
-.toc-table th, .toc-table td { border-bottom: 1px solid var(--rule); padding: 9px 12px; text-align: left; vertical-align: top; font-size: 13px; line-height: 1.65; }
-.toc-table thead th { font-family: var(--font-mono); font-weight: 500; font-size: 10.5px; letter-spacing: .1em; color: var(--ink-3); background: var(--sunk); white-space: nowrap; border-bottom-color: var(--rule-strong); }
-.toc-table tbody tr:last-child td { border-bottom: 0; }
-.toc-table td b { font-weight: 500; }
-.toc-table td .muted { display: block; color: var(--ink-2); font-size: 12.5px; margin-top: 2px; }
+.toc3-legend span { display: inline-flex; align-items: center; gap: 7px; }
+.toc3-legend svg { flex: none; }
+.toc3-legend .sw { width: 12px; height: 12px; border-radius: 3px; background: var(--root); }
+.toc3-hint { font-size: 11.5px; color: var(--ink-3); margin: 6px 0 0; }
+.toc3-read { margin: 18px 0 0; border: 1px solid var(--rule); border-radius: 8px; background: var(--sunk); padding: 14px 20px; }
+.toc3-read h3 { margin: 0 0 8px; font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: .14em; color: var(--ink-3); }
+.toc3-read ol { margin: 0; padding-left: 20px; font-size: 13px; line-height: 1.75; color: var(--ink-2); }
+.toc3-read li { margin-bottom: 3px; }
+.toc3-read li b { color: var(--ink); font-weight: 700; }
+.toc3-read .note { margin: 8px 0 0; font-size: 11.5px; color: var(--ink-3); line-height: 1.6; }
 
 /* ---------- footer ---------- */
 
@@ -895,11 +770,10 @@ input[type="number"] {
   .mx-stage { grid-template-columns: 1fr; }
   .mx-rail { display: none; }
   .table-scroll { overflow: visible; }
-  .why-more, .toc-hint { display: none !important; }
-  .toc-scroll { overflow: visible; border: 0; background: none; }
-  .toc-stage { min-width: 0; column-gap: 14px; padding: 0; }
-  #toc-edges { display: none; }
-  .toc-node { break-inside: avoid; }
+  .why-more, .toc3-hint { display: none !important; }
+  .toc3-scroll { overflow: visible; border: 0; padding: 0; }
+  .toc3-svg { min-width: 0; }
+  .toc3 { break-inside: avoid; }
 }
 </style>
 </head>
@@ -913,7 +787,7 @@ input[type="number"] {
       本版將 0919 版議題樹由「總會／分所 × 能力／意願」的四象限切法，重構為
       <strong>五大核心根因</strong>的 MECE 架構：外部門禁、業務規格、IT 技術驅動、人力產能、組織治理。
       全樹 17 個第二層節點逐一標註證據狀態（已依 0924 假說驗證與 0926 查證更新），第三區塊以影響力 × 可解性矩陣定位處理優先序，
-      第四區塊以改變理論（Theory of Change）說明解開五大根因後，總會、分所與政府如何啟動正向生態系飛輪。Section 1–4 共用同一組根因色碼。
+      第四區塊以改變理論（Theory of Change）畫出五大根因之間誰影響誰，據此先鎖定「業務規格」。Section 1–4 共用同一組根因色碼。
     </p>
 
     <div class="version-note" id="version-note">
@@ -922,13 +796,14 @@ input[type="number"] {
         <li>刪除錯誤的法規引用（衛福部帳號管理規範、資通安全責任等級分級辦法等）；敏感資料依據改為個資法第 6 條。</li>
         <li>節點與假說狀態依執行長訪談與 0926 查證降級：17 個節點改為 7 項已證實、6 項部份證實、4 項待驗證；H-2 改未驗證、H-3 改待驗證、H-4 改待 POC、H-5 改部份證實。</li>
         <li>伊甸做法改為中性寫法（「只填一次」，標明為訪談轉述）；查無出處的數字（48 小時、2.3 倍、35～45% 等）刪除或標為估算。</li>
-      </ul>
+              </ul>
     </div>
 
     <div class="meta-box">
       <div class="root-why">
         <span class="label">ROOT WHY（核心提問）</span>
         <p>在不增加社工工時的情況下，為什麼勵馨總會無法每個月收到全分所的服務資料？</p>
+        <p class="root-why-update"><b>0926 題目更新：</b>為什麼總會收不到足夠的服務資料，以推動方案／倡議／研究的策略發展？<span>（本頁節點仍依 0925 原題展開）</span></p>
       </div>
       <div class="why-brief">
         <span class="label">為什麼改題為「數據治理」</span>
@@ -1012,7 +887,7 @@ input[type="number"] {
   <section class="section" id="sec-hypo">
     <h2><span class="idx">SECTION 2</span>核心關鍵假說與驗證狀態清單</h2>
     <p class="section-lede">
-      以下是從全樹提煉出、<strong>影響力最高且最需驗證</strong>的五項核心假說，以及 A1／C1 權限節點，
+      以下是從全樹提煉出、<strong>影響力最高且最需驗證</strong>的五項核心假說（H-1～H-5），以及權限假說 H-6（對應 0919 矩陣 A1、C1），
       已於 2026-09-24 以執行長訪談（2026-09）為主要依據完成第一輪驗證，並於 2026-09-26 依公開資料查證更正法規與文獻引用。
       每項標示其歸屬的根因分支（色塊對應 Section 1 與 Section 3 的分支色）、驗證結論與下一步行動。
     </p>
@@ -1080,34 +955,104 @@ input[type="number"] {
   <section class="section" id="sec-toc">
     <h2><span class="idx">SECTION 4</span>改變理論 (Theory of Change)</h2>
     <p class="section-lede">
-      對接 Why Tree 診斷出的 5 大關鍵根因：說明解開根因後，總會、分所與政府三個利害關係人樞紐如何從「惡性卡點循環」翻轉為「正向生態系飛輪」。
-      左欄根因沿用 Section 1–3 的色碼；灰色粗線 ①→④ 是飛輪連動。把游標移到任一節點（或點擊固定），會亮起它的上游來源與下游影響。
+      五大根因之間<strong>誰卡住誰</strong>。題目：為什麼總會收不到足夠的服務資料，以推動方案／倡議／研究的策略發展？
+      箭頭代表「影響」，線上標出證據強度與機制；紅色粗線是主鏈。邊的依據出處：執行長訪談（2026-09）與 0919 議題樹。
     </p>
-    <div class="toc-core">
-      <span class="label">核心矛盾</span>
-      <p>如何在「零新增社工行政工時」的硬性約束下，打破總會與分所之間的數據斷流，將勵馨轉型為敏捷、數據驅動之社會倡議領導者？</p>
-    </div>
-    <div class="toc-vicious" id="toc-vicious"></div>
-    <div class="toc-scroll">
-      <div class="toc-stage" id="toc-stage">
-        <svg id="toc-edges" aria-hidden="true"></svg>
+    <figure class="toc3">
+      <div class="toc3-scroll">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 566" role="img" aria-label="改變理論：② 業務規格 → ③ IT 系統 → ⑤ 組織與價值 → 成果為主鏈；② 與 ⑤、③ 與 ④ 互為迴路；① 外部門禁是外部限制，影響 ③ 與 ④。業務規格位於主鏈最上游。" class="toc3-svg">
+<title>改變理論 v3：五大根因之間誰影響誰</title>
+<defs>
+<marker id="toc3-m-main" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--root)"/></marker>
+<marker id="toc3-m-strong" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--ink-2)"/></marker>
+<marker id="toc3-m-mid" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--ink-3)"/></marker>
+</defs>
+<g style="font-family:var(--font-body)">
+<path d="M296,140 L296,58 Q296,46 308,46 L894,46 Q906,46 906,58 L906,140" style="fill:none;stroke:var(--ink-3);stroke-width:1.3" marker-end="url(#toc3-m-mid)"/>
+<path d="M846,140 L846,108 Q846,96 834,96 L388,96 Q376,96 376,108 L376,140" style="fill:none;stroke:var(--ink-2);stroke-width:2" marker-end="url(#toc3-m-strong)"/>
+<text x="606" y="38" text-anchor="middle" style="font-size:12.5px;fill:var(--ink-2);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round"><tspan style="font-weight:700;fill:var(--ink)">中｜</tspan>資料不一致，產不出能回饋分所的分析</text>
+<text x="606" y="88" text-anchor="middle" style="font-size:12.5px;fill:var(--ink-2);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round"><tspan style="font-weight:700;fill:var(--ink)">強｜</tspan>為了不打擾，以政府要的資料為主，用途沒轉成規格</text>
+<path d="M286,252 L286,458 Q286,470 298,470 L516,470" style="fill:none;stroke:var(--ink-3);stroke-width:1.3" marker-end="url(#toc3-m-mid)"/>
+<text x="402" y="462" text-anchor="middle" style="font-size:12.5px;fill:var(--ink-2);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round"><tspan style="font-weight:700;fill:var(--ink)">中｜</tspan>沒有定義→格式不一、重工整理</text>
+<path d="M186,318 L544,318 Q556,318 556,306 L556,252" style="fill:none;stroke:var(--surface);stroke-width:9"/>
+<path d="M186,318 L544,318 Q556,318 556,306 L556,252" style="fill:none;stroke:var(--ink-2);stroke-width:2" marker-end="url(#toc3-m-strong)"/>
+<text x="424" y="309" text-anchor="middle" style="font-size:12.5px;fill:var(--ink-2);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round"><tspan style="font-weight:700;fill:var(--ink)">強｜</tspan>不給匯出→只能從分所端轉出</text>
+<path d="M101,402 L101,500 Q101,512 113,512 L516,512" style="fill:none;stroke:var(--ink-2);stroke-width:2" marker-end="url(#toc3-m-strong)"/>
+<text x="300" y="532" text-anchor="middle" style="font-size:12.5px;fill:var(--ink-2);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round"><tspan style="font-weight:700;fill:var(--ink)">強｜</tspan>拿不出來→重填、手動做報表</text>
+<path d="M586,430 L586,252" style="fill:none;stroke:var(--ink-2);stroke-width:2" marker-end="url(#toc3-m-strong)"/>
+<path d="M626,252 L626,430" style="fill:none;stroke:var(--ink-3);stroke-width:1.3" marker-end="url(#toc3-m-mid)"/>
+<text x="576" y="372" text-anchor="end" style="font-size:12.5px;fill:var(--ink-2);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round"><tspan style="font-weight:700;fill:var(--ink)">強｜</tspan>Helpdesk 切碎</text>
+<text x="576" y="390" text-anchor="end" style="font-size:12.5px;fill:var(--ink-2);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round"><tspan style="font-weight:700;fill:var(--ink)"></tspan>沒空開發</text>
+<text x="636" y="372" text-anchor="start" style="font-size:12.5px;fill:var(--ink-2);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round"><tspan style="font-weight:700;fill:var(--ink)">中｜</tspan>自動化減負</text>
+<path d="M696,470 L834,470 Q846,470 846,458 L846,252" style="fill:none;stroke:var(--ink-2);stroke-width:2" marker-end="url(#toc3-m-strong)"/>
+<text x="770" y="462" text-anchor="middle" style="font-size:12.5px;fill:var(--ink-2);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round"><tspan style="font-weight:700;fill:var(--ink)">強｜</tspan>沒空回饋、不敢索取</text>
+<path d="M926,252 L926,512 Q926,524 914,524 L696,524" style="fill:none;stroke:var(--ink-3);stroke-width:1.3;stroke-dasharray:5 4" marker-end="url(#toc3-m-mid)"/>
+<text x="812" y="544" text-anchor="middle" style="font-size:12.5px;fill:var(--ink-2);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round"><tspan style="font-weight:700;fill:var(--ink)">弱｜</tspan>不擴編、不編助理→壓低產能</text>
+<path d="M426,196 L516,196" style="fill:none;stroke:var(--root);stroke-width:3.6" marker-end="url(#toc3-m-main)"/>
+<path d="M696,196 L786,196" style="fill:none;stroke:var(--root);stroke-width:3.6" marker-end="url(#toc3-m-main)"/>
+<path d="M966,196 L1046,196" style="fill:none;stroke:var(--root);stroke-width:3.6" marker-end="url(#toc3-m-main)"/>
+<text x="471" y="170" text-anchor="middle" style="font-size:12px;fill:var(--ink-2)">共同規格未定</text>
+<text x="471" y="185" text-anchor="middle" style="font-size:12px;fill:var(--ink-2)">系統無從開發</text>
+<text x="471" y="216" text-anchor="middle" style="font-size:12px;font-weight:700;fill:var(--root)">強</text>
+<text x="741" y="170" text-anchor="middle" style="font-size:12px;fill:var(--ink-2)">沒工具</text>
+<text x="741" y="185" text-anchor="middle" style="font-size:12px;fill:var(--ink-2)">回饋太慢</text>
+<text x="741" y="216" text-anchor="middle" style="font-size:12px;font-weight:700;fill:var(--root)">中</text>
+<text x="1006" y="170" text-anchor="middle" style="font-size:12px;fill:var(--ink-2)">分所願意</text>
+<text x="1006" y="185" text-anchor="middle" style="font-size:12px;fill:var(--ink-2)">穩定回傳</text>
+<rect x="16" y="290" width="170" height="112" rx="16" style="fill:var(--sunk);stroke:var(--ink-3);stroke-width:1.2;stroke-dasharray:5 4"/>
+<text x="101" y="318" text-anchor="middle" style="font-size:12px;letter-spacing:.04em;fill:var(--ink-3)">① · 外部限制</text>
+<text x="101" y="343" text-anchor="middle" style="font-size:18px;font-weight:700;fill:var(--ink)">外部門禁</text>
+<text x="101" y="364" text-anchor="middle" style="font-size:13px;fill:var(--ink)">政府系統不給匯出</text>
+<text x="101" y="383" text-anchor="middle" style="font-size:13px;fill:var(--ink)">權限只到自己的個案</text>
+<rect x="246" y="140" width="180" height="112" rx="16" style="fill:var(--root);stroke:var(--root);stroke-width:1.2"/>
+<text x="336" y="168" text-anchor="middle" style="font-size:12px;letter-spacing:.04em;fill:rgba(255,255,255,.85)">② · 關鍵根因</text>
+<text x="336" y="193" text-anchor="middle" style="font-size:18px;font-weight:700;fill:#ffffff">業務規格</text>
+<text x="336" y="214" text-anchor="middle" style="font-size:13px;fill:#ffffff">總會要什麼沒定義</text>
+<text x="336" y="233" text-anchor="middle" style="font-size:13px;fill:#ffffff">統合不出共同表單</text>
+<rect x="516" y="140" width="180" height="112" rx="16" style="fill:color-mix(in srgb, var(--ink) 12%, var(--surface));stroke:var(--rule-strong);stroke-width:1.2"/>
+<text x="606" y="168" text-anchor="middle" style="font-size:12px;letter-spacing:.04em;fill:var(--ink-3)">③</text>
+<text x="606" y="193" text-anchor="middle" style="font-size:18px;font-weight:700;fill:var(--ink)">IT 系統</text>
+<text x="606" y="214" text-anchor="middle" style="font-size:13px;fill:var(--ink)">沒有按月接收的系統</text>
+<text x="606" y="233" text-anchor="middle" style="font-size:13px;fill:var(--ink)">缺少轉換工具</text>
+<rect x="786" y="140" width="180" height="112" rx="16" style="fill:color-mix(in srgb, var(--ink) 22%, var(--surface));stroke:var(--ink-3);stroke-width:1.2"/>
+<text x="876" y="168" text-anchor="middle" style="font-size:12px;letter-spacing:.04em;fill:var(--ink-2)">⑤</text>
+<text x="876" y="193" text-anchor="middle" style="font-size:18px;font-weight:700;fill:var(--ink)">組織與價值</text>
+<text x="876" y="214" text-anchor="middle" style="font-size:13px;fill:var(--ink)">為了不打擾、不敢索取</text>
+<text x="876" y="233" text-anchor="middle" style="font-size:13px;fill:var(--ink)">分所看不到用途</text>
+<rect x="516" y="430" width="180" height="112" rx="16" style="fill:color-mix(in srgb, var(--ink) 6%, var(--surface));stroke:var(--rule-strong);stroke-width:1.2"/>
+<text x="606" y="458" text-anchor="middle" style="font-size:12px;letter-spacing:.04em;fill:var(--ink-3)">④</text>
+<text x="606" y="483" text-anchor="middle" style="font-size:18px;font-weight:700;fill:var(--ink)">人力產能</text>
+<text x="606" y="504" text-anchor="middle" style="font-size:13px;fill:var(--ink)">資訊 4 人被切碎</text>
+<text x="606" y="523" text-anchor="middle" style="font-size:13px;fill:var(--ink)">社工工時飽和</text>
+<rect x="1046" y="128" width="180" height="136" rx="16" style="fill:var(--ink);stroke:var(--ink);stroke-width:1.2"/>
+<text x="1136" y="165.5" text-anchor="middle" style="font-size:12px;letter-spacing:.04em;fill:rgba(255,255,255,.75)">成果</text>
+<text x="1136" y="190.5" text-anchor="middle" style="font-size:18px;font-weight:700;fill:#ffffff">總會收到足夠的</text>
+<text x="1136" y="214.5" text-anchor="middle" style="font-size:18px;font-weight:700;fill:#ffffff">服務資料</text>
+<text x="1136" y="235.5" text-anchor="middle" style="font-size:13px;fill:#ffffff">→ 方案／倡議／研究</text>
+</g></svg>
       </div>
-    </div>
-    <p class="toc-hint">※ 窄螢幕可左右捲動圖表。現階段（Why Tree）聚焦根因診斷；下一階段（How Tree）將針對這些槓桿展開具體行動方案。</p>
+      <figcaption>
+        <p class="toc3-legend" aria-label="圖例"><span><svg width="38" height="10" viewBox="0 0 38 10" aria-hidden="true"><path d="M1,5 L30,5" style="fill:none;stroke:var(--root);stroke-width:3.6"/><path d="M28,1 L36,5 L28,9 z" style="fill:var(--root)"/></svg>主鏈（② → ③ → ⑤ → 成果）</span><span><svg width="38" height="10" viewBox="0 0 38 10" aria-hidden="true"><path d="M1,5 L30,5" style="fill:none;stroke:var(--ink-2);stroke-width:2"/><path d="M28,1 L36,5 L28,9 z" style="fill:var(--ink-2)"/></svg>強：訪談直接說出因果</span><span><svg width="38" height="10" viewBox="0 0 38 10" aria-hidden="true"><path d="M1,5 L30,5" style="fill:none;stroke:var(--ink-3);stroke-width:1.3"/><path d="M28,1 L36,5 L28,9 z" style="fill:var(--ink-3)"/></svg>中：事實有出處、因果為推論</span><span><svg width="38" height="10" viewBox="0 0 38 10" aria-hidden="true"><path d="M1,5 L30,5" style="fill:none;stroke:var(--ink-3);stroke-width:1.3;stroke-dasharray:5 4"/><path d="M28,1 L36,5 L28,9 z" style="fill:var(--ink-3)"/></svg>弱：邏輯成立、影響較小</span><span><i class="sw"></i>關鍵根因</span></p>
+        <p class="toc3-hint">※ 窄螢幕可左右捲動圖表。兩組雙箭頭是迴路：② ⇄ ⑤（不敢索取 ⇄ 做不出回饋）、③ ⇄ ④（人少 ⇄ 沒工具）。</p>
+      </figcaption>
+    </figure>
 
-    <h3 class="toc-sub">關鍵假設與驗證計畫</h3>
-    <div class="table-scroll">
-      <table class="toc-table" id="toc-risk">
-        <thead><tr><th>關鍵假設</th><th>對應假說</th><th>驗證方式</th><th>潛在風險</th><th>控制與解套機制</th></tr></thead>
-        <tbody></tbody>
-      </table>
+    <div class="toc3-read">
+      <h3>解讀：為什麼先鎖定業務規格</h3>
+      <ol>
+        <li><b>矩陣：</b>業務規格、IT 系統、組織與價值三類的影響力與可解性較高（平均皆在 70 以上）；外部門禁與人力產能的可解性低（45、40），當作限制條件。</li>
+        <li><b>因果位置：</b>業務規格在主鏈最上游——共同表單規格未定，系統開發就缺乏需求依據（執行長訪談（2026-09））；它也是總會自己可以決定的事。</li>
+        <li><b>為什麼不先處理組織與價值：</b>它的上游（總會的意願與用途）已經有了；缺的是下游的價值回饋，要等規格與系統先解開。</li>
+        <li><b>結論：</b>先鎖定<b>業務規格</b>；下一階段處理 <b>IT 系統</b>——有了業務規格，才知道系統要怎麼設計。</li>
+      </ol>
+      <p class="note">矩陣數字為 0919 分數依五大根因平均（IT 88／75、治理 77／79、門禁 80／45、規格 70／74、產能 60／40），尚未依 0925 架構重新評分；單看矩陣，業務規格不是最高分，先後順序是依因果位置判斷。</p>
     </div>
   </section>
 
   <footer class="report-foot">
     <span>勵馨基金會 × School 28 專案</span>
     <span>V7 · 更新 2026-09-26</span>
-    <span>來源：執行長訪談（2026-09） ／ 0919 議題樹與影響力矩陣 ／ 0924 假說驗證 ／ 0926 公開資料查證 ／ 改變理論 v2</span>
+    <span>來源：執行長訪談（2026-09） ／ 0919 議題樹與影響力矩陣 ／ 0924 假說驗證 ／ 0926 公開資料查證 ／ 改變理論 v3</span>
     <span>公開版：內部訪談細節已略去</span>
   </footer>
 </div>
@@ -1303,18 +1248,7 @@ input[type="number"] {
 
   // 0924 假說驗證（0926 依公開資料查證更正）。tone：pos 證實／mid 部份證實、條件成立或待驗證／neg 否定
   var HYPOTHESES = [
-    { id: "A1／C1", name: "政府保護性系統權限封閉與一線社工導出限制", branches: [1],
-      verdict: "證實（依執行長訪談；法規依據未查到）", tone: "pos",
-      body: "A1：服務資料存放在政府系統，總會研發與管理層無法跨機構讀取。C1：分所社工在政府系統只有單向輸入權限，沒有下載、匯出全機構統計報表的權限。",
-      evidence: [
-        "拿不到資料：勵馨曾請政府提供匯出，政府以資安為由不提供；總會沒辦法直接到原始資料庫撈資料，稽核時要請有權限的社工匯出（執行長訪談（2026-09））。",
-        "權限只到自己的個案：自然人憑證登入；系統由網絡共用，警察、檢察官、法官都可以進入；曾發生權限濫用事故，之後權限收緊，現在只能看到自己服務的個案（執行長訪談（2026-09））。",
-        "帳號申請：由地方政府逐人受理，例如高雄市社會局《保護資訊系統權限申請表》（公開搜尋結果，內容待開原文）。系統有無總會層級角色，公開資料查無，無法證實或否定。",
-        "資料敏感性：家暴、性侵、兒少保護資料涉及個資法第 6 條的特種個資（如性生活、健康），這是它屬高敏感資料的依據；保護資訊系統的資通系統防護需求等級，公開資料未查到正式評級。",
-        "文獻：王秀燕（2018）〈資訊科技接受與使用之感受－保護性社工使用保護資訊系統經驗〉，《社區發展季刊》第 161 期，訪談臺中、彰化 12 位保護性社工；是否述及報表導出受限，內容待讀全文確認，暫不作為依據。"
-      ],
-      action: "外部 Double-Check：訪談家扶、現代婦女基金會承接家暴／性侵委託案的社工督導——「登入衛福部保護系統後，介面上是否有一鍵匯出全機構 CSV／Excel 的功能？總會要資料時，你們如何交付？」；開啟高雄市權限申請表，確認權限項目有無匯出。" },
-    { id: "H-1", name: "IT 團隊技能與 Helpdesk 耗能分流假說", branches: [3, 4],
+    { id: "H-1", name: "IT 團隊技能與 Helpdesk 耗能分流假說", branches: [3, 4], mx: ["A3"],
       verdict: "部份證實／待技能盤點", tone: "mid",
       body: "全會 600 人僅 4 名 IT，工時被日常排障（Helpdesk）打碎；若將維運排障外包分流，現有 IT 即可投入自動化數據管線開發。",
       evidence: [
@@ -1322,7 +1256,7 @@ input[type="number"] {
         "日常耗損：IT 需兼顧日常障礙排除，難以專心開發（執行長訪談（2026-09））。"
       ],
       action: "IT 技能圖譜盤點：確認 4 名 IT 是否具備 Python ETL、API 介接、SQL 資料庫設計能力；若技能偏網路硬體維護，單純減輕 Helpdesk 並不會自動產生軟體 PM 與開發產出。" },
-    { id: "H-2", name: "保護性系統資料取得路徑假說", branches: [1],
+    { id: "H-2", name: "保護性系統資料取得路徑假說", branches: [1], mx: ["A1", "C1"],
       verdict: "未驗證（正面爭取難度高，但未被否定）", tone: "mid",
       body: "可以透過合規的技術輔助，或向衛福部／縣市政府協調權限開放，取得分所自己的服務資料。",
       evidence: [
@@ -1331,7 +1265,7 @@ input[type="number"] {
         "修法成本（類比）：過去委託契約相關的修法倡議經驗顯示，修法路徑耗時且不確定；該例不是系統權限議題，只能類比修法路徑的成本。"
       ],
       action: "雙軌：短期走「分所端輕量輔助」——在合規前提下，由分所端將既有資料轉為去識別化檔案（比照現行稽核時請有權限社工匯出的流程）；同步與縣府協調權限開放，以收出養介接為前例。" },
-    { id: "H-3", name: "伊甸「只填一次」模式複製假說", branches: [3],
+    { id: "H-3", name: "伊甸「只填一次」模式複製假說", branches: [3], mx: ["C6"],
       verdict: "待驗證（伊甸做法為訪談轉述）", tone: "mid",
       body: "勵馨可參考伊甸：社工只填一次，與政府重疊的約九成欄位不必重填，總會只補收差額，達成社工零重複填報。",
       evidence: [
@@ -1340,8 +1274,8 @@ input[type="number"] {
         "資源差距：伊甸資訊人員 30 幾人、勵馨 4 人（執行長訪談（2026-09）轉述）；以 Low-code 或輕量 Python 處理 CSV 轉換為本專案推論。",
         "上限：只靠政府欄位看不到新興議題（執行長訪談（2026-09））。"
       ],
-      action: "向伊甸確認實際作法與資料流向；比對一份政府系統欄位與總會年報欄位，量測實際重疊率；再以輕量轉換腳本驗證（去識別化沿用資訊組現有程式）（對應 Section 4 槓桿 B、E）。" },
-    { id: "H-4", name: "最小共通數據字典 (Master Data) 抽離假說", branches: [2],
+      action: "向伊甸確認實際作法與資料流向；比對一份政府系統欄位與總會年報欄位，量測實際重疊率；再以輕量轉換腳本驗證（去識別化沿用資訊組現有程式）。" },
+    { id: "H-4", name: "最小共通數據字典 (Master Data) 抽離假說", branches: [2], mx: ["B2"],
       verdict: "待 POC（假說）", tone: "mid",
       body: "跨服務領域（家暴、移工、性侵）差異雖大，研發與業務端仍能抽離出 10～20% 的共通數據主幹，無須 100% 表單一致。",
       evidence: [
@@ -1349,14 +1283,25 @@ input[type="number"] {
         "提議：改採「數據主幹 + 地方分支（Master Data & Local Extension）」架構，總會只收 10～20% 通用指標（開案日期、服務人次、處遇階段、結案轉折），允許分所保留 80% 地方特規（本專案提出，未驗證）。"
       ],
       action: "青少女懷孕場域 POC：執行長認為目前最有可能的驗證場域（不在政府系統內、系統完全由勵馨掌握；執行長訪談（2026-09）），測試最小共通數據字典與自動化接收介面的社工接受度。" },
-    { id: "H-5", name: "雙向數據反饋消除「被騷擾感」假說", branches: [5],
+    { id: "H-5", name: "雙向數據反饋消除「被騷擾感」假說", branches: [5], mx: ["D2"],
       verdict: "部份證實（回饋斷裂已證實；回饋能提升意願待驗證）", tone: "mid",
       body: "分所抗拒填報的主因是感受不到數據價值（感知為「總會騷擾／填雜事」）；若總會建立數據反饋機制（在地倡議簡報、影響力圖卡），將能建立內在填報動機。",
       evidence: [
         "訪談證實回饋斷裂：總會倡議人力有限、忙於對外急件，結果較少回饋給分所（執行長訪談（2026-09））。",
         "回饋效果為執行長判斷：分所若知道數據產生了什麼效果，再忙也會覺得有意義。電子腳鐐案中分所 2～3 天內回覆問卷（執行長訪談（2026-09）），但訪談沒有提到該案有回饋給分所或促成立法。"
       ],
-      action: "建立月度反饋機制並模組化：以自動化簡報範本降低研發組產製時間，避免回饋機制再次中斷；在試辦分所驗證回饋前後的填報意願（對應 Section 4 假設三）。" }
+      action: "建立月度反饋機制並模組化：以自動化簡報範本降低研發組產製時間，避免回饋機制再次中斷；在試辦分所驗證回饋前後的填報意願。" },
+    { id: "H-6", name: "政府保護性系統權限封閉與一線社工導出限制", branches: [1], mx: ["A1", "C1"],
+      verdict: "證實（依執行長訪談；法規依據未查到）", tone: "pos",
+      body: "（矩陣 A1）服務資料存放在政府系統，總會研發與管理層無法跨機構讀取。（矩陣 C1）分所社工在政府系統只有單向輸入權限，沒有下載、匯出全機構統計報表的權限。",
+      evidence: [
+        "拿不到資料：勵馨曾請政府提供匯出，政府以資安為由不提供；總會沒辦法直接到原始資料庫撈資料，稽核時要請有權限的社工匯出（執行長訪談（2026-09））。",
+        "權限只到自己的個案：自然人憑證登入；系統由網絡共用，警察、檢察官、法官都可以進入；曾發生權限濫用事故，之後權限收緊，現在只能看到自己服務的個案（執行長訪談（2026-09））。",
+        "帳號申請：由地方政府逐人受理，例如高雄市社會局《保護資訊系統權限申請表》（公開搜尋結果，內容待開原文）。系統有無總會層級角色，公開資料查無，無法證實或否定。",
+        "資料敏感性：家暴、性侵、兒少保護資料涉及個資法第 6 條的特種個資（如性生活、健康），這是它屬高敏感資料的依據；保護資訊系統的資通系統防護需求等級，公開資料未查到正式評級。",
+        "文獻：王秀燕（2018）〈資訊科技接受與使用之感受－保護性社工使用保護資訊系統經驗〉，《社區發展季刊》第 161 期，訪談臺中、彰化 12 位保護性社工；是否述及報表導出受限，內容待讀全文確認，暫不作為依據。"
+      ],
+      action: "外部 Double-Check：訪談家扶、現代婦女基金會承接家暴／性侵委託案的社工督導——「登入衛福部保護系統後，介面上是否有一鍵匯出全機構 CSV／Excel 的功能？總會要資料時，你們如何交付？」；開啟高雄市權限申請表，確認權限項目有無匯出。" }
   ];
 
   var OLD_COLORS = ["var(--o1)", "var(--o2)", "var(--o3)", "var(--o4)"];
@@ -1848,6 +1793,7 @@ input[type="number"] {
         chip.appendChild(document.createTextNode(br.n + ". " + br.short));
         chips.appendChild(chip);
       });
+      if (hy.mx) chips.appendChild(h("span", "branch-chip", "0919 矩陣 " + hy.mx.join("、")));
       chips.appendChild(h("span", "branch-chip verdict " + hy.tone, VERDICT_MARK[hy.tone] + hy.verdict));
       card.appendChild(chips);
 
@@ -2431,341 +2377,6 @@ input[type="number"] {
   });
 
   /* =======================================================================
-     Section 4 — theory of change（v2：生態系網絡與正向飛輪）
-     ======================================================================= */
-
-  // 欄 = 階段（色彩由淡到濃），列 = 利害關係人樞紐（泳道）
-  var TOC_HEADS = [
-    { col: 1, n: 1, t: "關鍵根因", en: "WHY TREE", color: "#6b7a8c" },
-    { col: 2, n: 2, t: "變革槓桿", en: "LEVERS", color: "var(--ink-2)" },
-    { col: 3, n: 3, t: "生態系成果", en: "OUTCOMES", color: "var(--ink)" },
-    { col: 5, n: 4, t: "系統性影響力", en: "IMPACT", color: "var(--root)" }
-  ];
-
-  var TOC_LANES = [
-    { id: "gov", row: 2, t: "政府與外部委託網絡", en: "GOVERNMENT & NETWORK", color: "var(--hypo)" },
-    { id: "hq", row: 3, t: "總會數據治理中樞", en: "HQ PIVOT", color: "var(--focus)" },
-    { id: "br", row: 4, t: "第一線分所與社工", en: "BRANCH & SOCIAL WORKER", color: "var(--fact)" }
-  ];
-
-  var TOC_ROOTS = [
-    { id: "RC1", b: 1, t: "外部門禁與權限障礙", d: "政府系統封閉、無 API、資安限制嚴格" },
-    { id: "RC2", b: 2, t: "業務規格與標準未定", d: "表單分歧、缺乏全會統一 Master Data" },
-    { id: "RC3", b: 3, t: "IT 技術與工具驅動不足", d: "缺乏自動化接收中樞與格式轉換工具" },
-    { id: "RC4", b: 4, t: "產能飽和與人力資源極限", d: "社工服務工時飽和、IT Helpdesk 耗能" },
-    { id: "RC5", b: 5, t: "組織治理與價值閉環斷裂", d: "雙向反饋閉環斷裂、分所感知為騷擾" }
-  ];
-
-  // kind: lever（槓桿）／result（成果）／hub（飛輪樞紐）
-  var TOC_NODES = [
-    { id: "LE", lane: "gov", col: 2, kind: "lever", k: "槓桿 E", t: "參考伊甸「只填一次」模式與分所端轉譯", d: "推動分所端輕量 CSV 導出與轉換，同步向縣府探詢開放權限；伊甸做法為訪談轉述。", hy: ["H-2", "H-3"] },
-    { id: "G1", lane: "gov", col: 3, kind: "result", k: "成果", t: "破解外部系統封閉，推進合規介接與政策溝通", d: "實現合規且安全的數據轉譯與自動回流。" },
-    { id: "LA", lane: "hq", col: 2, kind: "lever", k: "槓桿 A", t: "抽離 10–20% 核心 Master Data 數據字典", d: "建立全會統一的數據語言，保留地方特規欄位。", hy: ["H-4"] },
-    { id: "LB", lane: "hq", col: 2, kind: "lever", k: "槓桿 B", t: "建置自動化接收中樞與格式轉換腳本", d: "以 Low-code／Python 工具取代人工重複輸入；去識別化沿用資訊組現有程式。", hy: ["H-3"] },
-    { id: "LC", lane: "hq", col: 2, kind: "lever", k: "槓桿 C", t: "研發組發布「月度數據在地倡議圖卡」", d: "建立雙向數據倡議反饋閉環，讓分所看見數據成果。", hy: ["H-5"] },
-    { id: "HUB", lane: "hq", col: 3, kind: "hub", k: "飛輪樞紐", t: "總會數據治理中樞運轉", d: "承接分所穩定回流的動態數據，對外輸出雙向倡議成果。" },
-    { id: "LD", lane: "br", col: 2, kind: "lever", k: "槓桿 D", t: "IT Helpdesk 排障分流與自動化降載", d: "硬體維修 SOP 化／外包，IT 人員轉型軟體 PM。", hy: ["H-1"] },
-    { id: "S2", lane: "br", col: 3, kind: "result", k: "成果", t: "建立數據價值認同，穩定回流高品質數據", d: "「被騷擾感」轉化為「數據倡議共創」的內在驅動力。" },
-    { id: "S1", lane: "br", col: 3, kind: "result", k: "成果", t: "零新增手動工時，消除被騷擾感", d: "降低跨分所格式轉換成本。" }
-  ];
-
-  var TOC_IMPACTS = [
-    { id: "IMP1", row: 2, k: "敏捷倡議", t: "數日內以實證數據驅動法案修訂與政策回應" },
-    { id: "IMP2", row: 4, k: "服務極大化", t: "估算每年釋放 4.6 萬小時行政工時回歸個案直接陪伴" }
-  ];
-
-  // 因果連線（根因→槓桿→成果）
-  var TOC_CAUSAL = [
-    ["RC1", "LE"], ["RC2", "LA"], ["RC2", "LB"], ["RC3", "LA"], ["RC3", "LB"], ["RC4", "LD"], ["RC5", "LC"],
-    ["LE", "G1"], ["LA", "S1"], ["LB", "S1"], ["LC", "S2"], ["LD", "S2"]
-  ];
-  // 飛輪連動（route 決定走線方式）
-  var TOC_FLY = [
-    { f: "S2", t: "HUB", route: "up", n: "①", label: "穩定提供動態數據" },
-    { f: "S1", t: "HUB", route: "rightUp" },
-    { f: "HUB", t: "G1", route: "up", n: "②", label: "輸出雙向倡議成果與數據中樞" },
-    { f: "G1", t: "IMP1", route: "right", n: "③", label: "數據驅動社會議題與政策變革" },
-    { f: "S1", t: "IMP2", route: "right", n: "④", label: "釋放服務能量" }
-  ];
-
-  var TOC_RISKS = [
-    { a: "Master Data 抽離可行性", ad: "研發組與分所能達成共識，僅抽離 10～20% 核心跨服務欄位（如服務人次、個案轉折階段），80% 區域特規欄位允許保留。", hy: ["H-4"],
-      v: "對比家暴、性侵、移工三種不同服務表單，進行交集欄位對齊研討。",
-      r: "分所仍堅持地方特規，拒絕使用 Master Data。", m: "雙軌制", md: "主幹欄位由總會統一，80% 區域欄位允許分所自由保留。" },
-    { a: "Low-code／輕量腳本替代性", ad: "在僅 4 名 IT 的限制下，無須重金建置龐大 ERP，透過 Low-code／Python 自動化腳本即可完成 CSV 解析與格式轉換（去識別化沿用資訊組現有程式）。", hy: ["H-1", "H-3"],
-      v: "在試辦場域（青少女懷孕服務）進行 POC 輕量測試。",
-      r: "IT 團隊技能僅限硬體維修，沒有軟體開發經驗。", m: "技術降維", md: "改用無程式碼的 Power Automate／Excel 巨集，降低開發門檻。" },
-    { a: "數據反饋賦能", ad: "總會研發組產出的「月度數據在地倡議圖卡」，能讓分所主任與社工有感，將「填雜事感」轉化為「倡議共創認同」。", hy: ["H-5"],
-      v: "製作 1 份原型圖卡回饋給試辦分所，評估社工之態度轉變。",
-      r: "研發組人力太忙，回饋機制再次中斷。", m: "模組化範本", md: "建立自動化簡報生成模組，減少研發組產製時間。" }
-  ];
-
-  var tocStage = document.getElementById("toc-stage");
-  var tocSvg = document.getElementById("toc-edges");
-  var tocEls = {}, tocLines = [], tocLabels = [], tocPinned = null;
-  var TOC_GRAPH = TOC_CAUSAL.map(function (e) { return { from: e[0], to: e[1] }; })
-    .concat(TOC_FLY.map(function (e) { return { from: e.f, to: e.t, fly: e }; }));
-
-  function tocBranch(n) { return BRANCHES.filter(function (b) { return b.n === n; })[0]; }
-  function tocLane(id) { return TOC_LANES.filter(function (l) { return l.id === id; })[0]; }
-
-  function tocNode(cls, id, k, t, d, hyIds) {
-    var el = h("div", "toc-node " + cls);
-    el.tabIndex = 0;
-    el.setAttribute("data-id", id);
-    if (k) el.appendChild(h("span", "k", k));
-    el.appendChild(h("span", "t", t));
-    if (d) el.appendChild(h("p", "d", d));
-    if (hyIds) {
-      var hy = h("div", "hy");
-      hyIds.forEach(function (x) { hy.appendChild(hypoChip(x)); });
-      el.appendChild(hy);
-    }
-    tocEls[id] = el;
-    return el;
-  }
-
-  function renderToc() {
-    // 現狀：惡性卡點循環
-    var vc = document.getElementById("toc-vicious");
-    vc.textContent = "";
-    vc.appendChild(h("span", "lbl", "現狀 · 惡性卡點循環"));
-    TOC_ROOTS.forEach(function (rc) {
-      var br = tocBranch(rc.b);
-      var st = h("span", "step");
-      st.style.setProperty("--c", br.color);
-      st.appendChild(h("span", "sw"));
-      st.appendChild(document.createTextNode(rc.b + ". " + br.short));
-      vc.appendChild(st);
-      vc.appendChild(h("span", "arr", "→"));
-    });
-    vc.appendChild(h("span", "end", "數據斷流／敏捷失能"));
-
-    TOC_HEADS.forEach(function (hd) {
-      var head = h("div", "toc-col-head");
-      head.style.setProperty("--stage", hd.color);
-      head.style.gridColumn = hd.col;
-      head.style.gridRow = 1;
-      head.appendChild(h("span", "n", String(hd.n)));
-      head.appendChild(h("span", "t", hd.t));
-      head.appendChild(h("span", "en", hd.en));
-      tocStage.appendChild(head);
-    });
-
-    var rcCell = h("div", "toc-cell rc");
-    TOC_ROOTS.forEach(function (rc) {
-      var el = tocNode("rc", rc.id, "根因 " + rc.b, rc.t, rc.d);
-      el.style.setProperty("--c", tocBranch(rc.b).color);
-      rcCell.appendChild(el);
-    });
-    tocStage.appendChild(rcCell);
-
-    TOC_LANES.forEach(function (ln) {
-      var bg = h("div", "toc-lane");
-      bg.style.setProperty("--p", ln.color);
-      bg.style.gridRow = ln.row;
-      var lbl = h("div", "lane-lbl");
-      lbl.appendChild(h("span", "t", ln.t));
-      lbl.appendChild(h("span", "en", ln.en));
-      bg.appendChild(lbl);
-      tocStage.appendChild(bg);
-
-      [2, 3].forEach(function (col) {
-        var cell = h("div", "toc-cell");
-        cell.style.gridColumn = col;
-        cell.style.gridRow = ln.row;
-        cell.style.setProperty("--p", ln.color);
-        TOC_NODES.forEach(function (nd) {
-          if (nd.lane === ln.id && nd.col === col) cell.appendChild(tocNode(nd.kind, nd.id, nd.k, nd.t, nd.d, nd.hy));
-        });
-        tocStage.appendChild(cell);
-      });
-    });
-
-    var impBg = h("div", "toc-impact-lane");
-    impBg.appendChild(h("div", "lane-lbl", "終極系統性社會影響力"));
-    tocStage.appendChild(impBg);
-    TOC_IMPACTS.forEach(function (im) {
-      var cell = h("div", "toc-cell imp");
-      cell.style.gridRow = im.row;
-      cell.appendChild(tocNode("impact", im.id, im.k, im.t));
-      tocStage.appendChild(cell);
-    });
-
-    var tb = document.querySelector("#toc-risk tbody");
-    tb.textContent = "";
-    TOC_RISKS.forEach(function (rk, i) {
-      var tr = document.createElement("tr");
-      var tda = document.createElement("td");
-      tda.appendChild(h("b", null, "假設" + "一二三四五"[i] + "：" + rk.a));
-      tda.appendChild(h("span", "muted", rk.ad));
-      tr.appendChild(tda);
-      var tdh = document.createElement("td");
-      rk.hy.forEach(function (x) { tdh.appendChild(hypoChip(x)); tdh.appendChild(document.createTextNode(" ")); });
-      tr.appendChild(tdh);
-      tr.appendChild(h("td", null, rk.v));
-      tr.appendChild(h("td", null, rk.r));
-      var tdm = document.createElement("td");
-      tdm.appendChild(h("b", null, rk.m + "："));
-      tdm.appendChild(document.createTextNode(rk.md));
-      tr.appendChild(tdm);
-      tb.appendChild(tr);
-    });
-  }
-
-  // 折線轉角做圓角
-  function tocRoundPath(pts, r) {
-    var d = "M" + pts[0][0] + "," + pts[0][1];
-    for (var i = 1; i < pts.length - 1; i++) {
-      var p = pts[i], a = pts[i - 1], b = pts[i + 1];
-      var la = Math.hypot(p[0] - a[0], p[1] - a[1]), lb = Math.hypot(b[0] - p[0], b[1] - p[1]);
-      var rr = Math.min(r, la / 2, lb / 2);
-      var p1 = [p[0] + (a[0] - p[0]) * rr / la, p[1] + (a[1] - p[1]) * rr / la];
-      var p2 = [p[0] + (b[0] - p[0]) * rr / lb, p[1] + (b[1] - p[1]) * rr / lb];
-      d += " L" + p1[0] + "," + p1[1] + " Q" + p[0] + "," + p[1] + " " + p2[0] + "," + p2[1];
-    }
-    var z = pts[pts.length - 1];
-    return d + " L" + z[0] + "," + z[1];
-  }
-
-  // 箭頭：tip 為箭尖，dir 為單位方向
-  function tocHead(tip, dir) {
-    var bx = tip[0] - dir[0] * 7, by = tip[1] - dir[1] * 7;
-    var px = -dir[1] * 4.5, py = dir[0] * 4.5;
-    return svgEl("polygon", { points: tip[0] + "," + tip[1] + " " + (bx + px) + "," + (by + py) + " " + (bx - px) + "," + (by - py) });
-  }
-
-  function tocEdgeColor(id) {
-    if (/^RC/.test(id)) return tocBranch(+id.slice(2)).color;
-    var nd = TOC_NODES.filter(function (n) { return n.id === id; })[0];
-    return nd ? tocLane(nd.lane).color : "var(--root)";
-  }
-
-  function drawTocEdges() {
-    tocSvg.textContent = "";
-    tocLabels.forEach(function (l) { l.remove(); });
-    tocLines = []; tocLabels = [];
-    var box = tocStage.getBoundingClientRect();
-    tocSvg.setAttribute("width", tocStage.scrollWidth);
-    tocSvg.setAttribute("height", tocStage.scrollHeight);
-    function rect(id) {
-      var r = tocEls[id].getBoundingClientRect();
-      return { l: r.left - box.left, r: r.right - box.left, t: r.top - box.top, b: r.bottom - box.top, cx: r.left - box.left + r.width / 2, cy: r.top - box.top + r.height / 2, h: r.height };
-    }
-    function add(edge, path, head, fly) {
-      var color = tocEdgeColor(edge.from);
-      [path, head].forEach(function (el) {
-        el.style.setProperty("--edge", color);
-        if (fly) el.classList.add("fly");
-        tocSvg.appendChild(el);
-      });
-      var line = { from: edge.from, to: edge.to, els: [path, head] };
-      tocLines.push(line);
-      return line;
-    }
-    function label(line, fl, x, y) {
-      if (!fl.label) return;
-      var el = h("div", "toc-fly-label");
-      el.appendChild(h("b", null, fl.n + " "));
-      el.appendChild(document.createTextNode(fl.label));
-      tocStage.appendChild(el);
-      el.style.left = (x - el.offsetWidth / 2) + "px";
-      el.style.top = (y - el.offsetHeight / 2) + "px";
-      tocLabels.push(el);
-      line.els.push(el);
-    }
-
-    TOC_GRAPH.forEach(function (e) {
-      var a = rect(e.from), b = rect(e.to), fl = e.fly;
-      if (!fl) {
-        var x1 = a.r, y1 = a.cy, x2 = b.l - 7, y2 = b.cy, cx = (x1 + x2) / 2;
-        var path = svgEl("path", { d: "M" + x1 + "," + y1 + " C" + cx + "," + y1 + " " + cx + "," + y2 + " " + x2 + "," + y2 });
-        add(e, path, tocHead([b.l, y2], [1, 0]), false);
-        return;
-      }
-      var pts, tip, dir, lx, ly;
-      if (fl.route === "up") {
-        var my = (a.t + b.b) / 2;
-        tip = [b.cx, b.b]; dir = [0, -1];
-        pts = a.cx === b.cx ? [[a.cx, a.t], [b.cx, b.b + 7]] : [[a.cx, a.t], [a.cx, my], [b.cx, my], [b.cx, b.b + 7]];
-        lx = b.cx; ly = my;
-      } else if (fl.route === "rightUp") {
-        var gx = Math.max(a.r, b.r) + 18, sy = a.t + a.h * 0.3;
-        tip = [b.r, b.cy]; dir = [-1, 0];
-        pts = [[a.r, sy], [gx, sy], [gx, b.cy], [b.r + 7, b.cy]];
-      } else {
-        var y0 = fl.f === "S1" ? a.t + a.h * 0.7 : a.cy, ex = (a.r + b.l) / 2;
-        tip = [b.l, b.cy]; dir = [1, 0];
-        pts = Math.abs(y0 - b.cy) < 2 ? [[a.r, y0], [b.l - 7, y0]] : [[a.r, y0], [ex, y0], [ex, b.cy], [b.l - 7, b.cy]];
-        if (Math.abs(y0 - b.cy) < 2) tip[1] = y0;
-        lx = ex; ly = (y0 + b.cy) / 2;
-      }
-      var line = add(e, svgEl("path", { d: tocRoundPath(pts, 12) }), tocHead(tip, dir), true);
-      label(line, fl, lx, ly);
-    });
-    tocFocus(tocPinned);
-  }
-
-  // 亮起節點本身＋所有上游來源＋所有下游影響
-  function tocFocus(id) {
-    var up = {}, down = {};
-    if (id) {
-      up[id] = down[id] = true;
-      var grow = function (set, forward) {
-        var changed = true;
-        while (changed) {
-          changed = false;
-          TOC_GRAPH.forEach(function (e) {
-            var f = forward ? e.from : e.to, t = forward ? e.to : e.from;
-            if (set[f] && !set[t]) { set[t] = true; changed = true; }
-          });
-        }
-      };
-      grow(down, true);
-      grow(up, false);
-    }
-    tocStage.classList.toggle("has-focus", !!id);
-    Object.keys(tocEls).forEach(function (k) {
-      tocEls[k].classList.toggle("is-lit", !!(up[k] || down[k]));
-      tocEls[k].classList.toggle("is-pinned", k === tocPinned);
-    });
-    tocLines.forEach(function (ln) {
-      var lit = !!(id && ((down[ln.from] && down[ln.to]) || (up[ln.from] && up[ln.to])));
-      ln.els.forEach(function (el) { el.classList.toggle("is-lit", lit); });
-    });
-  }
-
-  function tocNodeOf(target) { return target && target.closest ? target.closest(".toc-node") : null; }
-  function tocTogglePin(id) { tocPinned = tocPinned === id ? null : id; tocFocus(tocPinned || id); }
-
-  tocStage.addEventListener("mouseover", function (e) {
-    var n = tocNodeOf(e.target);
-    tocFocus(n ? n.getAttribute("data-id") : tocPinned);
-  });
-  tocStage.addEventListener("mouseleave", function () { tocFocus(tocPinned); });
-  tocStage.addEventListener("click", function (e) {
-    var n = tocNodeOf(e.target);
-    if (n) tocTogglePin(n.getAttribute("data-id"));
-  });
-  tocStage.addEventListener("focusin", function (e) {
-    var n = tocNodeOf(e.target);
-    if (n) tocFocus(n.getAttribute("data-id"));
-  });
-  tocStage.addEventListener("focusout", function () { tocFocus(tocPinned); });
-  tocStage.addEventListener("keydown", function (e) {
-    var n = tocNodeOf(e.target);
-    if (!n) return;
-    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); tocTogglePin(n.getAttribute("data-id")); }
-    if (e.key === "Escape") { tocPinned = null; tocFocus(n.getAttribute("data-id")); }
-  });
-
-  var tocTimer = null;
-  window.addEventListener("resize", function () {
-    clearTimeout(tocTimer);
-    tocTimer = setTimeout(drawTocEdges, 120);
-  });
-
-  /* =======================================================================
      Root why — Benchmark dialog
      ======================================================================= */
 
@@ -2808,10 +2419,8 @@ input[type="number"] {
   renderOutline();
   renderHypotheses();
   renderTree(true);
-  renderToc();
-  drawTocEdges();
   // fonts land after first paint and change node heights — lay out again
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { renderTree(true); drawTocEdges(); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { renderTree(true); });
 
   loadMatrix(JSON.parse(document.getElementById("matrix-data").textContent));
   var top = data.items.slice().sort(function (a, b) { return b.impact - a.impact; })[0];
