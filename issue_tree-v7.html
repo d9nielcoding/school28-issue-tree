@@ -1,0 +1,2823 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>勵馨基金會 × School 28：五大核心根因議題樹與影響力矩陣 (V7 公開版)</title>
+<meta name="description" content="以五大核心根因重構之 Why Tree、五項待驗證核心假說，以及 17 個第二層議題的影響力 × 可解性矩陣。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600&display=swap">
+<style>
+:root {
+  color-scheme: light;
+
+  --plane:       #eef1f5;
+  --surface:     #ffffff;
+  --sunk:        #f5f7fa;
+  --sunk-2:      #eaeef3;
+
+  --ink:         #1f2a37;
+  --ink-2:       #4b5563;
+  --ink-3:       #79838f;
+
+  --rule:        #e4e8ee;
+  --rule-strong: #c8d0da;
+  --axis:        #aab4c0;
+
+  --root:        #b5342a;
+  --focus:       #2b6cb0;
+
+  /* 新第一層（五大核心根因）— all-pairs 驗證於白底 */
+  --b1: #be842d;
+  --b2: #5194d6;
+  --b3: #27a573;
+  --b4: #5151d6;
+  --b5: #d651ae;
+
+  /* 舊第一層（總會／分所 × 能力／意願） */
+  --o1: #b68c2b;
+  --o2: #309fcf;
+  --o3: #7951d6;
+  --o4: #d65187;
+
+  --fact:  #2f7d55;
+  --hypo:  #b06a12;
+
+  --font-display: "Noto Serif TC", "Songti TC", Georgia, serif;
+  --font-body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --shadow: 0 1px 2px rgba(31,42,55,.05), 0 14px 32px -20px rgba(31,42,55,.35);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--plane);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 1240px;
+  margin: 28px auto 60px;
+  padding: 34px 36px 44px;
+  background: var(--surface);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+@media (max-width: 760px) { .container { margin: 0; padding: 22px 18px 34px; border-radius: 0; } }
+
+a { color: var(--focus); }
+
+:where(button, select, input, a, [tabindex]):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .16em;
+  color: var(--ink-3);
+  margin: 0 0 8px;
+}
+
+/* ---------- header ---------- */
+
+.header-block { border-bottom: 1px solid var(--rule); padding-bottom: 26px; margin-bottom: 8px; }
+
+h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(22px, 2.5vw, 29px);
+  line-height: 1.4;
+  letter-spacing: .01em;
+  margin: 0 0 12px;
+  word-break: keep-all;
+  text-wrap: balance;
+  max-width: 34ch;
+}
+
+.report-intro { font-size: 14px; color: var(--ink-2); margin: 0; max-width: 68ch; }
+
+.meta-box {
+  margin-top: 20px;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.root-why {
+  padding: 16px 20px;
+  background: var(--sunk);
+  border-bottom: 1px solid var(--rule);
+}
+.root-why .label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .14em;
+  color: var(--root);
+  display: block;
+  margin-bottom: 4px;
+}
+.root-why p {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.meta-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 860px) { .meta-grid { grid-template-columns: 1fr; } }
+.meta-item { padding: 14px 20px; border-right: 1px solid var(--rule); }
+.meta-item:last-child { border-right: 0; }
+@media (max-width: 860px) {
+  .meta-item { border-right: 0; border-bottom: 1px solid var(--rule); }
+  .meta-item:last-child { border-bottom: 0; }
+}
+.meta-item strong {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  color: var(--ink-3);
+  margin-bottom: 6px;
+}
+.meta-item .big { font-family: var(--font-mono); font-size: 22px; color: var(--ink); }
+.meta-item p { margin: 2px 0 0; font-size: 12.5px; color: var(--ink-2); line-height: 1.6; }
+
+/* ---------- section nav ---------- */
+
+.section-nav {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  padding: 10px 0;
+  margin-bottom: 28px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--rule);
+}
+.section-nav a {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: .06em;
+  text-decoration: none;
+  color: var(--ink-3);
+  padding: 5px 11px;
+  border-radius: 5px;
+}
+.section-nav a:hover { color: var(--ink); background: var(--sunk); }
+.section-nav a.is-current { color: var(--ink); background: var(--sunk-2); }
+
+/* ---------- sections ---------- */
+
+.section { margin-bottom: 48px; scroll-margin-top: 64px; }
+
+h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 21px;
+  margin: 0 0 8px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--ink);
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+h2 .idx { font-family: var(--font-mono); font-size: 12px; letter-spacing: .1em; color: var(--ink-3); font-weight: 400; }
+.section-lede { margin: 14px 0 18px; color: var(--ink-2); max-width: 70ch; }
+
+/* ---------- tree canvas ---------- */
+
+.canvas-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 10px 12px;
+  background: var(--sunk);
+  border: 1px solid var(--rule);
+  border-bottom: 0;
+  border-radius: 8px 8px 0 0;
+}
+.tool-btn {
+  font: inherit;
+  font-size: 12.5px;
+  color: var(--ink-2);
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  border-radius: 5px;
+  padding: 4px 11px;
+  cursor: pointer;
+  line-height: 1.5;
+}
+.tool-btn:hover { border-color: var(--ink-3); color: var(--ink); }
+.tool-btn.icon { font-family: var(--font-mono); min-width: 32px; padding: 4px 0; text-align: center; }
+.zoom-readout {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-2);
+  min-width: 52px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.tool-sep { width: 1px; align-self: stretch; background: var(--rule-strong); margin: 0 4px; }
+.tool-hint { font-size: 11.5px; color: var(--ink-3); margin-left: auto; }
+@media (max-width: 760px) { .tool-hint { display: none; } }
+
+.canvas-viewport {
+  position: relative;
+  height: min(74vh, 760px);
+  min-height: 460px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 1px 1px, var(--sunk-2) 1px, transparent 0) 0 0 / 22px 22px,
+    var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 0 0 8px 8px;
+  cursor: grab;
+  touch-action: none;
+}
+.canvas-viewport.is-panning { cursor: grabbing; }
+.canvas-viewport:fullscreen { height: 100vh; border-radius: 0; }
+
+/* will-change 只在拖曳／縮放期間由 JS 加上；常駐會讓瀏覽器以 100% 點陣化後放大，導致放大後模糊 */
+.canvas-layer { position: absolute; top: 0; left: 0; transform-origin: 0 0; }
+.canvas-layer.is-moving { will-change: transform; }
+#tree-edges { position: absolute; top: 0; left: 0; overflow: visible; pointer-events: none; }
+
+.tnode {
+  position: absolute;
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  border-radius: 7px;
+  padding: 11px 13px;
+  text-align: left;
+  box-shadow: 0 1px 3px rgba(31,42,55,.07);
+}
+.tnode.root {
+  background: var(--root);
+  border-color: var(--root);
+  color: #fff;
+  text-align: center;
+  padding: 15px 17px;
+}
+.tnode.root .t-kicker { color: rgba(255,255,255,.78); }
+.tnode.root .t-text { color: #fff; font-family: var(--font-display); font-size: 15px; line-height: 1.6; }
+
+.tnode.l1 { border-width: 2px; }
+.tnode.l1 .t-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.tnode.l1 .t-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #fff;
+  border-radius: 4px;
+  padding: 0 6px;
+  line-height: 18px;
+}
+.tnode.l1 .t-short { font-weight: 700; font-size: 14px; }
+.tnode.l1 .t-text { font-size: 12.5px; color: var(--ink-2); line-height: 1.65; }
+
+.t-kicker {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .12em;
+  color: var(--ink-3);
+  display: block;
+  margin-bottom: 5px;
+}
+.tnode.l2 .t-tag {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .06em;
+  color: var(--ink-3);
+}
+.tnode.l2 .t-text { font-size: 12.5px; line-height: 1.65; margin: 3px 0 8px; }
+.t-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.t-link {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .04em;
+  color: var(--ink-2);
+  background: var(--sunk);
+  border: 1px solid var(--rule-strong);
+  border-radius: 4px;
+  padding: 0 7px;
+  line-height: 18px;
+  cursor: pointer;
+}
+.t-link:hover { color: var(--ink); border-color: var(--ink-3); }
+.tnode.is-flash { box-shadow: 0 0 0 3px var(--flash-color, var(--focus)); transition: box-shadow .3s; }
+.t-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .04em;
+  border-radius: 4px;
+  padding: 1px 7px;
+  margin-bottom: 7px;
+}
+.t-state.fact { color: var(--fact); background: #eaf5ee; }
+.t-state.hypo { color: var(--hypo); background: #fdf3e3; }
+.t-state.mixed { color: var(--hypo); background: #fdf3e3; }
+.t-basis { font-size: 12px; color: var(--ink-2); line-height: 1.65; margin: 0; }
+.t-basis b { font-weight: 500; color: var(--ink); }
+.t-test {
+  font-size: 12px;
+  color: var(--ink-2);
+  line-height: 1.65;
+  margin: 7px 0 0;
+  padding-top: 7px;
+  border-top: 1px dotted var(--rule-strong);
+}
+.t-test b { font-weight: 500; color: var(--hypo); }
+
+.t-toggle {
+  position: absolute;
+  right: -11px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid var(--rule-strong);
+  background: var(--surface);
+  color: var(--ink-2);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+.t-toggle:hover { border-color: var(--ink-3); color: var(--ink); }
+
+.canvas-hint { font-size: 11.5px; color: var(--ink-3); margin: 8px 0 0; }
+
+/* ---------- outline fallback ---------- */
+
+.outline { margin-top: 16px; border: 1px solid var(--rule); border-radius: 8px; padding: 12px 16px; }
+.outline > summary {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: .08em;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.outline ol { padding-left: 22px; }
+.outline > ol { margin: 14px 0 4px; }
+.outline li { margin-bottom: 8px; font-size: 13px; }
+.outline .o-branch > span { font-weight: 700; }
+.outline .o-meta { color: var(--ink-2); font-size: 12.5px; }
+
+/* ---------- hypotheses ---------- */
+
+.hypothesis-box {
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 18px 22px 20px;
+  margin-bottom: 16px;
+  background: var(--surface);
+}
+.hypothesis-box h3 {
+  margin: 0 0 4px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 17px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.h-id {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .06em;
+  color: #fff;
+  background: var(--ink);
+  border-radius: 4px;
+  padding: 1px 8px;
+  font-weight: 400;
+}
+.h-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 12px; }
+.branch-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .04em;
+  color: var(--ink-2);
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  padding: 2px 9px 2px 7px;
+}
+.branch-chip .swatch { width: 8px; height: 8px; border-radius: 2px; flex: none; }
+.hypothesis-box > p { margin: 0 0 14px; font-size: 14px; line-height: 1.75; }
+
+table { width: 100%; border-collapse: collapse; background: var(--surface); }
+.h-table th, .h-table td { border: 1px solid var(--rule); padding: 9px 13px; text-align: left; font-size: 13px; line-height: 1.65; vertical-align: top; }
+.h-table th { background: var(--sunk); color: var(--ink); white-space: nowrap; width: 190px; font-weight: 500; }
+
+/* ---------- matrix ---------- */
+
+.mx-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 22px;
+  padding: 12px 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 18px;
+}
+.ctl-label { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .12em; color: var(--ink-3); white-space: nowrap; }
+.ctl-group { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+.segmented { display: inline-flex; border: 1px solid var(--rule-strong); border-radius: 6px; overflow: hidden; }
+.segmented button {
+  font: inherit;
+  font-size: 12.5px;
+  color: var(--ink-2);
+  background: var(--surface);
+  border: 0;
+  border-right: 1px solid var(--rule-strong);
+  padding: 5px 13px;
+  cursor: pointer;
+}
+.segmented button:last-child { border-right: 0; }
+.segmented button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+
+input[type="number"] {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  border-radius: 5px;
+  padding: 4px 7px;
+  width: 60px;
+  text-align: right;
+}
+
+.mx-stage { display: grid; grid-template-columns: minmax(0, 1fr) 346px; gap: 20px; align-items: start; }
+@media (max-width: 1040px) { .mx-stage { grid-template-columns: minmax(0, 1fr); } }
+
+.mx-panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 9px; }
+.mx-plot { padding: 14px 14px 10px; position: relative; }
+
+#mx-svg { display: block; width: 100%; height: auto; }
+#mx-svg text { font-family: var(--font-mono); }
+.mx-grid { stroke: var(--rule); stroke-width: 1; }
+.mx-frame { stroke: var(--axis); stroke-width: 1; fill: none; }
+.mx-thresh { stroke: var(--rule-strong); stroke-width: 1.5; }
+.mx-bracket { stroke: var(--ink-3); stroke-width: 1.5; fill: none; }
+.mx-zone { fill: rgba(31,42,55,.035); }
+.mx-tick { font-size: 10.5px; fill: var(--ink-3); }
+.mx-axis-title { font-size: 11px; letter-spacing: .12em; fill: var(--ink-2); }
+.mx-zone-name { font-size: 11px; letter-spacing: .1em; fill: var(--ink-3); }
+.mx-zone-name.is-focus { fill: var(--ink); }
+.mx-zone-count { font-size: 10.5px; fill: var(--ink-3); }
+.mx-leader { stroke: var(--axis); stroke-width: 1; opacity: .5; }
+.mx-dot-label { font-size: 10px; fill: var(--ink-2); pointer-events: none; }
+
+.mx-mark { cursor: pointer; }
+.mx-mark .glyph {
+  stroke: var(--surface);
+  stroke-width: 2;
+  transition: transform .16s cubic-bezier(.2,.7,.3,1);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.mx-mark .halo { fill: none; stroke: currentColor; stroke-width: 0; opacity: 0; transition: stroke-width .16s, opacity .16s; }
+.mx-mark.is-active .glyph { transform: scale(1.42); }
+.mx-mark.is-active .halo { stroke-width: 1.5; opacity: .5; }
+/* 固定：實線外環 + 深色描邊，與 hover 的淡光暈區隔 */
+.mx-mark .pin-ring { fill: none; stroke: var(--ink); stroke-width: 0; opacity: 0; transition: stroke-width .16s, opacity .16s; }
+.mx-mark.is-pinned .glyph { transform: scale(1.42); stroke: var(--ink); stroke-width: 1.5; }
+.mx-mark.is-pinned .halo { stroke-width: 3; opacity: .35; }
+.mx-mark.is-pinned .pin-ring { stroke-width: 1.5; opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .mx-mark .glyph, .mx-mark .halo, .mx-mark .pin-ring { transition: none; } }
+/* 矩陣內不顯示瀏覽器的 focus 藍框；鍵盤聚焦時由 hover 樣式代為標示 */
+#mx-svg:focus, #mx-svg :focus, #mx-svg :focus-visible,
+#mx-table tr:focus, #mx-table tr:focus-visible,
+#mx-table th:focus, #mx-table th:focus-visible { outline: none; }
+#mx-table tbody tr:focus-visible { background: var(--sunk); }
+
+.mx-tooltip {
+  position: absolute;
+  z-index: 8;
+  min-width: 190px;
+  max-width: 272px;
+  padding: 10px 12px;
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .12s;
+}
+.mx-tooltip[data-show="1"] { opacity: 1; }
+.tt-head { display: flex; align-items: baseline; gap: 7px; margin-bottom: 5px; }
+.tt-key { width: 14px; height: 2px; border-radius: 1px; flex: none; transform: translateY(-4px); }
+.tt-id { font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); }
+.tt-title { font-weight: 700; font-size: 14px; line-height: 1.4; }
+.tt-scores { display: flex; gap: 14px; font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); }
+.tt-scores b { font-size: 15px; font-weight: 500; color: var(--ink); }
+.tt-zone { margin-top: 5px; font-size: 11.5px; color: var(--ink-2); }
+.tt-hint { margin-top: 6px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .08em; color: var(--ink-3); }
+
+.mx-legend { display: flex; flex-wrap: wrap; gap: 6px 4px; margin-top: 10px; padding-top: 11px; border-top: 1px solid var(--rule); }
+.legend-label { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .12em; color: var(--ink-3); align-self: center; margin-right: 4px; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 11px 4px 8px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink-2);
+  font: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+.chip:hover { border-color: var(--ink-3); color: var(--ink); }
+.chip[aria-pressed="false"] { opacity: .42; }
+.chip svg { display: block; overflow: visible; }
+.mx-note { margin: 8px 0 0; font-size: 11px; color: var(--ink-3); line-height: 1.55; }
+
+.mx-rail { padding: 17px 18px 19px; display: flex; flex-direction: column; gap: 13px; position: sticky; top: 62px; }
+@media (max-width: 1040px) { .mx-rail { position: static; } }
+.rail-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.rail-eyebrow { display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); }
+.rail-eyebrow .badge { font-size: 11px; letter-spacing: .06em; color: var(--ink); border: 1px solid var(--rule-strong); border-radius: 4px; padding: 1px 6px; }
+.pin-btn { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .08em; }
+.pin-btn[aria-pressed="true"] { color: var(--ink); border-color: var(--ink-3); }
+.mx-rail h3 { font-family: var(--font-display); font-weight: 600; font-size: 18px; line-height: 1.45; margin: 0; text-wrap: balance; }
+.rail-statement { margin: 0; font-size: 13px; color: var(--ink-2); line-height: 1.75; }
+.zone-tag { align-self: flex-start; font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; color: var(--ink-2); background: var(--sunk); border-radius: 4px; padding: 3px 9px; }
+.metric { display: flex; flex-direction: column; gap: 6px; }
+.metric-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.metric-name { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .12em; color: var(--ink-3); }
+.metric-val { font-family: var(--font-mono); font-size: 25px; line-height: 1; }
+.meter { position: relative; height: 5px; border-radius: 3px; background: var(--sunk-2); }
+.meter-fill { position: absolute; inset: 0 auto 0 0; border-radius: 3px; background: var(--ink-2); }
+.meter-thresh { position: absolute; top: -3px; bottom: -3px; width: 1px; background: var(--axis); }
+.metric-why { margin: 0; font-size: 12.5px; color: var(--ink-2); line-height: 1.72; }
+.rail-foot { border-top: 1px solid var(--rule); padding-top: 11px; display: flex; flex-direction: column; gap: 4px; }
+.foot-row { display: flex; gap: 10px; font-size: 12.5px; }
+.foot-row dt { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; color: var(--ink-3); min-width: 58px; padding-top: 2px; }
+.foot-row dd { margin: 0; color: var(--ink-2); }
+.foot-row .note { color: var(--ink-3); font-size: 11.5px; }
+.tree-jump {
+  font: inherit;
+  font-size: 12.5px;
+  color: var(--focus);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+.tree-jump:hover { text-decoration: underline; }
+
+.mx-table-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin: 26px 0 10px; }
+.mx-table-head h3 { font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: .16em; color: var(--ink-3); margin: 0; }
+.mx-table-head span { font-size: 11.5px; color: var(--ink-3); }
+.table-scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 9px; }
+#mx-table { font-size: 13px; }
+#mx-table th, #mx-table td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+#mx-table thead th {
+  font-family: var(--font-mono); font-weight: 500; font-size: 10.5px; letter-spacing: .1em;
+  color: var(--ink-3); white-space: nowrap; border-bottom-color: var(--rule-strong); background: var(--sunk);
+}
+#mx-table thead th.sortable { cursor: pointer; user-select: none; }
+#mx-table thead th.sortable:hover { color: var(--ink); }
+#mx-table thead th[aria-sort="ascending"]::after { content: " ↑"; }
+#mx-table thead th[aria-sort="descending"]::after { content: " ↓"; }
+#mx-table tbody tr { cursor: pointer; }
+#mx-table tbody tr:hover, #mx-table tbody tr.is-active { background: var(--sunk); }
+#mx-table tbody tr.is-pinned { background: var(--sunk-2); box-shadow: inset 3px 0 0 var(--ink); }
+#mx-table tbody tr:last-child td { border-bottom: 0; }
+#mx-table td.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+#mx-table td.id { font-family: var(--font-mono); color: var(--ink-3); white-space: nowrap; }
+#mx-table td.topic { min-width: 200px; }
+.cat-cell { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+
+/* ---------- root why: 改題論證摘要 + dialog ---------- */
+
+.why-brief { padding: 16px 20px 18px; border-bottom: 1px solid var(--rule); }
+.why-brief .label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .14em;
+  color: var(--ink-3);
+  display: block;
+  margin-bottom: 10px;
+}
+.why-points { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px 22px; margin: 0; padding: 0; list-style: none; }
+@media (max-width: 860px) { .why-points { grid-template-columns: 1fr; } }
+.why-points li { font-size: 13px; color: var(--ink-2); line-height: 1.7; }
+.why-points b { display: block; color: var(--ink); font-weight: 700; font-size: 13.5px; margin-bottom: 2px; }
+.why-points .num { font-family: var(--font-mono); color: var(--ink); }
+.why-more { margin-top: 12px; }
+
+.version-note {
+  margin-top: 16px;
+  max-width: 88ch;
+  padding: 10px 16px 12px;
+  background: var(--sunk);
+  border-left: 3px solid var(--focus);
+  border-radius: 0 6px 6px 0;
+  font-size: 13px;
+  color: var(--ink-2);
+}
+.version-note .label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .14em;
+  color: var(--focus);
+  display: block;
+  margin-bottom: 4px;
+}
+.version-note ul { margin: 0; padding-left: 1.2em; }
+.version-note li { line-height: 1.7; }
+
+.doc-dialog {
+  width: min(880px, calc(100vw - 32px));
+  max-height: calc(100vh - 48px);
+  padding: 0;
+  border: 1px solid var(--rule-strong);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  color: var(--ink);
+  background: var(--surface);
+}
+.doc-dialog::backdrop { background: rgba(31,42,55,.45); }
+.doc-head {
+  position: sticky; top: 0; z-index: 1;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 22px; background: var(--surface); border-bottom: 1px solid var(--rule);
+}
+.doc-head h2 { border: 0; padding: 0; margin: 0; font-size: 17px; }
+.doc-body { padding: 6px 26px 28px; font-size: 13.5px; line-height: 1.8; }
+.doc-body h3 { font-family: var(--font-display); font-weight: 600; font-size: 16px; margin: 24px 0 8px; padding-bottom: 6px; border-bottom: 1px solid var(--rule); }
+.doc-body h4 { font-size: 13.5px; margin: 16px 0 6px; }
+.doc-body p, .doc-body ul, .doc-body ol { margin: 0 0 10px; }
+.doc-body ul, .doc-body ol { padding-left: 20px; }
+.doc-body li { margin-bottom: 4px; }
+.doc-body blockquote { margin: 0 0 10px; padding: 8px 14px; background: var(--sunk); border-left: 3px solid var(--rule-strong); color: var(--ink-2); }
+.doc-body .formula { font-family: var(--font-mono); font-size: 12.5px; background: var(--sunk); border-radius: 5px; padding: 8px 12px; margin: 6px 0 10px; }
+.doc-table { font-size: 12.5px; margin: 6px 0 12px; }
+.doc-table th, .doc-table td { border: 1px solid var(--rule); padding: 7px 10px; vertical-align: top; text-align: left; line-height: 1.6; }
+.doc-table thead th { background: var(--sunk); font-weight: 500; white-space: nowrap; }
+.doc-table tbody th { background: var(--sunk); font-weight: 500; white-space: nowrap; }
+.doc-scroll { overflow-x: auto; }
+
+/* ---------- hypotheses: 驗證結論 ---------- */
+
+.verdict { font-weight: 500; }
+.verdict.pos { color: var(--fact); border-color: #b9dcc8; background: #eaf5ee; }
+.verdict.mid { color: var(--hypo); border-color: #ecd3a8; background: #fdf3e3; }
+.verdict.neg { color: var(--root); border-color: #e8bcb7; background: #fbeceb; }
+.h-table ul { margin: 0; padding-left: 18px; }
+.h-table li { margin-bottom: 3px; }
+.h-table li:last-child { margin-bottom: 0; }
+.action-plan { border: 1px dashed var(--rule-strong); border-radius: 8px; padding: 14px 20px; }
+.action-plan h3 { margin: 0 0 8px; font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: .14em; color: var(--ink-3); }
+.action-plan ol { margin: 0; padding-left: 20px; font-size: 13px; }
+.action-plan li { margin-bottom: 4px; }
+.action-plan li b { font-weight: 500; }
+
+/* ---------- theory of change ---------- */
+
+.toc-core {
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: var(--sunk);
+  padding: 14px 20px;
+  margin-bottom: 16px;
+}
+.toc-core .label { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .14em; color: var(--root); display: block; margin-bottom: 4px; }
+.toc-core p { margin: 0; font-family: var(--font-display); font-size: 16px; line-height: 1.6; }
+
+/* 現狀惡性循環：一列根因色塊 */
+.toc-vicious {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 4px;
+  margin: 0 0 16px;
+  padding: 10px 14px;
+  border: 1px dashed var(--rule-strong);
+  border-radius: 8px;
+}
+.toc-vicious .lbl { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .12em; color: var(--ink-3); margin-right: 8px; }
+.toc-vicious .step { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; padding: 2px 10px 2px 8px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--c) 45%, var(--surface)); background: color-mix(in srgb, var(--c) 9%, var(--surface)); }
+.toc-vicious .step .sw { width: 8px; height: 8px; border-radius: 2px; background: var(--c); }
+.toc-vicious .arr { color: var(--axis); font-size: 12px; }
+.toc-vicious .end { font-size: 12.5px; font-weight: 700; color: var(--root); }
+
+.toc-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 1px 1px, var(--sunk-2) 1px, transparent 0) 0 0 / 22px 22px,
+    var(--surface);
+}
+.toc-stage {
+  position: relative;
+  min-width: 1120px;
+  padding: 18px 24px 26px;
+  display: grid;
+  /* 根因 | 槓桿 | 成果 | 飛輪標籤通道 | 影響力 */
+  grid-template-columns: 180px minmax(0, 1fr) minmax(0, 1fr) 110px 210px;
+  grid-template-rows: auto auto auto auto;
+  column-gap: 40px;
+  row-gap: 16px;
+}
+#toc-edges { position: absolute; top: 0; left: 0; pointer-events: none; overflow: visible; z-index: 2; }
+#toc-edges path { fill: none; stroke: var(--axis); stroke-width: 1.4; opacity: .75; transition: opacity .16s, stroke-width .16s; }
+#toc-edges path.fly { stroke: var(--ink-3); stroke-width: 2; opacity: .9; }
+#toc-edges path.is-lit { stroke: var(--edge); stroke-width: 2.4; opacity: 1; }
+.toc-stage.has-focus #toc-edges path:not(.is-lit) { opacity: .12; }
+#toc-edges polygon { fill: var(--axis); opacity: .75; transition: opacity .16s; }
+#toc-edges polygon.fly { fill: var(--ink-3); opacity: .9; }
+#toc-edges polygon.is-lit { fill: var(--edge); opacity: 1; }
+.toc-stage.has-focus #toc-edges polygon:not(.is-lit) { opacity: .12; }
+.hypothesis-box { scroll-margin-top: 70px; }
+
+.toc-fly-label {
+  position: absolute;
+  z-index: 3;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  line-height: 1.45;
+  letter-spacing: .02em;
+  color: var(--ink-2);
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  border-radius: 5px;
+  padding: 2px 7px;
+  max-width: 150px;
+  pointer-events: none;
+  transition: opacity .16s;
+}
+.toc-fly-label b { color: var(--ink); font-weight: 500; }
+.toc-stage.has-focus .toc-fly-label:not(.is-lit) { opacity: .25; }
+
+.toc-col-head { display: flex; align-items: center; gap: 8px; padding-bottom: 8px; border-bottom: 2px solid var(--stage); align-self: end; }
+.toc-col-head .n { font-family: var(--font-mono); font-size: 11px; color: #fff; background: var(--stage); border-radius: 4px; padding: 0 6px; line-height: 18px; }
+.toc-col-head .t { font-weight: 700; font-size: 13.5px; }
+.toc-col-head .en { font-family: var(--font-mono); font-size: 10px; letter-spacing: .08em; color: var(--ink-3); margin-left: auto; }
+
+/* 泳道：列 = 利害關係人樞紐，跨「槓桿」「成果」兩欄 */
+.toc-lane {
+  grid-column: 2 / 4;
+  margin: 0 -14px;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--p) 22%, var(--surface));
+  background: color-mix(in srgb, var(--p) 4%, var(--surface));
+  position: relative;
+  z-index: 0;
+}
+.toc-lane .lane-lbl { position: absolute; top: 8px; left: 14px; display: flex; align-items: baseline; gap: 8px; }
+.toc-lane .lane-lbl .t { font-weight: 700; font-size: 12.5px; color: var(--p); }
+.toc-lane .lane-lbl .en { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .1em; color: var(--ink-3); }
+.toc-impact-lane {
+  grid-column: 5;
+  grid-row: 2 / 5;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--root) 25%, var(--surface));
+  background: color-mix(in srgb, var(--root) 5%, var(--surface));
+  margin: 0 -10px;
+  position: relative;
+  z-index: 0;
+}
+.toc-impact-lane .lane-lbl { position: absolute; top: 8px; left: 12px; font-weight: 700; font-size: 12.5px; color: var(--root); }
+
+.toc-cell { position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; gap: 12px; padding: 34px 0 14px; }
+.toc-cell.rc { grid-column: 1; grid-row: 2 / 5; justify-content: space-around; padding: 6px 0; }
+.toc-cell.imp { grid-column: 5; }
+
+.toc-node {
+  position: relative;
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  border-radius: 12px;
+  padding: 10px 12px 11px;
+  box-shadow: 0 1px 3px rgba(31,42,55,.07);
+  cursor: pointer;
+  transition: opacity .16s, box-shadow .16s;
+}
+.toc-node:focus, .toc-node:focus-visible { outline: none; }
+.toc-node .k { font-family: var(--font-mono); font-size: 10px; letter-spacing: .08em; color: var(--ink-3); display: block; margin-bottom: 2px; }
+.toc-node .t { font-weight: 700; font-size: 13px; line-height: 1.5; display: block; text-wrap: balance; }
+.toc-node .d { font-size: 12px; color: var(--ink-2); line-height: 1.6; margin: 4px 0 0; text-wrap: pretty; }
+.toc-node .hy { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; margin-top: 7px; }
+.toc-node .hy .branch-chip { font-size: 10px; padding: 0 7px 0 5px; background: var(--surface); }
+
+/* 由左至右色彩漸強：根因（淡）→ 槓桿 → 成果 → 影響力（實色） */
+.toc-node.rc { padding: 8px 10px 9px; border-color: color-mix(in srgb, var(--c) 40%, var(--surface)); background: color-mix(in srgb, var(--c) 8%, var(--surface)); }
+.toc-node.rc .k { color: var(--c); font-weight: 500; }
+.toc-node.rc .t { font-size: 12.5px; }
+.toc-node.rc .d { font-size: 11.5px; }
+.toc-node.lever { border-color: color-mix(in srgb, var(--p) 35%, var(--surface)); background: color-mix(in srgb, var(--p) 11%, var(--surface)); }
+.toc-node.lever .k { color: var(--p); }
+.toc-node.result { border: 1.5px solid color-mix(in srgb, var(--p) 70%, var(--surface)); background: color-mix(in srgb, var(--p) 24%, var(--surface)); }
+.toc-node.result .k { color: color-mix(in srgb, var(--p) 80%, var(--ink)); }
+.toc-node.result .d { color: var(--ink); }
+.toc-node.hub { background: var(--p); border-color: var(--p); color: #fff; }
+.toc-node.hub .k { color: rgba(255,255,255,.8); }
+.toc-node.hub .d { color: rgba(255,255,255,.92); }
+.toc-node.impact { background: var(--root); border-color: var(--root); color: #fff; padding: 14px 14px 15px; }
+.toc-node.impact .k { color: rgba(255,255,255,.8); }
+.toc-node.impact .t { font-size: 14px; }
+.toc-node.impact .d { color: rgba(255,255,255,.92); }
+
+.toc-stage.has-focus .toc-node:not(.is-lit) { opacity: .3; }
+.toc-node.is-lit { box-shadow: 0 0 0 1px var(--ink-3), 0 6px 16px -8px rgba(31,42,55,.35); }
+.toc-node.is-pinned { box-shadow: 0 0 0 2px var(--ink), 0 6px 16px -8px rgba(31,42,55,.35); }
+
+.toc-hint { font-size: 11.5px; color: var(--ink-3); margin: 8px 0 0; }
+.toc-sub { font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: .16em; color: var(--ink-3); margin: 26px 0 10px; }
+.toc-table th, .toc-table td { border-bottom: 1px solid var(--rule); padding: 9px 12px; text-align: left; vertical-align: top; font-size: 13px; line-height: 1.65; }
+.toc-table thead th { font-family: var(--font-mono); font-weight: 500; font-size: 10.5px; letter-spacing: .1em; color: var(--ink-3); background: var(--sunk); white-space: nowrap; border-bottom-color: var(--rule-strong); }
+.toc-table tbody tr:last-child td { border-bottom: 0; }
+.toc-table td b { font-weight: 500; }
+.toc-table td .muted { display: block; color: var(--ink-2); font-size: 12.5px; margin-top: 2px; }
+
+/* ---------- footer ---------- */
+
+.report-foot {
+  margin-top: 44px;
+  padding-top: 18px;
+  border-top: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .04em;
+  color: var(--ink-3);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+}
+
+/* ---------- print ---------- */
+
+@media print {
+  @page { margin: 12mm; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { background: #fff; }
+  .container { box-shadow: none; margin: 0; padding: 0; max-width: none; }
+  .section-nav, .canvas-toolbar, .canvas-viewport, .canvas-hint, .mx-controls, .tool-hint { display: none !important; }
+  .outline { border: 0; padding: 0; }
+  .outline > summary { display: none; }
+  .outline > ol { display: block !important; }
+  .section { margin-bottom: 22px; break-inside: auto; }
+  h2 { break-after: avoid; }
+  .hypothesis-box { break-inside: avoid; padding: 12px 14px; margin-bottom: 12px; }
+  .mx-stage { grid-template-columns: 1fr; }
+  .mx-rail { display: none; }
+  .table-scroll { overflow: visible; }
+  .why-more, .toc-hint { display: none !important; }
+  .toc-scroll { overflow: visible; border: 0; background: none; }
+  .toc-stage { min-width: 0; column-gap: 14px; padding: 0; }
+  #toc-edges { display: none; }
+  .toc-node { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="header-block">
+    <p class="eyebrow">勵馨基金會 × SCHOOL 28 · V7 · 更新 2026-09-26</p>
+    <h1>以五大核心根因重構之議題樹與影響力矩陣</h1>
+    <p class="report-intro">
+      本版將 0919 版議題樹由「總會／分所 × 能力／意願」的四象限切法，重構為
+      <strong>五大核心根因</strong>的 MECE 架構：外部門禁、業務規格、IT 技術驅動、人力產能、組織治理。
+      全樹 17 個第二層節點逐一標註證據狀態（已依 0924 假說驗證與 0926 查證更新），第三區塊以影響力 × 可解性矩陣定位處理優先序，
+      第四區塊以改變理論（Theory of Change）說明解開五大根因後，總會、分所與政府如何啟動正向生態系飛輪。Section 1–4 共用同一組根因色碼。
+    </p>
+
+    <div class="version-note" id="version-note">
+      <span class="label">V7 版本說明（相對 V6）</span>
+      <ul>
+        <li>刪除錯誤的法規引用（衛福部帳號管理規範、資通安全責任等級分級辦法等）；敏感資料依據改為個資法第 6 條。</li>
+        <li>節點與假說狀態依執行長訪談與 0926 查證降級：17 個節點改為 7 項已證實、6 項部份證實、4 項待驗證；H-2 改未驗證、H-3 改待驗證、H-4 改待 POC、H-5 改部份證實。</li>
+        <li>伊甸做法改為中性寫法（「只填一次」，標明為訪談轉述）；查無出處的數字（48 小時、2.3 倍、35～45% 等）刪除或標為估算。</li>
+      </ul>
+    </div>
+
+    <div class="meta-box">
+      <div class="root-why">
+        <span class="label">ROOT WHY（核心提問）</span>
+        <p>在不增加社工工時的情況下，為什麼勵馨總會無法每個月收到全分所的服務資料？</p>
+      </div>
+      <div class="why-brief">
+        <span class="label">為什麼改題為「數據治理」</span>
+        <ul class="why-points">
+          <li><b>行政負擔是症狀，數據治理癱瘓才是病因</b>
+            不解決資料回不到總會、規格不一、反饋斷裂，只給社工 AI 工具，同一筆資料仍要在政府系統與地方、總會表單間重複填寫多次（0919 議題樹）。</li>
+          <li><b>同業做法（訪談轉述）</b>
+            據執行長訪談（2026-09）轉述，伊甸有 <span class="num">30</span> 幾名資訊人員，社工只填一次，約九成和政府重疊的欄位不必重填（資料流向待確認）；勵馨僅 <span class="num">4</span> 名 IT、仍是一年一次年度成果報表，需走輕量架構。</li>
+          <li><b>影響力估算（假設，未量測）</b>
+            假設每位社工每月省下 8～10 小時，以 400 名社工 × 9.6 小時 × 12 個月估算，全會約 <span class="num">46,080</span> 小時／年，約 <span class="num">23</span> 名全職人力的年工時（每人約 2,000 小時）。</li>
+        </ul>
+        <div class="why-more">
+          <button type="button" class="tool-btn" id="open-benchmark">閱讀完整論證與 Benchmark 分析</button>
+        </div>
+      </div>
+      <div class="meta-grid">
+        <div class="meta-item">
+          <strong>樹狀規模</strong>
+          <span class="big">5 × 17</span>
+          <p>五大核心根因分支，展開 17 個第二層因果節點。</p>
+        </div>
+        <div class="meta-item">
+          <strong>證據狀態</strong>
+          <span class="big" id="meta-states">—</span>
+          <p>已證實之事實 ／ 部份證實或尚待驗證（依 0924 驗證、0926 查證更新）。</p>
+        </div>
+        <div class="meta-item">
+          <strong>核心假說驗證（0924）</strong>
+          <span class="big" id="meta-hypo">—</span>
+          <p id="meta-hypo-note">證實 ／ 部份證實或待驗證 ／ 否定。</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="section-nav" aria-label="區塊導覽">
+    <a href="#sec-tree" data-nav="sec-tree">Section 1 · Why Tree</a>
+    <a href="#sec-hypo" data-nav="sec-hypo">Section 2 · 核心假說</a>
+    <a href="#sec-matrix" data-nav="sec-matrix">Section 3 · 影響力 × 可解性矩陣</a>
+    <a href="#sec-toc" data-nav="sec-toc">Section 4 · 改變理論</a>
+  </nav>
+
+  <!-- ================= Section 1 ================= -->
+  <section class="section" id="sec-tree">
+    <h2><span class="idx">SECTION 1</span>巢狀因果議題樹 (Why Tree)</h2>
+    <p class="section-lede">
+      由左而右閱讀：根提問 → 五大核心根因 → 第二層因果節點。每個第二層節點都標示證據狀態，
+      「尚待驗證之假說」另附驗證關鍵。畫布可拖曳平移與縮放，點分支節點右側的圓鈕可收合該分支。
+    </p>
+
+    <div class="canvas-toolbar">
+      <button class="tool-btn icon" id="zoom-out" aria-label="縮小">−</button>
+      <span class="zoom-readout" id="zoom-readout">100%</span>
+      <button class="tool-btn icon" id="zoom-in" aria-label="放大">＋</button>
+      <span class="tool-sep" aria-hidden="true"></span>
+      <button class="tool-btn" id="zoom-fit">適合畫面</button>
+      <button class="tool-btn" id="zoom-reset">100%</button>
+      <span class="tool-sep" aria-hidden="true"></span>
+      <button class="tool-btn" id="expand-all">全部展開</button>
+      <button class="tool-btn" id="collapse-all">只看根因</button>
+      <button class="tool-btn" id="go-fullscreen">全螢幕</button>
+      <span class="tool-hint">拖曳平移 · ⌘/Ctrl + 滾輪或觸控板縮放 · 雙擊放大</span>
+    </div>
+
+    <div class="canvas-viewport" id="tree-viewport" tabindex="0" role="application"
+         aria-label="可平移縮放的議題樹畫布；完整文字內容請見下方文字大綱">
+      <div class="canvas-layer" id="tree-layer" aria-hidden="true">
+        <svg id="tree-edges"></svg>
+        <div id="tree-nodes"></div>
+      </div>
+    </div>
+    <p class="canvas-hint">※ 畫布為視覺呈現；完整可複製、可列印的文字內容請展開下方大綱。</p>
+
+    <details class="outline" id="tree-outline">
+      <summary>以文字大綱檢視（可複製、列印用）</summary>
+      <ol id="outline-body"></ol>
+    </details>
+  </section>
+
+  <!-- ================= Section 2 ================= -->
+  <section class="section" id="sec-hypo">
+    <h2><span class="idx">SECTION 2</span>核心關鍵假說與驗證狀態清單</h2>
+    <p class="section-lede">
+      以下是從全樹提煉出、<strong>影響力最高且最需驗證</strong>的五項核心假說，以及 A1／C1 權限節點，
+      已於 2026-09-24 以執行長訪談（2026-09）為主要依據完成第一輪驗證，並於 2026-09-26 依公開資料查證更正法規與文獻引用。
+      每項標示其歸屬的根因分支（色塊對應 Section 1 與 Section 3 的分支色）、驗證結論與下一步行動。
+    </p>
+    <div id="hypo-list"></div>
+    <div class="action-plan">
+      <h3>後續實地驗證行動清單</h3>
+      <ol>
+        <li><b>外部社工訪談</b>：訪問 2～3 位同業（家扶／現代婦女）保護性社工，確認其衛福部系統權限與報表產製現況。</li>
+        <li><b>IT 技能圖譜審計</b>：與勵馨資訊組溝通，釐清 4 名 IT 人員的真實開發領域（軟體／資料庫／網管）與 Helpdesk 外包可能性。</li>
+        <li><b>青少女懷孕場域 POC</b>：在執行長認為目前最有可能的試辦場域（不在政府系統內、系統完全由勵馨掌握），測試「最小共通數據字典」與「自動化接收介面」之社工接受度。</li>
+        <li><b>伊甸作法確認</b>：向伊甸資訊管理處確認實際作法與資料流向。</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================= Section 3 ================= -->
+  <section class="section" id="sec-matrix">
+    <h2><span class="idx">SECTION 3</span>影響力 × 可解性矩陣</h2>
+    <p class="section-lede">
+      17 個第二層議題在「影響力」與「可解性」兩軸上的定位，用來決定先做什麼、先實驗什麼、先剪掉什麼。
+      標記方式可切換：<strong>舊第一層</strong>為 0919 版的「總會／分所 × 能力／意願」四分類；
+      <strong>新第一層</strong>為本版的五大核心根因。
+    </p>
+
+    <div class="mx-controls">
+      <div class="ctl-group">
+        <span class="ctl-label">標記方式</span>
+        <div class="segmented" id="mode-switch" role="group" aria-label="標記方式">
+          <button type="button" data-mode="old" aria-pressed="false">舊第一層（總會／分所）</button>
+          <button type="button" data-mode="new" aria-pressed="true">新第一層（五大根因）</button>
+        </div>
+      </div>
+      <div class="ctl-group">
+        <span class="ctl-label">門檻</span>
+        <label class="ctl-label" for="th-impact" style="letter-spacing:0">影響力</label>
+        <input type="number" id="th-impact" min="0" max="100" step="5" value="60">
+        <label class="ctl-label" for="th-solve" style="letter-spacing:0">可解性</label>
+        <input type="number" id="th-solve" min="0" max="100" step="5" value="60">
+      </div>
+    </div>
+
+    <div class="mx-stage">
+      <div class="mx-panel mx-plot">
+        <svg id="mx-svg" viewBox="0 0 652 652" aria-labelledby="mx-title"></svg>
+        <div class="mx-tooltip" id="mx-tooltip" role="status" aria-live="polite"></div>
+        <div class="mx-legend" id="mx-legend"></div>
+        <p class="mx-note" id="mx-note"></p>
+      </div>
+      <aside class="mx-panel mx-rail" id="mx-rail" aria-live="polite"></aside>
+    </div>
+
+    <div class="mx-table-head">
+      <h3>完整資料表</h3>
+      <span>點任一列可在右側展開完整評分理由</span>
+    </div>
+    <div class="table-scroll">
+      <table id="mx-table">
+        <thead><tr id="mx-thead"></tr></thead>
+        <tbody id="mx-tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= Section 4 ================= -->
+  <section class="section" id="sec-toc">
+    <h2><span class="idx">SECTION 4</span>改變理論 (Theory of Change)</h2>
+    <p class="section-lede">
+      對接 Why Tree 診斷出的 5 大關鍵根因：說明解開根因後，總會、分所與政府三個利害關係人樞紐如何從「惡性卡點循環」翻轉為「正向生態系飛輪」。
+      左欄根因沿用 Section 1–3 的色碼；灰色粗線 ①→④ 是飛輪連動。把游標移到任一節點（或點擊固定），會亮起它的上游來源與下游影響。
+    </p>
+    <div class="toc-core">
+      <span class="label">核心矛盾</span>
+      <p>如何在「零新增社工行政工時」的硬性約束下，打破總會與分所之間的數據斷流，將勵馨轉型為敏捷、數據驅動之社會倡議領導者？</p>
+    </div>
+    <div class="toc-vicious" id="toc-vicious"></div>
+    <div class="toc-scroll">
+      <div class="toc-stage" id="toc-stage">
+        <svg id="toc-edges" aria-hidden="true"></svg>
+      </div>
+    </div>
+    <p class="toc-hint">※ 窄螢幕可左右捲動圖表。現階段（Why Tree）聚焦根因診斷；下一階段（How Tree）將針對這些槓桿展開具體行動方案。</p>
+
+    <h3 class="toc-sub">關鍵假設與驗證計畫</h3>
+    <div class="table-scroll">
+      <table class="toc-table" id="toc-risk">
+        <thead><tr><th>關鍵假設</th><th>對應假說</th><th>驗證方式</th><th>潛在風險</th><th>控制與解套機制</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="report-foot">
+    <span>勵馨基金會 × School 28 專案</span>
+    <span>V7 · 更新 2026-09-26</span>
+    <span>來源：執行長訪談（2026-09） ／ 0919 議題樹與影響力矩陣 ／ 0924 假說驗證 ／ 0926 公開資料查證 ／ 改變理論 v2</span>
+    <span>公開版：內部訪談細節已略去</span>
+  </footer>
+</div>
+<dialog class="doc-dialog" id="benchmark-dialog" aria-labelledby="benchmark-title">
+  <div class="doc-head">
+    <h2 id="benchmark-title">題目影響力數據與國內外 Benchmark 分析</h2>
+    <button type="button" class="tool-btn" id="close-benchmark">關閉</button>
+  </div>
+  <div class="doc-body">
+    <h3>一、專案改題背景與論證需求 (Why Data Governance?)</h3>
+    <p>本專案之核心命題經歷了重要的範式轉移：</p>
+    <ul>
+      <li><b>原題目</b>：如何用數位科技／AI 簡化社工個案紀錄行政流程？</li>
+      <li><b>新題目（數據治理）</b>：在不增加社工工時的情況下，為什麼勵馨總會無法每個月收到全分所的服務資料？</li>
+    </ul>
+
+    <h4>答辯與論證核心邏輯 (Defense Narrative)</h4>
+    <p>當專案報告向評審、顧問或內部決策層簡報時，改題為「數據治理（Data Governance）」經常面臨以下質疑：</p>
+    <ol>
+      <li><i>「數據治理聽起來太企業化、太高高在上，真的貼近社工實務嗎？」</i></li>
+      <li><i>「社工行政負擔那麼重，談數據治理是不是在增加總會管控、剝削社工？」</i></li>
+    </ol>
+    <p><b>我們的核心反駁與論證：</b></p>
+    <ul>
+      <li><b>「行政負擔重」只是系統失能的症狀（Symptom），「數據治理癱瘓」才是病因（Root Cause）。</b></li>
+      <li>如果不解決「資料回不到總會」、「表單規格不一」、「雙向反饋斷裂」等數據治理問題，單純給社工一個 AI 語音逐字稿工具，同一筆資料仍要在政府系統與地方、總會表單之間<b>重複填寫多次</b>（0919 議題樹，綠燈）。</li>
+      <li>推動數據治理的目標，是透過自動化與架構優化<b>為社工減少重複彙整</b>，並為總會倡議<b>提升數據即時性</b>，達到雙贏（目標，未量測）。</li>
+    </ul>
+
+    <h3>二、國內同業 Benchmark：以財團法人伊甸社會福利基金會為例</h3>
+    <p>伊甸是執行長提到、已處理過類似問題的同業（勵馨曾拜訪其資訊處；執行長訪談（2026-09））。透過對比勵馨與伊甸，可釐清勵馨的轉型定位：</p>
+    <h4>勵馨 vs. 伊甸 數據治理與 IT 架構對比表</h4>
+    <div class="doc-scroll">
+      <table class="doc-table">
+        <thead><tr><th>比較維度</th><th>伊甸社會福利基金會</th><th>勵馨社會福利事業基金會</th><th>標竿啟示與差距</th></tr></thead>
+        <tbody>
+          <tr><th>組織與 IT 規模</th><td>全會 3,000 多人；資訊人員 <b>30 幾人</b>（執行長訪談（2026-09）轉述，未經伊甸證實）。公開資料：維基百科稱 2,800 多名工作人員；資訊單位為「資訊管理處」（ETtoday 2026-07-07），人數查無。</td><td>全會 600 人（訪談；徵才平台登錄 450／550 人）；資訊組 <b>4 人</b>（訪談）。</td><td>差距在絕對人數（4 人對 30 幾人），勵馨欠缺重型開發能量，需走輕量架構。</td></tr>
+          <tr><th>政府資料對接模式</th><td>伊甸讓社工只填一次，約九成和政府重疊的欄位不必重填（執行長訪談（2026-09）轉述；資料流向待確認；未見公開文獻）。</td><td><b>「一年一次年度成果報表」模式</b>。因不願社工填兩次而放棄常態收集（執行長訪談（2026-09））。</td><td>若伊甸做法屬實，代表「免除社工重複輸入」在同業已做到；細節作法需向伊甸驗證。</td></tr>
+          <tr><th>核心管理系統</th><td>線上志工專區／雲志工媒合、線上捐款系統（伊甸官網；ETtoday 2026-07-07）；個案管理系統的規模與集中程度，公開資料查無。</td><td>舊版 CRM、分所依縣市要求的表單、青少女懷孕系統規劃重做（執行長訪談（2026-09））。</td><td>勵馨目前缺乏全會統一的個案數據中樞。</td></tr>
+          <tr><th>資安與資產曝險治理</th><td>規劃導入 ISO 27001 等 ISMS（ETtoday 2026-07-07）；2026 年導入奧義賽博（CyCraft）EASM 外部曝險管理（奧義官網 2026-06，待開原文），7 月另導入中華電信「風險之眼」（ETtoday 2026-07-07）。</td><td>去識別化已由資訊組程式自動遮蔽；資訊同仁需兼顧日常障礙排除（執行長訪談（2026-09））。</td><td>伊甸資安投入較多；勵馨需建立輕量去識別化與資安管理。</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h4>政府系統對民間介接：公開先例（待開原文）</h4>
+    <ul>
+      <li><b>長照</b>：Ankecare 報導〈2020衛福部資訊處重要業務：開放API 匯入申報，建置長照大數據系統〉；1966 長照專區自 2021 年起辦理「長照自建資訊系統介接長照服務費用支付審核系統驗證作業」；2024-05-09 公開《支付審核系統API 規格說明書（照管平台）版次 2.2.1》。資料方向是民間系統寫入政府系統；伊甸的資料流向若也是如此，兩者可能是同一個方向，但資料流向確認前不下定論。</li>
+      <li><b>收出養</b>：《兒童及少年收出養媒合服務者許可及管理辦法》要求媒合服務者把檔案資料登錄到中央主管機關資訊系統（條號待核對）；「建置時規格納入與 NPO 介接」出自執行長訪談（2026-09），未見公開佐證。</li>
+      <li><b>保護資訊系統</b>：官方公開的介接清單看來都是政府系統（社會安全網 FAQ）；對受託民間單位的匯出權限，公開資料查無。</li>
+    </ul>
+    <h4>洞見（○ 假說，待驗證）</h4>
+    <p>伊甸的主要業務是身障與長照，而長照系統已開放民間系統寫入 API；勵馨以保護性業務為主，保護資訊系統查不到對民間開放的介接。因此兩者的差距可能不只是 IT 人力（30 幾人 vs 4 人），<b>也在於各自服務領域所用的政府系統開放程度不同</b>。</p>
+
+    <h3>三、國外 Benchmark 與跨國研究數據</h3>
+    <h4>國際研究數據（皆為搜尋摘要，待開原文核對）</h4>
+    <ul>
+      <li><b>資料即時性</b>：ERP 廠商 Unit4 委託 PAC 調查北美與歐洲 NPO 高階主管（2024 年底）：72% 表示彙整決策所需數據要 2～7 天，只有 7% 能即時取得（廠商委託調查；Unit4／PAC〈From Transition to Transformation〉，2025）。</li>
+      <li><b>一線文書負擔</b>：英國社工協會 2018 年調查 350 位兒少家庭社工：每週 45 小時中，29 小時花在電腦與文書，面對面服務只有 11 小時（BASW England 80-20 Campaign；Community Care 2018-05-29 報導）。</li>
+    </ul>
+    <h4>傳統 NPO vs. 數據驅動 NPO 營運指標對比（右欄為本專案目標，非量測）</h4>
+    <div class="doc-scroll">
+      <table class="doc-table">
+        <thead><tr><th>指標</th><th>傳統 NPO 營運模式</th><th>數據治理驅動 NPO 模式</th></tr></thead>
+        <tbody>
+          <tr><th>數據頻率</th><td>一年一次（Lag）</td><td>月度動態（Real-time）</td></tr>
+          <tr><th>社工感知</th><td>填雜事／被騷擾</td><td>數據倡議有成效</td></tr>
+          <tr><th>倡議回應</th><td>臨時發問卷調查</td><td>數日內產出聲明</td></tr>
+          <tr><th>系統狀態</th><td>資料傳遞緩慢</td><td>敏捷敏銳數據中樞</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>四、勵馨改題「數據治理」之影響力數據評估模型 (Impact Sizing)</h3>
+    <p>為說明本專案的潛在影響力（Impact），我們建立量化與質化評估模型：</p>
+    <h4>1. 量化效益模型（估算，非量測）</h4>
+    <ul>
+      <li>全台勵馨約 600 名員工（訪談），其中直接服務社工約 350～400 人（內部估計，公開資料查無）。</li>
+      <li>假設透過「數據治理 + 政府資料自動轉換」，每位社工每月可節省手動重複彙整與填報時間約 <b>8～10 小時</b>（假設值，未量測）。</li>
+      <li><b>全會每年節省工時（估算）</b>：
+        <div class="formula">400 人 × 9.6 小時／月 × 12 個月 = 46,080 小時／年</div>前提：取社工人數上限 400 人、每月省時取 9.6 小時，皆未量測。</li>
+      <li><b>約相當於 23 名全職人力的年工時（估算）</b>：以每人每年約 2,000 小時換算。</li>
+    </ul>
+    <h4>2. 質化戰略效益 (Qualitative Strategic Value)</h4>
+    <ul>
+      <li><b>縮短資料傳遞時間</b>：及時捕捉政府系統可能未涵蓋的新興議題（以數位性暴力為例，執行長訪談（2026-09）；現行通報表是否已新增相關欄位待確認）。</li>
+      <li><b>即時性政策倡議</b>：如訪談中之「電子腳鐐個案調查案」，總會臨時擬問卷、分所 2～3 天內回覆（執行長訪談（2026-09））；若有常態數據，可望不必臨時調查即產出一線受暴婦女數據。</li>
+    </ul>
+
+    <h3>五、挑戰答辯 Quick Reference (Defense FAQ)</h3>
+    <p><b>Q：如果衛福部保護系統就是不給 API，數據治理是不是空談？</b></p>
+    <blockquote>不是。數據治理的核心是「資料規格定義」與「流程設計」。短期不強求政府改 API，而是透過勵馨內部的「最小共通數據字典」與「分所端輕量 CSV 轉譯工具」推進（總會稽核時已有請有權限社工匯出的流程）；同時可向縣府探詢開放總會權限，收出養系統已有 NPO 介接的前例（執行長訪談（2026-09））。</blockquote>
+    <p><b>Q：勵馨只有 4 名 IT，談數據治理會不會不切實際？</b></p>
+    <blockquote>正因為只有 4 名 IT，才更需要數據治理！現況是 IT 需兼顧日常障礙排除；數據治理係透過「職務再設計（Helpdesk 分流）」與「Low-code／Python 輕量架構」，讓 4 名 IT 轉型為數據 PM。</blockquote>
+  </div>
+</dialog>
+
+<script id="matrix-data" type="application/json">{"metadata":{"title":"勵馨基金會議題樹 0919 整合版 (切法二) - Level 2 影響力與可解性評估矩陣","version":"1.0.0","total_items":17,"scoring_scale":"0-100","description":"針對 0919 整合版 (總會分所維度 x 能力意願維度) 的 17 個第二層議題節點，評估其『影響力 (Impact)』與『可解性 (Solvability)』分數，作為後續專案優先順序 (Prioritization) 與假說驗證 (Hypothesis Testing) 之可視化數據庫。","quadrant_definitions":{"Quick_Wins":"高影響力 (>=60) / 高可解性 (>=60)：核心突破口，最優先執行之專案範疇 (Quick Wins / Core Initiatives)","Strategic_Pivots":"高影響力 (>=60) / 低可解性 (<60)：戰略槓桿點，需進行低成本 MVP / POC 實驗或繞道解法 (Strategic Pivots)","Fill_ins":"低影響力 (<60) / 高可解性 (>=60)：次要補充項目，可順帶處理或自動化改善 (Fill-ins / Easy Fixes)","Hard_Knocks":"低影響力 (<60) / 低可解性 (<60)：次要卡點，暫緩處理或直接剪枝 (Hard Knocks / Deprioritize)"}},"items":[{"id":"A1","level1_category":"A 總會沒有能力取得","level2_item":"因為總會沒有權限讀取各分所在政府系統裡的資料","short_title":"政府系統權限封閉","impact_score":90,"impact_rationale":"政府委託服務約占勵馨一半以上（執行長訪談（2026-09）），資料都在政府系統內，總會無法按月取得，致命性極高。","solvability_score":35,"solvability_rationale":"家暴性侵系統建於二三十年前、未納入 NPO 介接，直接要求政府開放權限難度高；但執行長認為可與縣府協調權限開放，收出養系統已納入 NPO 介接（執行長訪談（2026-09）），也可參考伊甸「只填一次」做法（訪談轉述）。","quadrant":"Strategic_Pivots","quadrant_label":"戰略槓桿點 (高影響力 / 低可解性)","root_cause_tag":"外部門禁與權限障礙"},{"id":"A2","level1_category":"A 總會沒有能力取得","level2_item":"因為總會沒有符合需求的資訊系統","short_title":"總會缺乏承接數據系統","impact_score":85,"impact_rationale":"缺乏內部數據中樞（Data Repository / Dashboard），即使分所導出資料也無處承接與自動彙整。","solvability_score":75,"solvability_rationale":"總會擁有內部決策主導權，可透過低程式碼 (Low-code) 或結合規劃重做的自籌系統（如青少女懷孕系統）建立。","quadrant":"Quick_Wins","quadrant_label":"快速贏家 (高影響力 / 高可解性)","root_cause_tag":"IT技術與工具驅動不足"},{"id":"A3","level1_category":"A 總會沒有能力取得","level2_item":"因為總會沒有人力去各分所撈資料","short_title":"總會缺乏人工撈資料人力","impact_score":40,"impact_rationale":"依靠人工到全國 15 縣市 50 餘個服務據點（勵馨官網）實地/手動撈資料本身即非可永續擴展之模式，非根本卡點。","solvability_score":30,"solvability_rationale":"總會倡議人力有限、IT 僅 4 人，難以補充專責人工撈資料人力。","quadrant":"Hard_Knocks","quadrant_label":"次要卡點 / 剪枝 (低影響力 / 低可解性)","root_cause_tag":"產能飽和與人力資源極限"},{"id":"A4","level1_category":"A 總會沒有能力取得","level2_item":"因為資訊解決方案沒有給出明確的資料格式需求","short_title":"資訊方案缺乏明確規格需求","impact_score":80,"impact_rationale":"資訊端若未給出標準 Schema 與資料字典，研發與分所即無從配合統一格式。","solvability_score":80,"solvability_rationale":"屬總會研發與資訊組內部對齊範疇，只要釐清業務與 IT 需求即可完成規格定義。","quadrant":"Quick_Wins","quadrant_label":"快速贏家 (高影響力 / 高可解性)","root_cause_tag":"業務規格與標準未定"},{"id":"B1","level1_category":"B 總會沒有意願索取","level2_item":"因為總會不希望拉工作量提升（社工福祉）","short_title":"體恤社工不願增加行政負擔","impact_score":85,"impact_rationale":"總會因為心疼社工重工而主動選擇不發起索取，是每月數據收集停擺的核心決策心態。","solvability_score":70,"solvability_rationale":"一旦提供『零新增工時』的自動化導出或預填工具，總會索取意願將瞬間解凍。","quadrant":"Quick_Wins","quadrant_label":"快速贏家 (高影響力 / 高可解性)","root_cause_tag":"組織治理與價值閉環斷裂"},{"id":"B2","level1_category":"B 總會沒有意願索取","level2_item":"因為推動跨分所協調的成本很高（溝通成本）","short_title":"跨分所協調與溝通成本高","impact_score":65,"impact_rationale":"地方分權導致 7 個法院服務處努力 5-10 年仍無法統合表單，協調摩擦極大。","solvability_score":50,"solvability_rationale":"可採『最小共通核心欄位 (Master Data)』策略或由自籌服務（青少女懷孕）切入，避開全表單 100% 統合摩擦。","quadrant":"Strategic_Pivots","quadrant_label":"戰略槓桿點 (高影響力 / 中低可解性)","root_cause_tag":"業務規格與標準未定"},{"id":"B3","level1_category":"B 總會沒有意願索取","level2_item":"因為總會尚未確定蒐集來的資料要如何運用","short_title":"總會數據運用戰略與目的未定","impact_score":75,"impact_rationale":"若總會不清楚資料能產出何種倡議效益，索取行為便缺乏正當性，淪為形式作業。","solvability_score":85,"solvability_rationale":"純屬總會管理層與研發組內部共識範疇，明確數據倡議主題（如電子腳鐐、數位性暴力）即可解決。","quadrant":"Quick_Wins","quadrant_label":"快速贏家 (高影響力 / 高可解性)","root_cause_tag":"組織治理與價值閉環斷裂"},{"id":"C1","level1_category":"C 分所沒有能力提供","level2_item":"因為分所拿不到政府系統裡已經算好的統計","short_title":"無法匯出政府系統現成統計","impact_score":70,"impact_rationale":"政府系統內部已有計算結果，但分所不會/無法導出，被迫人工重新計算重工。","solvability_score":55,"solvability_rationale":"需透過教育訓練（教分所操作固定報表指令）或與地方政府協調開放統計導出權限。","quadrant":"Strategic_Pivots","quadrant_label":"戰略槓桿點 (高影響力 / 中低可解性)","root_cause_tag":"外部門禁與權限障礙"},{"id":"C2","level1_category":"C 分所沒有能力提供","level2_item":"因為分所不知道怎麼產出總會要的資料","short_title":"分所缺乏產出資料 Know-how","impact_score":75,"impact_rationale":"欄位定義模糊、無統一數據字典、找不到詢問窗口，導致分所無所適從。","solvability_score":85,"solvability_rationale":"編撰明確 SOP、建立數據字典與指定研發/IT 單一窗口，可快速消除 Know-how 障礙。","quadrant":"Quick_Wins","quadrant_label":"快速贏家 (高影響力 / 高可解性)","root_cause_tag":"業務規格與標準未定"},{"id":"C3","level1_category":"C 分所沒有能力提供","level2_item":"因為分所交出來的資料品質參差不齊","short_title":"交出資料品質參差不齊","impact_score":60,"impact_rationale":"資料品質不一（如定義不同、算頭不算尾）導致總會不敢直接使用，增添稽核成本。","solvability_score":80,"solvability_rationale":"建立前端表單邏輯檢核（Validation）與品管流程，可大幅提升資料品質。","quadrant":"Quick_Wins","quadrant_label":"快速贏家 (高影響力 / 高可解性)","root_cause_tag":"業務規格與標準未定"},{"id":"C4","level1_category":"C 分所沒有能力提供","level2_item":"因為社工作業量多","short_title":"社工直接服務工時飽和","impact_score":95,"impact_rationale":"0919 議題樹訪談中，總會與分所皆表示社工沒有餘裕彙整總會報告（0919 綠燈），屬最核心的產能瓶頸（Capacity Bottleneck）。","solvability_score":25,"solvability_rationale":"無法透過增加社工人力解決（NPO 缺工與預算限制），必須透過『減法管理/自動化』釋放工時。","quadrant":"Strategic_Pivots","quadrant_label":"戰略槓桿點 (極高影響力 / 低可解性)","root_cause_tag":"產能飽和與人力資源極限"},{"id":"C5","level1_category":"C 分所沒有能力提供","level2_item":"因為無法用行政助理補充工時供給","short_title":"行政助理補充機制失效","impact_score":55,"impact_rationale":"委託經費多不含行政人力、需自籌；勵馨曾試行行政助理，交辦與教學成本高，未能持續（執行長訪談（2026-09））。","solvability_score":40,"solvability_rationale":"受限於委託經費結構（行政人力需自籌）與勵馨 HR 制度，短時間內難以全面補充行政助理。","quadrant":"Hard_Knocks","quadrant_label":"次要卡點 (低影響力 / 低可解性)","root_cause_tag":"產能飽和與人力資源極限"},{"id":"C6","level1_category":"C 分所沒有能力提供","level2_item":"因為工作被重複工與不良流程墊高","short_title":"重複填報與不良流程耗能","impact_score":90,"impact_rationale":"重複填寫多份表單（政府系統、地方表單、總會報表）、介面不友善，浪費社工有限的工時；去識別化已由資訊組程式自動化（執行長訪談（2026-09））。","solvability_score":75,"solvability_rationale":"高槓桿切入點！沿用資訊組既有的自動去識別化程式，搭配低代碼表單整合與流程優化，可大幅消除重工。","quadrant":"Quick_Wins","quadrant_label":"核心快速贏家 (極高影響力 / 高可解性)","root_cause_tag":"IT技術與工具驅動不足"},{"id":"C7","level1_category":"C 分所沒有能力提供","level2_item":"因為考核時間與系統建檔天數限制造成月內尖峰堆疊","short_title":"考核天數限制致月內尖峰堆疊","impact_score":50,"impact_rationale":"月底建檔與評鑑時間點重疊，造成月內作業工作量暴增集中。","solvability_score":65,"solvability_rationale":"可調整總會內部平時收集頻率（如週度微紀錄/彈性填報窗口）平滑化工作尖峰。","quadrant":"Fill_ins","quadrant_label":"次要補充 (低影響力 / 高可解性)","root_cause_tag":"產能飽和與人力資源極限"},{"id":"D1","level1_category":"D 分所沒有意願提供","level2_item":"因為不交資料不會有任何損失","short_title":"缺少考核與監督驅動機制","impact_score":65,"impact_rationale":"未納入考核、無追蹤機制，導致分所將數據提交列為最低優先級。","solvability_score":85,"solvability_rationale":"總會可自主建立輕量定期追蹤與主管考核指標，制度建立難度低。","quadrant":"Quick_Wins","quadrant_label":"快速贏家 (中高影響力 / 高可解性)","root_cause_tag":"組織治理與價值閉環斷裂"},{"id":"D2","level1_category":"D 分所沒有意願提供","level2_item":"因為分所看不到交資料的價值","short_title":"缺乏數據價值感知與反饋閉環","impact_score":90,"impact_rationale":"總會未反饋倡議成果，分所感受不到資料價值，強烈認知為『被騷擾/增加雜事』。","solvability_score":80,"solvability_rationale":"極高槓桿！研發組建立雙向數據反饋機制，讓分所看到數據贏得法案或資源的成果。","quadrant":"Quick_Wins","quadrant_label":"核心快速贏家 (極高影響力 / 高可解性)","root_cause_tag":"組織治理與價值閉環斷裂"},{"id":"D3","level1_category":"D 分所沒有意願提供","level2_item":"因為交資料可能造成風險","short_title":"個資洩漏疑慮與跨分所比較壓力","impact_score":70,"impact_rationale":"擔心違反個資法或數據被總會拿來做分所間的不公平績效評比，產生防禦心態。","solvability_score":75,"solvability_rationale":"明確宣告數據僅用於總會倡議與資源爭取、不作分所懲罰性評比，並提供自動去識別化安全承諾。","quadrant":"Quick_Wins","quadrant_label":"快速贏家 (高影響力 / 高可解性)","root_cause_tag":"組織治理與價值閉環斷裂"}]}</script>
+
+<script>
+(function () {
+  "use strict";
+
+  /* =======================================================================
+     Shared data
+     ======================================================================= */
+
+  // 五大核心根因。tag 必須與矩陣 JSON 的 root_cause_tag 完全一致。
+  var BRANCHES = [
+    { n: 1, short: "外部門禁", tag: "外部門禁與權限障礙", color: "var(--b1)", hex: "#be842d",
+      text: "因為外部門禁與權限障礙，導致資料在源頭與傳輸出口直接斷流" },
+    { n: 2, short: "業務規格", tag: "業務規格與標準未定", color: "var(--b2)", hex: "#5194d6",
+      text: "因為業務規格與標準未定，導致跨分所資料缺乏統一語言與定義" },
+    { n: 3, short: "技術驅動", tag: "IT技術與工具驅動不足", color: "var(--b3)", hex: "#27a573",
+      text: "因為 IT 技術與工具驅動不足，導致數據傳輸缺乏自動化管線與中樞" },
+    { n: 4, short: "人力產能", tag: "產能飽和與人力資源極限", color: "var(--b4)", hex: "#5151d6",
+      text: "因為產能飽和與人力資源極限，導致社工與 IT 皆無法承受額外手動負擔" },
+    { n: 5, short: "組織治理", tag: "組織治理與價值閉環斷裂", color: "var(--b5)", hex: "#d651ae",
+      text: "因為組織治理與價值閉環斷裂，導致總分所缺乏數據驅動之雙向誘因" }
+  ];
+
+  var ROOT_TEXT = "在不增加社工工時的情況下，為什麼勵馨總會無法每個月收到全分所的服務資料？";
+
+  var LEAVES = {
+    "外部門禁與權限障礙": [
+      { tag: "系統出口限制", mx: "A1", text: "因為政府保護性系統權限封閉且資安限制嚴格，未開放 API 或批次匯出",
+        state: "mixed", stateLabel: "部份證實（訪談證實；法規依據未查到）", basisLabel: "事實依據",
+        basis: "勵馨多年前曾請政府提供匯出，政府以資安為由不提供。家暴、性侵系統建於二三十年前，當時沒有把與 NPO 介接的功能考量進去；官方公開的保護資訊系統介接清單看來都是政府系統（社會安全網 FAQ，待開原文）。對照：收出養系統約三四年前建置時即納入 NPO 介接（執行長說法；未見公開佐證）。執行長認為家暴性侵系統的介接技術上可行，但不確定。保護資訊系統的資安防護等級與對外 API 規定，公開資料未查到。以技術外掛或行政授權破局（H-2）尚未驗證。出處：執行長訪談（2026-09）。" },
+      { tag: "操作權限限制", mx: "C1", text: "因為分所無政府系統後台數據導出權限或不熟悉撈取指令",
+        state: "fact", stateLabel: "已明確證實之事實（依執行長訪談（2026-09））", basisLabel: "事實依據",
+        basis: "保護資訊系統以自然人憑證登入，由網絡共用，警察、檢察官、法官都可以進入；曾發生權限濫用事故，之後權限收緊，現在只能看到自己服務的個案（執行長訪談（2026-09））。帳號由地方政府逐人受理申請（高雄市社會局《保護資訊系統權限申請表》，公開搜尋結果，內容待開原文）。分所表示沒有權限直接下載統整後的數據（0919 燈號：綠）。「不熟悉撈取指令」為執行長推測。" }
+    ],
+    "業務規格與標準未定": [
+      { tag: "欄位規格缺失", mx: "B2", text: "因為跨分所同質與異質業務之表單未統一，缺乏全會 Master Data 數據字典",
+        state: "mixed", stateLabel: "已證實之事實（解法為假說，待 POC）", basisLabel: "事實依據",
+        basis: "研發組曾想為 7 個法院服務處（同質方案）做共同資料庫或表單，努力 5～10 年後放棄；原因是各縣市要求不同，分所須依縣市政府要求填寫（執行長訪談（2026-09））。「失敗主因是追求 100% 全表單一致、改採『數據主幹 + 地方分支』即可解開」是本專案的詮釋與假說（H-4），待 POC。",
+        test: "在青少女懷孕試辦場域，驗證只抽離 10～20% 核心指標（開案日期、服務人次、處遇階段、結案轉折）、保留 80% 地方特規的做法能否被分所接受。" },
+      { tag: "外部特規拉力", text: "因為地方分所須配合委託方（地方政府）之特規委託契約表單",
+        state: "fact", stateLabel: "已明確證實之事實", basisLabel: "事實依據",
+        basis: "分所同時對委託的地方政府與總會負責；委託表單依縣市政府要求，分所難以自行調整（執行長訪談（2026-09））。" },
+      { tag: "產出指引缺失", mx: "C2", text: "因為總會需求與欄位定義模糊，分所不知如何產出合規數據",
+        state: "hypo", stateLabel: "尚待驗證之假說", basisLabel: "假說內容",
+        basis: "總會未給予明確的數據產出定義與 SOP，導致各分所理解迥異、交上來的資料格式參差不齊。目前沒有直接出處：0919 燈號中「分所不懂總會資料的定義、找不到窗口」為紅燈（未驗證），「系統太難操作」為黃燈（執行長）；訪談只提到總會一年收一次年度成果報表（執行長訪談（2026-09））。",
+        test: "取得年度成果報表的填報說明，並詢問 2～3 個分所填報時的疑問點與窗口。" },
+      { tag: "範疇覆蓋限制", text: "因為現行政府系統欄位僅限法定項目，無法涵蓋新興議題數據",
+        state: "mixed", stateLabel: "部份證實（執行長訪談所述；現行通報表是否已新增相關欄位待確認）", basisLabel: "事實依據",
+        basis: "執行長訪談（2026-09）所述：政府收集的多是法定服務；以數位性暴力為例，以前社會沒有這個議題，政府資料裡就沒有這個項目，一線看到了也填不進去，報表裡看不到。但新版性侵害案件通報表自 113 年 7 月 1 日起適用、2023 年性影像相關四法修正，現行通報表是否已新增相關欄位待確認。",
+        test: "核對保護服務司《性侵害案件通報表（1130701 適用）》與《家庭暴力事件通報表》有無性影像或數位暴力欄位。" }
+    ],
+    "IT技術與工具驅動不足": [
+      { tag: "接收中樞缺失", mx: "A2", text: "因為總會缺乏符合需求之資訊系統與自動化數據接收中樞",
+        state: "fact", stateLabel: "已明確證實之事實", basisLabel: "事實依據",
+        basis: "總會目前唯一的數據來源是一年一次的年度成果報表，沒有可以按月接收分所服務資料的系統；共同表單規格未定，系統開發也就缺乏需求依據（執行長訪談（2026-09））。" },
+      { tag: "轉換工具缺失", mx: "C6", text: "因為政府系統資料缺乏轉成總會格式的工具，分所提供資料仍需人工整理",
+        state: "mixed", stateLabel: "部份證實（去識別化已自動化；轉換環節待驗證）", basisLabel: "事實依據",
+        basis: "去識別化已經自動化：資訊組設計了程式，資料丟進去會自動判斷個資欄位並遮蔽（前兩年仍是手動塗黑）。尚缺的是把政府系統資料取出並轉成總會格式的環節：總會沒辦法直接到原始資料庫撈資料，稽核時要請有權限的社工把資料匯出（執行長訪談（2026-09））；分所社工整理並彙整報告需要額外花時間（0919 燈號：綠）。勵馨自身與政府欄位的重疊率未量測（「100 項中約 90 項重疊」是描述伊甸時的舉例）。以輕量 Low-code／Python 腳本處理 CSV 轉換為本專案推論（H-3），待 IT 技能盤點。",
+        test: "分所督導合法登入後，以瀏覽器擴充套件或本機腳本將畫面資料轉為去識別化數據檔的可行性，以及是否符合系統使用規範。" }
+    ],
+    "產能飽和與人力資源極限": [
+      { tag: "IT 產能瓶頸", mx: "A3", text: "因為總會 IT 人力極度匱乏（全會僅 4 人），且被日常 Helpdesk 維運排障擠爆",
+        state: "mixed", stateLabel: "部份證實（技能待盤點）", basisLabel: "事實依據",
+        basis: "勵馨全會 600 人、資訊人員 4 人；伊甸全會 3,000 多人、資訊人員 30 幾人（執行長訪談（2026-09）轉述；伊甸資訊人數公開資料查無）。總會資訊同仁需兼顧日常障礙排除，難以專心開發（H-1）。",
+        test: "現有 4 名 IT 是否具備 Python ETL、API 介接、SQL 資料庫設計等能力；若技能偏網路硬體維護，單純減輕 Helpdesk 也不會自動產生開發產出。" },
+      { tag: "社工工時飽和", mx: "C4", text: "因為分所個案量飽和，社工工時已無餘裕處理總會報表",
+        state: "fact", stateLabel: "已明確證實之事實", basisLabel: "事實依據",
+        basis: "0919 議題樹訪談中，總會與分所皆表示，分所社工在不增加工時的情況下沒有時間填或彙整總會要的報告（0919 燈號：綠）。" },
+      { tag: "替代人力失能", mx: "C5", text: "因為缺乏行政助理專職協助數據整理，或助理教學與權限維護成本過高",
+        state: "fact", stateLabel: "已明確證實之事實", basisLabel: "事實依據",
+        basis: "委託經費多只給社工，行政人力要民間自籌。勵馨曾試行行政助理，交辦與教學成本高，未能持續（執行長訪談（2026-09））。" },
+      { tag: "收集流程錯位", mx: "C7", text: "因為現行數據收集機制（年度報表、半年團督）缺乏月度動態流程設計",
+        state: "fact", stateLabel: "已明確證實之事實", basisLabel: "事實依據",
+        basis: "現行收集頻率為一年一次年度成果報表；半年一次的議題團督偏向總會傳達宣導，沒有收集數據（執行長訪談（2026-09））。" }
+    ],
+    "組織治理與價值閉環斷裂": [
+      { tag: "總會發起意願", mx: "B1", text: "因為總會恪守「體恤社工不願重工」底線，缺乏強制要求之政策決心",
+        state: "fact", stateLabel: "已明確證實之事實", basisLabel: "事實依據",
+        basis: "總會不願讓社工重複填寫，所以放棄自建收集；為了不打擾分所，盡量以政府要收集的資料為主（執行長訪談（2026-09））。" },
+      { tag: "戰略用途不明", mx: "B3", text: "因為總會管理層對數據收集後之戰略用途與倡議目標尚未形成共識",
+        state: "hypo", stateLabel: "尚待驗證之假說", basisLabel: "假說內容",
+        basis: "總會管理層對資料收集後的具體用途（方案調整、倡議）尚未形成可操作的共識。注意：執行長本人對用途講得具體——從全分所數據找到新的倡議點、改善總分所關係（執行長訪談（2026-09））；0919 燈號中「研究或倡議策略不明確」已標為與證據衝突。",
+        test: "訪談研發組主管：總會目前要用分所資料回答哪些問題、有無書面用途清單。" },
+      { tag: "制度激勵缺失", mx: "D1", text: "因為工作考核與評鑑皆未納入數據提供，欠缺制度約束力與激勵誘因",
+        state: "hypo", stateLabel: "尚待驗證之假說", basisLabel: "假說內容",
+        basis: "政府評鑑與內部考績皆未包含數據繳交，不提供資料沒有後果或追蹤。0919 燈號中相關節點皆為紅燈（未驗證），訪談未提及。",
+        test: "查閱勵馨內部考核表與政府評鑑指標，確認有無資料繳交項目。" },
+      { tag: "價值感知斷裂", mx: "D2", text: "因為雙向數據反饋閉環斷裂，分所感受不到資料價值，感知為「填雜事／騷擾」",
+        state: "mixed", stateLabel: "部份證實（回饋斷裂已證實；回饋能提升意願為執行長判斷，待驗證）", basisLabel: "事實依據",
+        basis: "分所填完資料後不知道資料怎麼被使用；總會倡議人力有限、對外急件多，結果較少回饋給分所。執行長認為分所若知道數據產生了什麼效果，再忙也會覺得有意義（執行長判斷）。電子腳鐐案中，分所 2～3 天內回覆總會問卷；訪談沒有提到該案有回饋給分所（H-5）。出處：執行長訪談（2026-09）。" },
+      { tag: "心理防禦機制", mx: "D3", text: "因為分所對跨分所數據評比缺乏安全感，或擔心違反個資規範",
+        state: "hypo", stateLabel: "尚待驗證之假說", basisLabel: "假說內容",
+        basis: "分所擔心數據被總會拿來做跨分所績效評比，且擔心個資外洩。0919 燈號：個資疑慮為黃燈（執行長，範圍待補）、跨分所評比為紅燈（未驗證）。",
+        test: "在試辦分所訪談主任與督導：交資料給總會時最擔心什麼。" }
+    ]
+  };
+
+  // 0924 假說驗證（0926 依公開資料查證更正）。tone：pos 證實／mid 部份證實、條件成立或待驗證／neg 否定
+  var HYPOTHESES = [
+    { id: "A1／C1", name: "政府保護性系統權限封閉與一線社工導出限制", branches: [1],
+      verdict: "證實（依執行長訪談；法規依據未查到）", tone: "pos",
+      body: "A1：服務資料存放在政府系統，總會研發與管理層無法跨機構讀取。C1：分所社工在政府系統只有單向輸入權限，沒有下載、匯出全機構統計報表的權限。",
+      evidence: [
+        "拿不到資料：勵馨曾請政府提供匯出，政府以資安為由不提供；總會沒辦法直接到原始資料庫撈資料，稽核時要請有權限的社工匯出（執行長訪談（2026-09））。",
+        "權限只到自己的個案：自然人憑證登入；系統由網絡共用，警察、檢察官、法官都可以進入；曾發生權限濫用事故，之後權限收緊，現在只能看到自己服務的個案（執行長訪談（2026-09））。",
+        "帳號申請：由地方政府逐人受理，例如高雄市社會局《保護資訊系統權限申請表》（公開搜尋結果，內容待開原文）。系統有無總會層級角色，公開資料查無，無法證實或否定。",
+        "資料敏感性：家暴、性侵、兒少保護資料涉及個資法第 6 條的特種個資（如性生活、健康），這是它屬高敏感資料的依據；保護資訊系統的資通系統防護需求等級，公開資料未查到正式評級。",
+        "文獻：王秀燕（2018）〈資訊科技接受與使用之感受－保護性社工使用保護資訊系統經驗〉，《社區發展季刊》第 161 期，訪談臺中、彰化 12 位保護性社工；是否述及報表導出受限，內容待讀全文確認，暫不作為依據。"
+      ],
+      action: "外部 Double-Check：訪談家扶、現代婦女基金會承接家暴／性侵委託案的社工督導——「登入衛福部保護系統後，介面上是否有一鍵匯出全機構 CSV／Excel 的功能？總會要資料時，你們如何交付？」；開啟高雄市權限申請表，確認權限項目有無匯出。" },
+    { id: "H-1", name: "IT 團隊技能與 Helpdesk 耗能分流假說", branches: [3, 4],
+      verdict: "部份證實／待技能盤點", tone: "mid",
+      body: "全會 600 人僅 4 名 IT，工時被日常排障（Helpdesk）打碎；若將維運排障外包分流，現有 IT 即可投入自動化數據管線開發。",
+      evidence: [
+        "規模差距：勵馨全會 600 人、資訊人員 4 人；伊甸全會 3,000 多人、資訊人員 30 幾人（執行長訪談（2026-09）轉述）。",
+        "日常耗損：IT 需兼顧日常障礙排除，難以專心開發（執行長訪談（2026-09））。"
+      ],
+      action: "IT 技能圖譜盤點：確認 4 名 IT 是否具備 Python ETL、API 介接、SQL 資料庫設計能力；若技能偏網路硬體維護，單純減輕 Helpdesk 並不會自動產生軟體 PM 與開發產出。" },
+    { id: "H-2", name: "保護性系統技術外掛或行政授權破局假說", branches: [1],
+      verdict: "未驗證（正面爭取難度高，但未被否定）", tone: "mid",
+      body: "可以透過技術外掛爬取政府系統，或向衛福部／縣市政府協調權限開放。",
+      evidence: [
+        "困難面：曾發生權限濫用事故，之後權限收緊到只能看自己的個案；家暴性侵系統建置時未納入 NPO 介接（執行長訪談（2026-09））；官方公開的保護資訊系統介接清單看來都是政府系統（社會安全網 FAQ，待開原文）。",
+        "可能面：執行長認為權限這一關「技術上可能可以克服」，可與縣府協調權限開放；收出養系統三四年前建置時已納入 NPO 介接（執行長說法；未見公開佐證）。出處：執行長訪談（2026-09）。",
+        "修法成本（類比）：過去委託契約相關的修法倡議經驗顯示，修法路徑耗時且不確定；該例不是系統權限議題，只能類比修法路徑的成本。"
+      ],
+      action: "雙軌：短期走「分所端輕量輔助」——分所督導合法登入後，以瀏覽器擴充套件或本機腳本協助將畫面資料轉為去識別化數據檔（比照現行稽核時請有權限社工匯出的流程；外掛須先確認符合系統使用規範）；同步與縣府協調權限開放，以收出養介接為前例。" },
+    { id: "H-3", name: "伊甸「只填一次」模式複製假說", branches: [3],
+      verdict: "待驗證（伊甸做法為訪談轉述）", tone: "mid",
+      body: "勵馨可參考伊甸：社工只填一次，與政府重疊的約九成欄位不必重填，總會只補收差額，達成社工零重複填報。",
+      evidence: [
+        "伊甸做法：伊甸讓社工只填一次，約九成和政府重疊的欄位不必重填（執行長訪談（2026-09）轉述；資料流向待確認；未見公開文獻）。勵馨評估過可行但沒有做，細節作法仍需驗證。",
+        "重疊率：「100 項中約 90 項重疊」是描述伊甸時的舉例（執行長訪談（2026-09）），勵馨自身的欄位重疊率未量測。",
+        "資源差距：伊甸資訊人員 30 幾人、勵馨 4 人（執行長訪談（2026-09）轉述）；以 Low-code 或輕量 Python 處理 CSV 轉換為本專案推論。",
+        "上限：只靠政府欄位看不到新興議題（執行長訪談（2026-09））。"
+      ],
+      action: "向伊甸確認實際作法與資料流向；比對一份政府系統欄位與總會年報欄位，量測實際重疊率；再以輕量轉換腳本驗證（去識別化沿用資訊組現有程式）（對應 Section 4 槓桿 B、E）。" },
+    { id: "H-4", name: "最小共通數據字典 (Master Data) 抽離假說", branches: [2],
+      verdict: "待 POC（假說）", tone: "mid",
+      body: "跨服務領域（家暴、移工、性侵）差異雖大，研發與業務端仍能抽離出 10～20% 的共通數據主幹，無須 100% 表單一致。",
+      evidence: [
+        "過去失敗經過：研發組想為 7 個法院服務處做共同資料庫或表單，5～10 年後放棄，原因是各縣市要求不同、分所須依縣市政府要求（執行長訪談（2026-09））。「敗在追求 100% 一致」是本專案的詮釋。",
+        "提議：改採「數據主幹 + 地方分支（Master Data & Local Extension）」架構，總會只收 10～20% 通用指標（開案日期、服務人次、處遇階段、結案轉折），允許分所保留 80% 地方特規（本專案提出，未驗證）。"
+      ],
+      action: "青少女懷孕場域 POC：執行長認為目前最有可能的驗證場域（不在政府系統內、系統完全由勵馨掌握；執行長訪談（2026-09）），測試最小共通數據字典與自動化接收介面的社工接受度。" },
+    { id: "H-5", name: "雙向數據反饋消除「被騷擾感」假說", branches: [5],
+      verdict: "部份證實（回饋斷裂已證實；回饋能提升意願待驗證）", tone: "mid",
+      body: "分所抗拒填報的主因是感受不到數據價值（感知為「總會騷擾／填雜事」）；若總會建立數據反饋機制（在地倡議簡報、影響力圖卡），將能建立內在填報動機。",
+      evidence: [
+        "訪談證實回饋斷裂：總會倡議人力有限、忙於對外急件，結果較少回饋給分所（執行長訪談（2026-09））。",
+        "回饋效果為執行長判斷：分所若知道數據產生了什麼效果，再忙也會覺得有意義。電子腳鐐案中分所 2～3 天內回覆問卷（執行長訪談（2026-09）），但訪談沒有提到該案有回饋給分所或促成立法。"
+      ],
+      action: "建立月度反饋機制並模組化：以自動化簡報範本降低研發組產製時間，避免回饋機制再次中斷；在試辦分所驗證回饋前後的填報意願（對應 Section 4 假設三）。" }
+  ];
+
+  var OLD_COLORS = ["var(--o1)", "var(--o2)", "var(--o3)", "var(--o4)"];
+
+  /* =======================================================================
+     Generic helpers
+     ======================================================================= */
+
+  var SVGNS = "http://www.w3.org/2000/svg";
+
+  function svgEl(tag, attrs) {
+    var n = document.createElementNS(SVGNS, tag);
+    for (var k in attrs) if (attrs[k] !== undefined && attrs[k] !== null) n.setAttribute(k, attrs[k]);
+    return n;
+  }
+  function svgText(tag, attrs, s) {
+    var n = svgEl(tag, attrs);
+    n.appendChild(document.createTextNode(s));
+    return n;
+  }
+  function h(tag, cls, s) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (s !== undefined && s !== null && s !== "") n.textContent = s;
+    return n;
+  }
+  function toNum(v) {
+    var n = typeof v === "string" ? parseFloat(v) : v;
+    return typeof n === "number" && isFinite(n) ? n : null;
+  }
+  function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+  /* Glyph shapes — the secondary encoding that carries category identity
+     without relying on hue alone. */
+  function shapePath(kind, r) {
+    var f = function (x) { return x.toFixed(2); };
+    if (kind === 1) { var s = r * 0.886; return "M" + f(-s) + "," + f(-s) + "H" + f(s) + "V" + f(s) + "H" + f(-s) + "Z"; }
+    if (kind === 2) { var b = r * 1.3468, u = r * 1.555, d = r * 0.7775; return "M0," + f(-u) + "L" + f(b) + "," + f(d) + "L" + f(-b) + "," + f(d) + "Z"; }
+    if (kind === 3) { var a = r * 1.2533; return "M0," + f(-a) + "L" + f(a) + ",0L0," + f(a) + "L" + f(-a) + ",0Z"; }
+    if (kind === 4) { var b2 = r * 1.3468, u2 = r * 1.555, d2 = r * 0.7775; return "M0," + f(u2) + "L" + f(b2) + "," + f(-d2) + "L" + f(-b2) + "," + f(-d2) + "Z"; }
+    return "M" + f(-r) + ",0a" + f(r) + "," + f(r) + " 0 1,0 " + f(2 * r) + ",0a" + f(r) + "," + f(r) + " 0 1,0 " + f(-2 * r) + ",0";
+  }
+  function glyphSwatch(idx, color, r) {
+    var side = r * 3.4;
+    var s = svgEl("svg", { width: side, height: side, viewBox: (-side / 2) + " " + (-side / 2) + " " + side + " " + side, "aria-hidden": "true" });
+    var p = svgEl("path", { d: shapePath(idx % 5, r) });
+    p.style.fill = color;
+    s.appendChild(p);
+    return s;
+  }
+
+  /* =======================================================================
+     Section 1 — tree canvas (tidy left-to-right layout + pan/zoom)
+     ======================================================================= */
+
+  var W_ROOT = 300, W_L1 = 250, W_L2 = 404;
+  var H_GAP = 84, V_GAP = 14, GROUP_GAP = 34, CANVAS_PAD = 56;
+
+  var viewport = document.getElementById("tree-viewport");
+  var layer = document.getElementById("tree-layer");
+  var edgesSvg = document.getElementById("tree-edges");
+  var nodesBox = document.getElementById("tree-nodes");
+  var zoomReadout = document.getElementById("zoom-readout");
+
+  var view = { x: 0, y: 0, k: 1 };
+  var collapsed = {};
+  var treeNodes = [];
+  var canvasSize = { w: 1200, h: 800 };
+
+  function buildTreeNodes() {
+    nodesBox.textContent = "";
+    treeNodes = [];
+
+    var rootEl = h("div", "tnode root");
+    rootEl.style.width = W_ROOT + "px";
+    rootEl.appendChild(h("span", "t-kicker", "ROOT WHY"));
+    rootEl.appendChild(h("div", "t-text", ROOT_TEXT));
+    nodesBox.appendChild(rootEl);
+    var root = { el: rootEl, depth: 0, children: [] };
+    treeNodes.push(root);
+
+    BRANCHES.forEach(function (br) {
+      var el = h("div", "tnode l1");
+      el.style.width = W_L1 + "px";
+      el.style.borderColor = br.color;
+
+      var head = h("div", "t-head");
+      var numEl = h("span", "t-num", String(br.n));
+      numEl.style.background = br.color;
+      head.appendChild(numEl);
+      head.appendChild(h("span", "t-short", br.short));
+      el.appendChild(head);
+      el.appendChild(h("div", "t-text", br.text));
+
+      var kids = LEAVES[br.tag] || [];
+      var toggle = h("button", "t-toggle", collapsed[br.tag] ? "+" : "−");
+      toggle.type = "button";
+      toggle.setAttribute("aria-expanded", collapsed[br.tag] ? "false" : "true");
+      toggle.setAttribute("aria-label", (collapsed[br.tag] ? "展開" : "收合") + br.short + "分支，共 " + kids.length + " 個節點");
+      toggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        collapsed[br.tag] = !collapsed[br.tag];
+        renderTree(false);
+      });
+      el.appendChild(toggle);
+      nodesBox.appendChild(el);
+
+      var node = { el: el, depth: 1, branch: br, children: [] };
+      treeNodes.push(node);
+      root.children.push(node);
+
+      if (collapsed[br.tag]) return;
+
+      kids.forEach(function (leaf) {
+        var le = h("div", "tnode l2");
+        le.style.width = W_L2 + "px";
+        var row = h("div", "t-row");
+        row.appendChild(h("span", "t-tag", leaf.tag));
+        if (leaf.mx) {
+          var link = h("button", "t-link", "矩陣 " + leaf.mx + " →");
+          link.type = "button";
+          link.setAttribute("aria-label", "在影響力矩陣中查看 " + leaf.mx);
+          link.addEventListener("click", function (e) { e.stopPropagation(); jumpToMatrix(leaf.mx); });
+          row.appendChild(link);
+        }
+        le.appendChild(row);
+        le.appendChild(h("div", "t-text", leaf.text));
+
+        var st = h("span", "t-state " + leaf.state, (leaf.state === "fact" ? "✓ " : "⚠ ") + leaf.stateLabel);
+        le.appendChild(st);
+
+        var basis = h("p", "t-basis");
+        basis.appendChild(h("b", null, "【" + leaf.basisLabel + "】"));
+        basis.appendChild(document.createTextNode(leaf.basis));
+        le.appendChild(basis);
+
+        if (leaf.test) {
+          var test = h("p", "t-test");
+          test.appendChild(h("b", null, "【驗證關鍵】"));
+          test.appendChild(document.createTextNode(leaf.test));
+          le.appendChild(test);
+        }
+
+        nodesBox.appendChild(le);
+        var ln = { el: le, depth: 2, branch: br, leaf: leaf, children: [] };
+        treeNodes.push(ln);
+        node.children.push(ln);
+      });
+    });
+
+    return root;
+  }
+
+  function layoutTree(root) {
+    var xRoot = CANVAS_PAD;
+    var xL1 = xRoot + W_ROOT + H_GAP;
+    var xL2 = xL1 + W_L1 + H_GAP;
+
+    var cursor = CANVAS_PAD;
+    root.children.forEach(function (b1, i) {
+      if (i > 0) cursor += GROUP_GAP;
+      if (b1.children.length) {
+        var start = cursor;
+        b1.children.forEach(function (l2, j) {
+          if (j > 0) cursor += V_GAP;
+          l2.x = xL2;
+          l2.y = cursor;
+          l2.h = l2.el.offsetHeight;
+          cursor += l2.h;
+        });
+        b1.h = b1.el.offsetHeight;
+        b1.y = start + (cursor - start) / 2 - b1.h / 2;
+      } else {
+        b1.h = b1.el.offsetHeight;
+        b1.y = cursor;
+        cursor += b1.h;
+      }
+      b1.x = xL1;
+    });
+
+    var first = root.children[0], last = root.children[root.children.length - 1];
+    root.h = root.el.offsetHeight;
+    root.x = xRoot;
+    root.y = (first.y + (last.y + last.h)) / 2 - root.h / 2;
+
+    // keep everything inside positive space
+    var minY = Infinity;
+    treeNodes.forEach(function (n) { if (n.y < minY) minY = n.y; });
+    var shift = minY < CANVAS_PAD ? CANVAS_PAD - minY : 0;
+    var maxY = 0;
+    treeNodes.forEach(function (n) {
+      n.y += shift;
+      n.el.style.left = n.x + "px";
+      n.el.style.top = n.y + "px";
+      if (n.y + n.h > maxY) maxY = n.y + n.h;
+    });
+
+    canvasSize.w = xL2 + W_L2 + CANVAS_PAD;
+    canvasSize.h = maxY + CANVAS_PAD;
+    layer.style.width = canvasSize.w + "px";
+    layer.style.height = canvasSize.h + "px";
+  }
+
+  function drawEdges(root) {
+    edgesSvg.textContent = "";
+    edgesSvg.setAttribute("width", canvasSize.w);
+    edgesSvg.setAttribute("height", canvasSize.h);
+
+    function edge(from, to, color) {
+      var x1 = from.x + (from.depth === 0 ? W_ROOT : W_L1);
+      var y1 = from.y + from.h / 2;
+      var x2 = to.x;
+      var y2 = to.y + to.h / 2;
+      var mid = x1 + (x2 - x1) / 2;
+      var p = svgEl("path", {
+        d: "M" + x1 + "," + y1 + "C" + mid + "," + y1 + " " + mid + "," + y2 + " " + x2 + "," + y2,
+        fill: "none", "stroke-width": from.depth === 0 ? 2 : 1.5, "stroke-linecap": "round"
+      });
+      p.style.stroke = color;
+      p.style.opacity = from.depth === 0 ? "0.9" : "0.65";
+      edgesSvg.appendChild(p);
+    }
+
+    root.children.forEach(function (b1) {
+      edge(root, b1, b1.branch.color);
+      b1.children.forEach(function (l2) { edge(b1, l2, b1.branch.color); });
+    });
+  }
+
+  // 移動中開 GPU 圖層保持流暢；停下後拿掉，讓瀏覽器以目前倍率重新繪製文字與線條
+  var settleTimer = null;
+  function applyView() {
+    layer.classList.add("is-moving");
+    layer.style.transform = "translate(" + view.x + "px," + view.y + "px) scale(" + view.k + ")";
+    zoomReadout.textContent = Math.round(view.k * 100) + "%";
+    clearTimeout(settleTimer);
+    settleTimer = setTimeout(function () { layer.classList.remove("is-moving"); }, 150);
+  }
+
+  function fitView() {
+    var vw = viewport.clientWidth, vh = viewport.clientHeight;
+    var k = clamp(Math.min(vw / canvasSize.w, vh / canvasSize.h) * 0.98, 0.15, 1);
+    view.k = k;
+    view.x = (vw - canvasSize.w * k) / 2;
+    view.y = (vh - canvasSize.h * k) / 2;
+    applyView();
+  }
+
+  function zoomAt(cx, cy, factor) {
+    var k = clamp(view.k * factor, 0.15, 2.5);
+    if (k === view.k) return;
+    var ratio = k / view.k;
+    view.x = cx - (cx - view.x) * ratio;
+    view.y = cy - (cy - view.y) * ratio;
+    view.k = k;
+    applyView();
+  }
+
+  function zoomCenter(factor) {
+    zoomAt(viewport.clientWidth / 2, viewport.clientHeight / 2, factor);
+  }
+
+  function renderTree(refit) {
+    var root = buildTreeNodes();
+    layoutTree(root);
+    drawEdges(root);
+    if (refit) fitView(); else applyView();
+  }
+
+  // --- pan / zoom interaction ---
+
+  var pointers = new Map();
+  var panStart = null;
+  var pinchStart = null;
+
+  viewport.addEventListener("pointerdown", function (e) {
+    if (e.target.closest(".t-toggle, .t-link")) return;
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    viewport.setPointerCapture(e.pointerId);
+    if (pointers.size === 1) {
+      panStart = { px: e.clientX, py: e.clientY, vx: view.x, vy: view.y };
+      viewport.classList.add("is-panning");
+    } else if (pointers.size === 2) {
+      panStart = null;
+      var pts = Array.from(pointers.values());
+      pinchStart = {
+        dist: Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y),
+        k: view.k
+      };
+    }
+  });
+
+  viewport.addEventListener("pointermove", function (e) {
+    if (!pointers.has(e.pointerId)) return;
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+    if (pointers.size === 2 && pinchStart) {
+      var pts = Array.from(pointers.values());
+      var dist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+      if (pinchStart.dist > 0) {
+        var rect = viewport.getBoundingClientRect();
+        var mx = (pts[0].x + pts[1].x) / 2 - rect.left;
+        var my = (pts[0].y + pts[1].y) / 2 - rect.top;
+        var target = clamp(pinchStart.k * (dist / pinchStart.dist), 0.15, 2.5);
+        zoomAt(mx, my, target / view.k);
+      }
+      return;
+    }
+    if (panStart) {
+      view.x = panStart.vx + (e.clientX - panStart.px);
+      view.y = panStart.vy + (e.clientY - panStart.py);
+      applyView();
+    }
+  });
+
+  function endPointer(e) {
+    pointers.delete(e.pointerId);
+    if (pointers.size < 2) pinchStart = null;
+    if (pointers.size === 0) {
+      panStart = null;
+      viewport.classList.remove("is-panning");
+    }
+  }
+  viewport.addEventListener("pointerup", endPointer);
+  viewport.addEventListener("pointercancel", endPointer);
+
+  // ⌘/Ctrl + wheel zooms (this is also what a trackpad pinch emits);
+  // a plain wheel is left alone so the page keeps scrolling normally.
+  viewport.addEventListener("wheel", function (e) {
+    if (!e.ctrlKey && !e.metaKey) return;
+    e.preventDefault();
+    var rect = viewport.getBoundingClientRect();
+    zoomAt(e.clientX - rect.left, e.clientY - rect.top, Math.exp(-e.deltaY * 0.01));
+  }, { passive: false });
+
+  viewport.addEventListener("dblclick", function (e) {
+    if (e.target.closest(".t-toggle, .t-link")) return;
+    var rect = viewport.getBoundingClientRect();
+    zoomAt(e.clientX - rect.left, e.clientY - rect.top, 1.35);
+  });
+
+  viewport.addEventListener("keydown", function (e) {
+    var step = 60;
+    var handled = true;
+    if (e.key === "ArrowLeft") view.x += step;
+    else if (e.key === "ArrowRight") view.x -= step;
+    else if (e.key === "ArrowUp") view.y += step;
+    else if (e.key === "ArrowDown") view.y -= step;
+    else if (e.key === "+" || e.key === "=") zoomCenter(1.2);
+    else if (e.key === "-" || e.key === "_") zoomCenter(1 / 1.2);
+    else if (e.key === "0") fitView();
+    else handled = false;
+    if (handled) { e.preventDefault(); applyView(); }
+  });
+
+  document.getElementById("zoom-in").addEventListener("click", function () { zoomCenter(1.2); });
+  document.getElementById("zoom-out").addEventListener("click", function () { zoomCenter(1 / 1.2); });
+  document.getElementById("zoom-fit").addEventListener("click", fitView);
+  document.getElementById("zoom-reset").addEventListener("click", function () {
+    var vw = viewport.clientWidth, vh = viewport.clientHeight;
+    var ratio = 1 / view.k;
+    view.x = vw / 2 - (vw / 2 - view.x) * ratio;
+    view.y = vh / 2 - (vh / 2 - view.y) * ratio;
+    view.k = 1;
+    applyView();
+  });
+  document.getElementById("expand-all").addEventListener("click", function () {
+    collapsed = {};
+    renderTree(true);
+  });
+  document.getElementById("collapse-all").addEventListener("click", function () {
+    BRANCHES.forEach(function (b) { collapsed[b.tag] = true; });
+    renderTree(true);
+  });
+  document.getElementById("go-fullscreen").addEventListener("click", function () {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else if (viewport.requestFullscreen) viewport.requestFullscreen();
+  });
+  document.addEventListener("fullscreenchange", function () {
+    var btn = document.getElementById("go-fullscreen");
+    btn.textContent = document.fullscreenElement ? "離開全螢幕" : "全螢幕";
+    setTimeout(fitView, 60);
+  });
+
+  var treeResizeTimer = null;
+  window.addEventListener("resize", function () {
+    clearTimeout(treeResizeTimer);
+    treeResizeTimer = setTimeout(fitView, 140);
+  });
+
+  // --- cross-links between tree and matrix ---
+
+  function leafForMatrixId(id) {
+    for (var t in LEAVES) {
+      for (var i = 0; i < LEAVES[t].length; i++) {
+        if (LEAVES[t][i].mx === id) return { branch: BRANCHES.filter(function (b) { return b.tag === t; })[0], leaf: LEAVES[t][i] };
+      }
+    }
+    return null;
+  }
+
+  var flashTimer = null;
+  function jumpToTree(id) {
+    var hit = leafForMatrixId(id);
+    if (!hit) return;
+    if (collapsed[hit.branch.tag]) { collapsed[hit.branch.tag] = false; renderTree(false); }
+    var node = treeNodes.filter(function (n) { return n.leaf === hit.leaf; })[0];
+    if (!node) return;
+
+    document.getElementById("sec-tree").scrollIntoView({ behavior: "smooth", block: "start" });
+    var k = Math.max(view.k, 0.9);
+    view.k = clamp(k, 0.15, 2.5);
+    view.x = viewport.clientWidth / 2 - (node.x + W_L2 / 2) * view.k;
+    view.y = viewport.clientHeight / 2 - (node.y + node.h / 2) * view.k;
+    applyView();
+
+    treeNodes.forEach(function (n) { n.el.classList.remove("is-flash"); });
+    node.el.style.setProperty("--flash-color", hit.branch.color);
+    node.el.classList.add("is-flash");
+    clearTimeout(flashTimer);
+    flashTimer = setTimeout(function () { node.el.classList.remove("is-flash"); }, 2400);
+  }
+
+  function jumpToMatrix(id) {
+    var it = data.items.filter(function (x) { return x.id === id; })[0];
+    if (!it) return;
+    var key = mode + "|" + groupOf(it);
+    if (hidden[key]) { hidden[key] = false; renderLegend(); renderPlot(); renderTable(); }
+    pinned = true;
+    selectItem(id);
+    document.getElementById("sec-matrix").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  // --- text outline (accessible + printable twin of the canvas) ---
+
+  function renderOutline() {
+    var ol = document.getElementById("outline-body");
+    ol.textContent = "";
+    var facts = 0, hypos = 0;
+
+    BRANCHES.forEach(function (br) {
+      var li = h("li", "o-branch");
+      li.appendChild(h("span", null, br.n + ". " + br.short + "：" + br.text));
+      var sub = document.createElement("ol");
+      (LEAVES[br.tag] || []).forEach(function (leaf) {
+        if (leaf.state === "fact") facts++; else hypos++;
+        var sli = document.createElement("li");
+        sli.appendChild(h("div", null, leaf.text + "（" + leaf.tag + (leaf.mx ? "・矩陣 " + leaf.mx : "") + "）"));
+        sli.appendChild(h("div", "o-meta", "【狀態】" + leaf.stateLabel));
+        sli.appendChild(h("div", "o-meta", "【" + leaf.basisLabel + "】" + leaf.basis));
+        if (leaf.test) sli.appendChild(h("div", "o-meta", "【驗證關鍵】" + leaf.test));
+        sub.appendChild(sli);
+      });
+      li.appendChild(sub);
+      ol.appendChild(li);
+    });
+
+    document.getElementById("meta-states").textContent = facts + " ／ " + hypos;
+  }
+
+  /* =======================================================================
+     Section 2 — hypotheses
+     ======================================================================= */
+
+  var VERDICT_MARK = { pos: "✓ ", mid: "◐ ", neg: "✕ " };
+
+  function renderHypotheses() {
+    var box = document.getElementById("hypo-list");
+    box.textContent = "";
+    var tally = { pos: 0, mid: 0, neg: 0 };
+
+    HYPOTHESES.forEach(function (hy) {
+      tally[hy.tone]++;
+      var card = h("div", "hypothesis-box");
+      card.id = "hy-" + hy.id.replace(/[^A-Za-z0-9]+/g, "-");
+
+      var head = h("h3");
+      head.appendChild(h("span", "h-id", hy.id));
+      head.appendChild(document.createTextNode(hy.name));
+      card.appendChild(head);
+
+      var chips = h("div", "h-chips");
+      hy.branches.forEach(function (n) {
+        var br = BRANCHES[n - 1];
+        var chip = h("span", "branch-chip");
+        var sw = h("span", "swatch");
+        sw.style.background = br.color;
+        chip.appendChild(sw);
+        chip.appendChild(document.createTextNode(br.n + ". " + br.short));
+        chips.appendChild(chip);
+      });
+      chips.appendChild(h("span", "branch-chip verdict " + hy.tone, VERDICT_MARK[hy.tone] + hy.verdict));
+      card.appendChild(chips);
+
+      card.appendChild(h("p", null, hy.body));
+
+      var table = document.createElement("table");
+      table.className = "h-table";
+      var tr1 = document.createElement("tr");
+      tr1.appendChild(h("th", null, "驗證依據"));
+      var td1 = document.createElement("td");
+      var ul = document.createElement("ul");
+      hy.evidence.forEach(function (ev) { ul.appendChild(h("li", null, ev)); });
+      td1.appendChild(ul);
+      tr1.appendChild(td1);
+      table.appendChild(tr1);
+      var tr2 = document.createElement("tr");
+      tr2.appendChild(h("th", null, "下一步行動"));
+      tr2.appendChild(h("td", null, hy.action));
+      table.appendChild(tr2);
+      card.appendChild(table);
+
+      box.appendChild(card);
+    });
+
+    document.getElementById("meta-hypo").textContent = tally.pos + " ／ " + tally.mid + " ／ " + tally.neg;
+  }
+
+  function hypoById(id) { return HYPOTHESES.filter(function (x) { return x.id === id; })[0]; }
+  function hypoChip(id) {
+    var hy = hypoById(id);
+    return h("span", "branch-chip" + (hy ? " verdict " + hy.tone : ""), id + (hy ? " · " + hy.verdict : ""));
+  }
+
+  /* =======================================================================
+     Section 3 — impact × solvability matrix
+     ======================================================================= */
+
+  var PAD = { l: 62, r: 30, t: 30, b: 62 }, SIZE = 560, R = 7.5, HIT = 17;
+  var CELL_FALLBACK = { HH: "高影響 · 高可解", HL: "高影響 · 低可解", LH: "低影響 · 高可解", LL: "低影響 · 低可解" };
+
+  var mx = {
+    svg: document.getElementById("mx-svg"),
+    tooltip: document.getElementById("mx-tooltip"),
+    legend: document.getElementById("mx-legend"),
+    note: document.getElementById("mx-note"),
+    rail: document.getElementById("mx-rail"),
+    thead: document.getElementById("mx-thead"),
+    tbody: document.getElementById("mx-tbody"),
+    thI: document.getElementById("th-impact"),
+    thS: document.getElementById("th-solve")
+  };
+
+  var data = null;
+  var mode = "new";
+  var thImpact = 60, thSolve = 60;
+  var hidden = {};
+  var sortKey = "impact", sortDir = -1;
+  var selectedId = null, pinned = false;
+  var marks = [];
+
+  function shortLabel(s) { return String(s).split(/[(（]/)[0].replace(/[\s·、]+$/, "").trim(); }
+  function mostCommon(list) {
+    var c = {}, best = null, bn = 0;
+    list.forEach(function (v) { if (!v) return; c[v] = (c[v] || 0) + 1; if (c[v] > bn) { bn = c[v]; best = v; } });
+    return best;
+  }
+  function cellOf(imp, sol) { return (imp >= thImpact ? "H" : "L") + (sol >= thSolve ? "H" : "L"); }
+
+  function loadMatrix(raw) {
+    var meta = raw.metadata || {};
+    var oldCats = [], oldIndex = {};
+
+    var items = raw.items.map(function (row, i) {
+      var cat = String(row.level1_category || "未分類");
+      if (!(cat in oldIndex)) { oldIndex[cat] = oldCats.length; oldCats.push(cat); }
+      return {
+        id: String(row.id || (i + 1)),
+        oldCat: cat,
+        oldIdx: oldIndex[cat],
+        newCat: String(row.root_cause_tag || "未分類"),
+        title: String(row.short_title || row.level2_item || ("項目 " + (i + 1))),
+        statement: row.level2_item || null,
+        impact: toNum(row.impact_score),
+        // 舊版 JSON 欄位拼成 solveability_*，兩種都接受
+        solve: toNum(row.solvability_score != null ? row.solvability_score : row.solveability_score),
+        impactWhy: row.impact_rationale || null,
+        solveWhy: row.solvability_rationale || row.solveability_rationale || null,
+        srcLabel: row.quadrant_label || null
+      };
+    });
+
+    // branch order for the "new L1" mode follows the tree, not first-seen order
+    var newCats = BRANCHES.map(function (b) { return b.tag; });
+    items.forEach(function (it) {
+      var k = newCats.indexOf(it.newCat);
+      it.newIdx = k < 0 ? newCats.length : k;
+      if (k < 0 && newCats.indexOf(it.newCat) < 0) newCats.push(it.newCat);
+    });
+
+    var byCell = { HH: [], HL: [], LH: [], LL: [] };
+    items.forEach(function (it) {
+      byCell[(it.impact >= 60 ? "H" : "L") + (it.solve >= 60 ? "H" : "L")].push(it.srcLabel ? shortLabel(it.srcLabel) : null);
+    });
+    var cellNames = {};
+    Object.keys(CELL_FALLBACK).forEach(function (c) { cellNames[c] = mostCommon(byCell[c]) || CELL_FALLBACK[c]; });
+
+    data = {
+      title: meta.title || "",
+      scale: { min: 0, max: 100 },
+      items: items,
+      oldCats: oldCats,
+      newCats: newCats,
+      cellNames: cellNames
+    };
+  }
+
+  function groupOf(it) { return mode === "old" ? it.oldCat : it.newCat; }
+  function groupIdx(it) { return mode === "old" ? it.oldIdx : it.newIdx; }
+  function groupList() { return mode === "old" ? data.oldCats : data.newCats; }
+  function colorFor(idx) {
+    if (mode === "old") return OLD_COLORS[idx] || "var(--ink-3)";
+    return (BRANCHES[idx] && BRANCHES[idx].color) || "var(--ink-3)";
+  }
+  function colorForItem(it) { return colorFor(groupIdx(it)); }
+
+  function visibleItems() {
+    return data.items.filter(function (it) { return !hidden[mode + "|" + groupOf(it)]; });
+  }
+
+  var sx = function (v) { return PAD.l + (v - data.scale.min) / (data.scale.max - data.scale.min) * SIZE; };
+  var sy = function (v) { return PAD.t + SIZE - (v - data.scale.min) / (data.scale.max - data.scale.min) * SIZE; };
+
+  function layoutMarks(items) {
+    var ns = items.map(function (it, i) {
+      var x0 = sx(it.solve), y0 = sy(it.impact);
+      return { it: it, x0: x0, y0: y0, x: x0, y: y0, i: i };
+    });
+    var minD = 2 * R + 3;
+    for (var pass = 0; pass < 220; pass++) {
+      for (var a = 0; a < ns.length; a++) {
+        for (var b = a + 1; b < ns.length; b++) {
+          var dx = ns[b].x - ns[a].x, dy = ns[b].y - ns[a].y;
+          var d = Math.sqrt(dx * dx + dy * dy);
+          if (d >= minD) continue;
+          if (d < 0.001) { var ang = a * 2.39996; dx = Math.cos(ang) * 0.5; dy = Math.sin(ang) * 0.5; d = 0.5; }
+          var push = ((minD - d) / d) * 0.3;
+          ns[a].x -= dx * push; ns[a].y -= dy * push;
+          ns[b].x += dx * push; ns[b].y += dy * push;
+        }
+      }
+      for (var k = 0; k < ns.length; k++) {
+        ns[k].x += (ns[k].x0 - ns[k].x) * 0.045;
+        ns[k].y += (ns[k].y0 - ns[k].y) * 0.045;
+        ns[k].x = clamp(ns[k].x, PAD.l + R, PAD.l + SIZE - R);
+        ns[k].y = clamp(ns[k].y, PAD.t + R, PAD.t + SIZE - R);
+      }
+    }
+    placeMarkLabels(ns);
+    return ns;
+  }
+
+  function placeMarkLabels(ns) {
+    var boxes = [];
+    var order = ns.slice().sort(function (p, q) { return q.it.impact - p.it.impact; });
+    var GAP = R + 5;
+    order.forEach(function (n) {
+      var w = n.it.id.length * 6.1 + 2, hh = 11;
+      var cands = [
+        { x: n.x + GAP, y: n.y + 3.6, anchor: "start" },
+        { x: n.x - GAP, y: n.y + 3.6, anchor: "end" },
+        { x: n.x, y: n.y - GAP - 1, anchor: "middle" },
+        { x: n.x, y: n.y + GAP + 8, anchor: "middle" }
+      ];
+      for (var c = 0; c < cands.length; c++) {
+        var cd = cands[c];
+        var bx = cd.anchor === "start" ? cd.x : cd.anchor === "end" ? cd.x - w : cd.x - w / 2;
+        var box = { x: bx - 1, y: cd.y - hh + 1, w: w + 2, h: hh + 2 };
+        if (box.x < PAD.l - 6 || box.x + box.w > PAD.l + SIZE + 6) continue;
+        if (box.y < PAD.t - 6 || box.y + box.h > PAD.t + SIZE + 6) continue;
+        var clash = boxes.some(function (o) {
+          return !(box.x + box.w < o.x || o.x + o.w < box.x || box.y + box.h < o.y || o.y + o.h < box.y);
+        }) || ns.some(function (o) {
+          if (o === n) return false;
+          var cx = clamp(o.x, box.x, box.x + box.w), cy = clamp(o.y, box.y, box.y + box.h);
+          return (o.x - cx) * (o.x - cx) + (o.y - cy) * (o.y - cy) < (R + 1) * (R + 1);
+        });
+        if (!clash) { n.label = cd; boxes.push(box); return; }
+      }
+      n.label = null;
+    });
+  }
+
+  function renderPlot() {
+    var svg = mx.svg;
+    svg.textContent = "";
+
+    var items = visibleItems();
+    marks = layoutMarks(items);
+
+    svg.appendChild(svgText("title", { id: "mx-title" },
+      "以可解性為橫軸、影響力為縱軸的散佈矩陣，共 " + items.length + " 個議題節點。"));
+
+    var x0 = PAD.l, x1 = PAD.l + SIZE, y0 = PAD.t, y1 = PAD.t + SIZE;
+    var tx = sx(thSolve), ty = sy(thImpact);
+
+    svg.appendChild(svgEl("rect", { class: "mx-zone", x: tx, y: y0, width: Math.max(0, x1 - tx), height: Math.max(0, ty - y0) }));
+
+    for (var i = 0; i <= 5; i++) {
+      var v = data.scale.min + (data.scale.max - data.scale.min) * (i / 5);
+      var gx = sx(v), gy = sy(v);
+      svg.appendChild(svgEl("line", { class: "mx-grid", x1: gx, y1: y0, x2: gx, y2: y1 }));
+      svg.appendChild(svgEl("line", { class: "mx-grid", x1: x0, y1: gy, x2: x1, y2: gy }));
+      svg.appendChild(svgText("text", { class: "mx-tick", x: gx, y: y1 + 18, "text-anchor": "middle" }, String(Math.round(v))));
+      svg.appendChild(svgText("text", { class: "mx-tick", x: x0 - 10, y: gy + 3.5, "text-anchor": "end" }, String(Math.round(v))));
+    }
+
+    svg.appendChild(svgEl("rect", { class: "mx-frame", x: x0, y: y0, width: SIZE, height: SIZE }));
+    svg.appendChild(svgEl("line", { class: "mx-thresh", x1: tx, y1: y0, x2: tx, y2: y1 }));
+    svg.appendChild(svgEl("line", { class: "mx-thresh", x1: x0, y1: ty, x2: x1, y2: ty }));
+    svg.appendChild(svgEl("path", { class: "mx-bracket", d: "M" + (x1 - 22) + "," + (y0 + 9) + "H" + (x1 - 9) + "V" + (y0 + 22) }));
+
+    var counts = { HH: 0, HL: 0, LH: 0, LL: 0 };
+    items.forEach(function (it) { counts[cellOf(it.impact, it.solve)]++; });
+    [
+      { cell: "HH", x: x1 - 16, y: y0 + 22, anchor: "end", focus: true },
+      { cell: "HL", x: x0 + 16, y: y0 + 22, anchor: "start", focus: false },
+      { cell: "LH", x: x1 - 16, y: y1 - 29, anchor: "end", focus: false },
+      { cell: "LL", x: x0 + 16, y: y1 - 29, anchor: "start", focus: false }
+    ].forEach(function (z) {
+      svg.appendChild(svgText("text", { class: "mx-zone-name" + (z.focus ? " is-focus" : ""), x: z.x, y: z.y, "text-anchor": z.anchor }, data.cellNames[z.cell]));
+      svg.appendChild(svgText("text", { class: "mx-zone-count", x: z.x, y: z.y + 15, "text-anchor": z.anchor }, counts[z.cell] + " 項"));
+    });
+
+    svg.appendChild(svgText("text", { class: "mx-axis-title", x: x0 + SIZE / 2, y: y1 + 44, "text-anchor": "middle" }, "可解性 SOLVABILITY →"));
+    svg.appendChild(svgText("text", {
+      class: "mx-axis-title", x: 0, y: 0, "text-anchor": "middle",
+      transform: "translate(" + (x0 - 40) + "," + (y0 + SIZE / 2) + ") rotate(-90)"
+    }, "影響力 IMPACT →"));
+
+    var moved = 0;
+    marks.forEach(function (n) {
+      if (Math.hypot(n.x - n.x0, n.y - n.y0) > 1.6) {
+        moved++;
+        svg.appendChild(svgEl("line", { class: "mx-leader", x1: n.x0, y1: n.y0, x2: n.x, y2: n.y }));
+      }
+    });
+
+    marks.forEach(function (n) {
+      if (!n.label) return;
+      svg.appendChild(svgText("text", { class: "mx-dot-label", x: n.label.x, y: n.label.y, "text-anchor": n.label.anchor }, n.it.id));
+    });
+
+    marks.forEach(function (n) {
+      var color = colorForItem(n.it);
+      var g = svgEl("g", {
+        class: "mx-mark",
+        transform: "translate(" + n.x.toFixed(2) + "," + n.y.toFixed(2) + ")",
+        tabindex: "0", role: "button", "data-id": n.it.id,
+        "aria-label": n.it.id + " " + n.it.title + "，影響力 " + n.it.impact + "，可解性 " + n.it.solve
+      });
+      g.style.color = color;
+      g.appendChild(svgEl("circle", { class: "halo", r: R + 5 }));
+      g.appendChild(svgEl("circle", { class: "pin-ring", r: R + 7 }));
+      var glyph = svgEl("path", { class: "glyph", d: shapePath(groupIdx(n.it) % 5, R) });
+      glyph.style.fill = color;
+      g.appendChild(glyph);
+      g.appendChild(svgEl("circle", { class: "hit", r: HIT, fill: "transparent" }));
+      n.g = g;
+      svg.appendChild(g);
+    });
+
+    mx.note.textContent = moved ? "重疊的點已做最小位移，細線指回實際座標；精確分數見下方資料表。" : "";
+    syncActive();
+  }
+
+  function markById(id) {
+    for (var i = 0; i < marks.length; i++) if (marks[i].it.id === id) return marks[i];
+    return null;
+  }
+
+  function syncActive() {
+    marks.forEach(function (n) {
+      var on = n.it.id === selectedId;
+      n.g.classList.toggle("is-active", on && !pinned);
+      n.g.classList.toggle("is-pinned", on && pinned);
+    });
+    Array.prototype.forEach.call(mx.tbody.children, function (tr) {
+      var on = tr.getAttribute("data-id") === selectedId;
+      tr.classList.toggle("is-active", on && !pinned);
+      tr.classList.toggle("is-pinned", on && pinned);
+    });
+  }
+
+  function selectItem(id) { selectedId = id; renderRail(); syncActive(); }
+
+  function showTooltip(n, clientX, clientY) {
+    var t = mx.tooltip;
+    t.textContent = "";
+
+    var head = h("div", "tt-head");
+    var key = h("span", "tt-key");
+    key.style.background = colorForItem(n.it);
+    head.appendChild(key);
+    var col = h("div");
+    col.appendChild(h("div", "tt-id", n.it.id + " · " + groupOf(n.it)));
+    col.appendChild(h("div", "tt-title", n.it.title));
+    head.appendChild(col);
+    t.appendChild(head);
+
+    var scores = h("div", "tt-scores");
+    var a = h("span"); a.appendChild(h("b", null, String(n.it.impact))); a.appendChild(document.createTextNode(" 影響力"));
+    var b = h("span"); b.appendChild(h("b", null, String(n.it.solve))); b.appendChild(document.createTextNode(" 可解性"));
+    scores.appendChild(a); scores.appendChild(b);
+    t.appendChild(scores);
+    t.appendChild(h("div", "tt-zone", data.cellNames[cellOf(n.it.impact, n.it.solve)]));
+    if (!pinned) t.appendChild(h("div", "tt-hint", "點擊固定於右側"));
+
+    var host = mx.svg.parentNode.getBoundingClientRect();
+    t.setAttribute("data-show", "1");
+    var tw = t.offsetWidth, th = t.offsetHeight, px, py;
+    if (clientX === undefined) {
+      var r = n.g.getBoundingClientRect();
+      px = r.left + r.width / 2 - host.left;
+      py = r.top - host.top;
+    } else {
+      px = clientX - host.left;
+      py = clientY - host.top;
+    }
+    var left = px + 16, top = py - th - 12;
+    if (left + tw > host.width - 6) left = px - tw - 16;
+    if (left < 6) left = 6;
+    if (top < 6) top = py + 22;
+    t.style.left = left + "px";
+    t.style.top = top + "px";
+  }
+  function hideTooltip() { mx.tooltip.setAttribute("data-show", "0"); }
+
+  mx.svg.addEventListener("pointerover", function (e) {
+    var g = e.target.closest && e.target.closest(".mx-mark");
+    if (!g) return;
+    var n = markById(g.getAttribute("data-id"));
+    if (!n) return;
+    g.classList.add("is-active");
+    showTooltip(n, e.clientX, e.clientY);
+    if (!pinned) selectItem(n.it.id);
+  });
+  mx.svg.addEventListener("pointermove", function (e) {
+    var g = e.target.closest && e.target.closest(".mx-mark");
+    if (!g) return;
+    var n = markById(g.getAttribute("data-id"));
+    if (n) showTooltip(n, e.clientX, e.clientY);
+  });
+  mx.svg.addEventListener("pointerout", function (e) {
+    var g = e.target.closest && e.target.closest(".mx-mark");
+    if (!g) return;
+    if (g.getAttribute("data-id") !== selectedId) g.classList.remove("is-active");
+    hideTooltip();
+  });
+  mx.svg.addEventListener("click", function (e) {
+    var g = e.target.closest && e.target.closest(".mx-mark");
+    if (!g) return;
+    var id = g.getAttribute("data-id");
+    if (pinned && id === selectedId) pinned = false; else { pinned = true; selectItem(id); }
+    renderRail();
+  });
+  mx.svg.addEventListener("focusin", function (e) {
+    var g = e.target.closest && e.target.closest(".mx-mark");
+    if (!g) return;
+    var n = markById(g.getAttribute("data-id"));
+    if (!n) return;
+    // 滑鼠點擊也會先觸發 focusin；固定狀態下不在這裡換選取，交給 click 判斷
+    if (!pinned) selectItem(n.it.id);
+    showTooltip(n);
+  });
+  mx.svg.addEventListener("focusout", hideTooltip);
+  mx.svg.addEventListener("keydown", function (e) {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    var g = e.target.closest && e.target.closest(".mx-mark");
+    if (!g) return;
+    e.preventDefault();
+    var id = g.getAttribute("data-id");
+    if (pinned && id === selectedId) pinned = false; else { pinned = true; selectItem(id); }
+    renderRail();
+  });
+
+  function metricBlock(name, value, why, thresholdValue) {
+    var box = h("div", "metric");
+    var head = h("div", "metric-head");
+    head.appendChild(h("span", "metric-name", name));
+    head.appendChild(h("span", "metric-val", String(value)));
+    box.appendChild(head);
+
+    var meter = h("div", "meter");
+    var fill = h("div", "meter-fill");
+    fill.style.width = clamp((value - data.scale.min) / (data.scale.max - data.scale.min) * 100, 0, 100) + "%";
+    meter.appendChild(fill);
+    var tick = h("div", "meter-thresh");
+    tick.style.left = ((thresholdValue - data.scale.min) / (data.scale.max - data.scale.min) * 100) + "%";
+    meter.appendChild(tick);
+    box.appendChild(meter);
+
+    if (why) box.appendChild(h("p", "metric-why", why));
+    return box;
+  }
+
+  function renderRail() {
+    var r = mx.rail;
+    r.textContent = "";
+
+    var it = null;
+    data.items.some(function (x) { if (x.id === selectedId) { it = x; return true; } return false; });
+    syncActive();
+    if (!it) {
+      r.appendChild(h("p", "rail-statement", "把游標移到任何一個點上，這裡會顯示該議題的完整評分理由。"));
+      return;
+    }
+
+    var top = h("div", "rail-top");
+    var eyebrow = h("div", "rail-eyebrow");
+    eyebrow.appendChild(glyphSwatch(groupIdx(it), colorForItem(it), 5));
+    eyebrow.appendChild(h("span", "badge", it.id));
+    eyebrow.appendChild(h("span", null, groupOf(it)));
+    top.appendChild(eyebrow);
+    var pin = h("button", "tool-btn pin-btn", pinned ? "已固定" : "固定");
+    pin.type = "button";
+    pin.setAttribute("aria-pressed", pinned ? "true" : "false");
+    pin.addEventListener("click", function () { pinned = !pinned; renderRail(); });
+    top.appendChild(pin);
+    r.appendChild(top);
+
+    r.appendChild(h("h3", null, it.title));
+    if (it.statement) r.appendChild(h("p", "rail-statement", it.statement));
+    r.appendChild(h("span", "zone-tag", data.cellNames[cellOf(it.impact, it.solve)]));
+    r.appendChild(metricBlock("影響力 IMPACT", it.impact, it.impactWhy, thImpact));
+    r.appendChild(metricBlock("可解性 SOLVABILITY", it.solve, it.solveWhy, thSolve));
+
+    var foot = h("dl", "rail-foot");
+    function footRow(label, dd) {
+      var row = h("div", "foot-row");
+      row.appendChild(h("dt", null, label));
+      row.appendChild(dd);
+      foot.appendChild(row);
+    }
+
+    var hit = leafForMatrixId(it.id);
+    var treeDd = h("dd");
+    if (hit) {
+      var jump = h("button", "tree-jump", "← " + hit.branch.short + " › " + hit.leaf.tag);
+      jump.type = "button";
+      jump.addEventListener("click", function () { jumpToTree(it.id); });
+      treeDd.appendChild(jump);
+    } else {
+      treeDd.appendChild(h("span", "note", "新版議題樹無一對一對應節點"));
+    }
+    footRow("議題樹", treeDd);
+
+    footRow("舊第一層", h("dd", null, it.oldCat));
+    footRow("新第一層", h("dd", null, it.newCat));
+    if (it.srcLabel) {
+      // 原始標註是以 60／60 門檻評定；門檻改動後可能與目前象限不同
+      var srcDd = h("dd", null, it.srcLabel);
+      if (thImpact !== 60 || thSolve !== 60) srcDd.appendChild(h("span", "note", "（依 60／60 門檻評定）"));
+      footRow("原始標註", srcDd);
+    }
+    r.appendChild(foot);
+  }
+
+  function renderLegend() {
+    var box = mx.legend;
+    box.textContent = "";
+    box.appendChild(h("span", "legend-label", (mode === "old" ? "舊第一層" : "新第一層") + " · 點選以篩選"));
+    groupList().forEach(function (name, i) {
+      var b = h("button", "chip");
+      b.type = "button";
+      var key = mode + "|" + name;
+      b.setAttribute("aria-pressed", hidden[key] ? "false" : "true");
+      b.appendChild(glyphSwatch(i, colorFor(i), 5));
+      b.appendChild(h("span", null, mode === "new" ? (i + 1) + ". " + name : name));
+      b.addEventListener("click", function () {
+        hidden[key] = !hidden[key];
+        renderLegend(); renderPlot(); renderTable();
+      });
+      box.appendChild(b);
+    });
+  }
+
+  var COLS = [
+    { key: "id", label: "ID" },
+    { key: "group", label: "分類" },
+    { key: "title", label: "議題" },
+    { key: "impact", label: "影響力", num: true },
+    { key: "solve", label: "可解性", num: true },
+    { key: "cell", label: "象限" }
+  ];
+
+  function renderTableHead() {
+    var tr = mx.thead;
+    tr.textContent = "";
+    COLS.forEach(function (c) {
+      var th = h("th", "sortable", c.label);
+      if (c.num) th.style.textAlign = "right";
+      th.setAttribute("aria-sort", sortKey === c.key ? (sortDir > 0 ? "ascending" : "descending") : "none");
+      th.setAttribute("tabindex", "0");
+      th.setAttribute("role", "button");
+      var go = function () {
+        if (sortKey === c.key) sortDir = -sortDir; else { sortKey = c.key; sortDir = c.num ? -1 : 1; }
+        renderTableHead(); renderTable();
+      };
+      th.addEventListener("click", go);
+      th.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+      tr.appendChild(th);
+    });
+  }
+
+  function renderTable() {
+    var tb = mx.tbody;
+    tb.textContent = "";
+    var rows = visibleItems().slice();
+    var valOf = function (it) {
+      if (sortKey === "cell") return data.cellNames[cellOf(it.impact, it.solve)];
+      if (sortKey === "group") return groupIdx(it);
+      return it[sortKey];
+    };
+    rows.sort(function (a, b) {
+      var va = valOf(a), vb = valOf(b);
+      if (typeof va === "number" && typeof vb === "number") return (va - vb) * sortDir;
+      return String(va).localeCompare(String(vb), "zh-Hant") * sortDir;
+    });
+
+    rows.forEach(function (it) {
+      var tr = document.createElement("tr");
+      tr.setAttribute("data-id", it.id);
+      tr.setAttribute("tabindex", "0");
+      tr.appendChild(h("td", "id", it.id));
+
+      var tdCat = h("td");
+      var span = h("span", "cat-cell");
+      span.appendChild(glyphSwatch(groupIdx(it), colorForItem(it), 4));
+      span.appendChild(h("span", null, groupOf(it)));
+      tdCat.appendChild(span);
+      tr.appendChild(tdCat);
+
+      tr.appendChild(h("td", "topic", it.title));
+      tr.appendChild(h("td", "num", String(it.impact)));
+      tr.appendChild(h("td", "num", String(it.solve)));
+      tr.appendChild(h("td", null, data.cellNames[cellOf(it.impact, it.solve)]));
+
+      var go = function () { pinned = true; selectItem(it.id); renderRail(); };
+      tr.addEventListener("click", go);
+      tr.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+      tb.appendChild(tr);
+    });
+    syncActive();
+  }
+
+  function renderMatrix() { renderLegend(); renderPlot(); renderTableHead(); renderTable(); renderRail(); }
+
+  Array.prototype.forEach.call(document.querySelectorAll("#mode-switch button"), function (btn) {
+    btn.addEventListener("click", function () {
+      mode = btn.getAttribute("data-mode");
+      Array.prototype.forEach.call(document.querySelectorAll("#mode-switch button"), function (b) {
+        b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+      });
+      renderMatrix();
+    });
+  });
+
+  function onThreshold() {
+    var i = toNum(mx.thI.value), s = toNum(mx.thS.value);
+    if (i !== null) thImpact = clamp(i, data.scale.min, data.scale.max);
+    if (s !== null) thSolve = clamp(s, data.scale.min, data.scale.max);
+    renderPlot(); renderTable(); renderRail();
+  }
+  mx.thI.addEventListener("change", onThreshold);
+  mx.thS.addEventListener("change", onThreshold);
+
+  var mxResizeTimer = null;
+  window.addEventListener("resize", function () {
+    clearTimeout(mxResizeTimer);
+    mxResizeTimer = setTimeout(hideTooltip, 60);
+  });
+
+  /* =======================================================================
+     Section 4 — theory of change（v2：生態系網絡與正向飛輪）
+     ======================================================================= */
+
+  // 欄 = 階段（色彩由淡到濃），列 = 利害關係人樞紐（泳道）
+  var TOC_HEADS = [
+    { col: 1, n: 1, t: "關鍵根因", en: "WHY TREE", color: "#6b7a8c" },
+    { col: 2, n: 2, t: "變革槓桿", en: "LEVERS", color: "var(--ink-2)" },
+    { col: 3, n: 3, t: "生態系成果", en: "OUTCOMES", color: "var(--ink)" },
+    { col: 5, n: 4, t: "系統性影響力", en: "IMPACT", color: "var(--root)" }
+  ];
+
+  var TOC_LANES = [
+    { id: "gov", row: 2, t: "政府與外部委託網絡", en: "GOVERNMENT & NETWORK", color: "var(--hypo)" },
+    { id: "hq", row: 3, t: "總會數據治理中樞", en: "HQ PIVOT", color: "var(--focus)" },
+    { id: "br", row: 4, t: "第一線分所與社工", en: "BRANCH & SOCIAL WORKER", color: "var(--fact)" }
+  ];
+
+  var TOC_ROOTS = [
+    { id: "RC1", b: 1, t: "外部門禁與權限障礙", d: "政府系統封閉、無 API、資安限制嚴格" },
+    { id: "RC2", b: 2, t: "業務規格與標準未定", d: "表單分歧、缺乏全會統一 Master Data" },
+    { id: "RC3", b: 3, t: "IT 技術與工具驅動不足", d: "缺乏自動化接收中樞與格式轉換工具" },
+    { id: "RC4", b: 4, t: "產能飽和與人力資源極限", d: "社工服務工時飽和、IT Helpdesk 耗能" },
+    { id: "RC5", b: 5, t: "組織治理與價值閉環斷裂", d: "雙向反饋閉環斷裂、分所感知為騷擾" }
+  ];
+
+  // kind: lever（槓桿）／result（成果）／hub（飛輪樞紐）
+  var TOC_NODES = [
+    { id: "LE", lane: "gov", col: 2, kind: "lever", k: "槓桿 E", t: "參考伊甸「只填一次」模式與分所端轉譯", d: "推動分所端輕量 CSV 導出與轉換，同步向縣府探詢開放權限；伊甸做法為訪談轉述。", hy: ["H-2", "H-3"] },
+    { id: "G1", lane: "gov", col: 3, kind: "result", k: "成果", t: "破解外部系統封閉，推進合規介接與政策溝通", d: "實現合規且安全的數據轉譯與自動回流。" },
+    { id: "LA", lane: "hq", col: 2, kind: "lever", k: "槓桿 A", t: "抽離 10–20% 核心 Master Data 數據字典", d: "建立全會統一的數據語言，保留地方特規欄位。", hy: ["H-4"] },
+    { id: "LB", lane: "hq", col: 2, kind: "lever", k: "槓桿 B", t: "建置自動化接收中樞與格式轉換腳本", d: "以 Low-code／Python 工具取代人工重複輸入；去識別化沿用資訊組現有程式。", hy: ["H-3"] },
+    { id: "LC", lane: "hq", col: 2, kind: "lever", k: "槓桿 C", t: "研發組發布「月度數據在地倡議圖卡」", d: "建立雙向數據倡議反饋閉環，讓分所看見數據成果。", hy: ["H-5"] },
+    { id: "HUB", lane: "hq", col: 3, kind: "hub", k: "飛輪樞紐", t: "總會數據治理中樞運轉", d: "承接分所穩定回流的動態數據，對外輸出雙向倡議成果。" },
+    { id: "LD", lane: "br", col: 2, kind: "lever", k: "槓桿 D", t: "IT Helpdesk 排障分流與自動化降載", d: "硬體維修 SOP 化／外包，IT 人員轉型軟體 PM。", hy: ["H-1"] },
+    { id: "S2", lane: "br", col: 3, kind: "result", k: "成果", t: "建立數據價值認同，穩定回流高品質數據", d: "「被騷擾感」轉化為「數據倡議共創」的內在驅動力。" },
+    { id: "S1", lane: "br", col: 3, kind: "result", k: "成果", t: "零新增手動工時，消除被騷擾感", d: "降低跨分所格式轉換成本。" }
+  ];
+
+  var TOC_IMPACTS = [
+    { id: "IMP1", row: 2, k: "敏捷倡議", t: "數日內以實證數據驅動法案修訂與政策回應" },
+    { id: "IMP2", row: 4, k: "服務極大化", t: "估算每年釋放 4.6 萬小時行政工時回歸個案直接陪伴" }
+  ];
+
+  // 因果連線（根因→槓桿→成果）
+  var TOC_CAUSAL = [
+    ["RC1", "LE"], ["RC2", "LA"], ["RC2", "LB"], ["RC3", "LA"], ["RC3", "LB"], ["RC4", "LD"], ["RC5", "LC"],
+    ["LE", "G1"], ["LA", "S1"], ["LB", "S1"], ["LC", "S2"], ["LD", "S2"]
+  ];
+  // 飛輪連動（route 決定走線方式）
+  var TOC_FLY = [
+    { f: "S2", t: "HUB", route: "up", n: "①", label: "穩定提供動態數據" },
+    { f: "S1", t: "HUB", route: "rightUp" },
+    { f: "HUB", t: "G1", route: "up", n: "②", label: "輸出雙向倡議成果與數據中樞" },
+    { f: "G1", t: "IMP1", route: "right", n: "③", label: "數據驅動社會議題與政策變革" },
+    { f: "S1", t: "IMP2", route: "right", n: "④", label: "釋放服務能量" }
+  ];
+
+  var TOC_RISKS = [
+    { a: "Master Data 抽離可行性", ad: "研發組與分所能達成共識，僅抽離 10～20% 核心跨服務欄位（如服務人次、個案轉折階段），80% 區域特規欄位允許保留。", hy: ["H-4"],
+      v: "對比家暴、性侵、移工三種不同服務表單，進行交集欄位對齊研討。",
+      r: "分所仍堅持地方特規，拒絕使用 Master Data。", m: "雙軌制", md: "主幹欄位由總會統一，80% 區域欄位允許分所自由保留。" },
+    { a: "Low-code／輕量腳本替代性", ad: "在僅 4 名 IT 的限制下，無須重金建置龐大 ERP，透過 Low-code／Python 自動化腳本即可完成 CSV 解析與格式轉換（去識別化沿用資訊組現有程式）。", hy: ["H-1", "H-3"],
+      v: "在試辦場域（青少女懷孕服務）進行 POC 輕量測試。",
+      r: "IT 團隊技能僅限硬體維修，沒有軟體開發經驗。", m: "技術降維", md: "改用無程式碼的 Power Automate／Excel 巨集，降低開發門檻。" },
+    { a: "數據反饋賦能", ad: "總會研發組產出的「月度數據在地倡議圖卡」，能讓分所主任與社工有感，將「填雜事感」轉化為「倡議共創認同」。", hy: ["H-5"],
+      v: "製作 1 份原型圖卡回饋給試辦分所，評估社工之態度轉變。",
+      r: "研發組人力太忙，回饋機制再次中斷。", m: "模組化範本", md: "建立自動化簡報生成模組，減少研發組產製時間。" }
+  ];
+
+  var tocStage = document.getElementById("toc-stage");
+  var tocSvg = document.getElementById("toc-edges");
+  var tocEls = {}, tocLines = [], tocLabels = [], tocPinned = null;
+  var TOC_GRAPH = TOC_CAUSAL.map(function (e) { return { from: e[0], to: e[1] }; })
+    .concat(TOC_FLY.map(function (e) { return { from: e.f, to: e.t, fly: e }; }));
+
+  function tocBranch(n) { return BRANCHES.filter(function (b) { return b.n === n; })[0]; }
+  function tocLane(id) { return TOC_LANES.filter(function (l) { return l.id === id; })[0]; }
+
+  function tocNode(cls, id, k, t, d, hyIds) {
+    var el = h("div", "toc-node " + cls);
+    el.tabIndex = 0;
+    el.setAttribute("data-id", id);
+    if (k) el.appendChild(h("span", "k", k));
+    el.appendChild(h("span", "t", t));
+    if (d) el.appendChild(h("p", "d", d));
+    if (hyIds) {
+      var hy = h("div", "hy");
+      hyIds.forEach(function (x) { hy.appendChild(hypoChip(x)); });
+      el.appendChild(hy);
+    }
+    tocEls[id] = el;
+    return el;
+  }
+
+  function renderToc() {
+    // 現狀：惡性卡點循環
+    var vc = document.getElementById("toc-vicious");
+    vc.textContent = "";
+    vc.appendChild(h("span", "lbl", "現狀 · 惡性卡點循環"));
+    TOC_ROOTS.forEach(function (rc) {
+      var br = tocBranch(rc.b);
+      var st = h("span", "step");
+      st.style.setProperty("--c", br.color);
+      st.appendChild(h("span", "sw"));
+      st.appendChild(document.createTextNode(rc.b + ". " + br.short));
+      vc.appendChild(st);
+      vc.appendChild(h("span", "arr", "→"));
+    });
+    vc.appendChild(h("span", "end", "數據斷流／敏捷失能"));
+
+    TOC_HEADS.forEach(function (hd) {
+      var head = h("div", "toc-col-head");
+      head.style.setProperty("--stage", hd.color);
+      head.style.gridColumn = hd.col;
+      head.style.gridRow = 1;
+      head.appendChild(h("span", "n", String(hd.n)));
+      head.appendChild(h("span", "t", hd.t));
+      head.appendChild(h("span", "en", hd.en));
+      tocStage.appendChild(head);
+    });
+
+    var rcCell = h("div", "toc-cell rc");
+    TOC_ROOTS.forEach(function (rc) {
+      var el = tocNode("rc", rc.id, "根因 " + rc.b, rc.t, rc.d);
+      el.style.setProperty("--c", tocBranch(rc.b).color);
+      rcCell.appendChild(el);
+    });
+    tocStage.appendChild(rcCell);
+
+    TOC_LANES.forEach(function (ln) {
+      var bg = h("div", "toc-lane");
+      bg.style.setProperty("--p", ln.color);
+      bg.style.gridRow = ln.row;
+      var lbl = h("div", "lane-lbl");
+      lbl.appendChild(h("span", "t", ln.t));
+      lbl.appendChild(h("span", "en", ln.en));
+      bg.appendChild(lbl);
+      tocStage.appendChild(bg);
+
+      [2, 3].forEach(function (col) {
+        var cell = h("div", "toc-cell");
+        cell.style.gridColumn = col;
+        cell.style.gridRow = ln.row;
+        cell.style.setProperty("--p", ln.color);
+        TOC_NODES.forEach(function (nd) {
+          if (nd.lane === ln.id && nd.col === col) cell.appendChild(tocNode(nd.kind, nd.id, nd.k, nd.t, nd.d, nd.hy));
+        });
+        tocStage.appendChild(cell);
+      });
+    });
+
+    var impBg = h("div", "toc-impact-lane");
+    impBg.appendChild(h("div", "lane-lbl", "終極系統性社會影響力"));
+    tocStage.appendChild(impBg);
+    TOC_IMPACTS.forEach(function (im) {
+      var cell = h("div", "toc-cell imp");
+      cell.style.gridRow = im.row;
+      cell.appendChild(tocNode("impact", im.id, im.k, im.t));
+      tocStage.appendChild(cell);
+    });
+
+    var tb = document.querySelector("#toc-risk tbody");
+    tb.textContent = "";
+    TOC_RISKS.forEach(function (rk, i) {
+      var tr = document.createElement("tr");
+      var tda = document.createElement("td");
+      tda.appendChild(h("b", null, "假設" + "一二三四五"[i] + "：" + rk.a));
+      tda.appendChild(h("span", "muted", rk.ad));
+      tr.appendChild(tda);
+      var tdh = document.createElement("td");
+      rk.hy.forEach(function (x) { tdh.appendChild(hypoChip(x)); tdh.appendChild(document.createTextNode(" ")); });
+      tr.appendChild(tdh);
+      tr.appendChild(h("td", null, rk.v));
+      tr.appendChild(h("td", null, rk.r));
+      var tdm = document.createElement("td");
+      tdm.appendChild(h("b", null, rk.m + "："));
+      tdm.appendChild(document.createTextNode(rk.md));
+      tr.appendChild(tdm);
+      tb.appendChild(tr);
+    });
+  }
+
+  // 折線轉角做圓角
+  function tocRoundPath(pts, r) {
+    var d = "M" + pts[0][0] + "," + pts[0][1];
+    for (var i = 1; i < pts.length - 1; i++) {
+      var p = pts[i], a = pts[i - 1], b = pts[i + 1];
+      var la = Math.hypot(p[0] - a[0], p[1] - a[1]), lb = Math.hypot(b[0] - p[0], b[1] - p[1]);
+      var rr = Math.min(r, la / 2, lb / 2);
+      var p1 = [p[0] + (a[0] - p[0]) * rr / la, p[1] + (a[1] - p[1]) * rr / la];
+      var p2 = [p[0] + (b[0] - p[0]) * rr / lb, p[1] + (b[1] - p[1]) * rr / lb];
+      d += " L" + p1[0] + "," + p1[1] + " Q" + p[0] + "," + p[1] + " " + p2[0] + "," + p2[1];
+    }
+    var z = pts[pts.length - 1];
+    return d + " L" + z[0] + "," + z[1];
+  }
+
+  // 箭頭：tip 為箭尖，dir 為單位方向
+  function tocHead(tip, dir) {
+    var bx = tip[0] - dir[0] * 7, by = tip[1] - dir[1] * 7;
+    var px = -dir[1] * 4.5, py = dir[0] * 4.5;
+    return svgEl("polygon", { points: tip[0] + "," + tip[1] + " " + (bx + px) + "," + (by + py) + " " + (bx - px) + "," + (by - py) });
+  }
+
+  function tocEdgeColor(id) {
+    if (/^RC/.test(id)) return tocBranch(+id.slice(2)).color;
+    var nd = TOC_NODES.filter(function (n) { return n.id === id; })[0];
+    return nd ? tocLane(nd.lane).color : "var(--root)";
+  }
+
+  function drawTocEdges() {
+    tocSvg.textContent = "";
+    tocLabels.forEach(function (l) { l.remove(); });
+    tocLines = []; tocLabels = [];
+    var box = tocStage.getBoundingClientRect();
+    tocSvg.setAttribute("width", tocStage.scrollWidth);
+    tocSvg.setAttribute("height", tocStage.scrollHeight);
+    function rect(id) {
+      var r = tocEls[id].getBoundingClientRect();
+      return { l: r.left - box.left, r: r.right - box.left, t: r.top - box.top, b: r.bottom - box.top, cx: r.left - box.left + r.width / 2, cy: r.top - box.top + r.height / 2, h: r.height };
+    }
+    function add(edge, path, head, fly) {
+      var color = tocEdgeColor(edge.from);
+      [path, head].forEach(function (el) {
+        el.style.setProperty("--edge", color);
+        if (fly) el.classList.add("fly");
+        tocSvg.appendChild(el);
+      });
+      var line = { from: edge.from, to: edge.to, els: [path, head] };
+      tocLines.push(line);
+      return line;
+    }
+    function label(line, fl, x, y) {
+      if (!fl.label) return;
+      var el = h("div", "toc-fly-label");
+      el.appendChild(h("b", null, fl.n + " "));
+      el.appendChild(document.createTextNode(fl.label));
+      tocStage.appendChild(el);
+      el.style.left = (x - el.offsetWidth / 2) + "px";
+      el.style.top = (y - el.offsetHeight / 2) + "px";
+      tocLabels.push(el);
+      line.els.push(el);
+    }
+
+    TOC_GRAPH.forEach(function (e) {
+      var a = rect(e.from), b = rect(e.to), fl = e.fly;
+      if (!fl) {
+        var x1 = a.r, y1 = a.cy, x2 = b.l - 7, y2 = b.cy, cx = (x1 + x2) / 2;
+        var path = svgEl("path", { d: "M" + x1 + "," + y1 + " C" + cx + "," + y1 + " " + cx + "," + y2 + " " + x2 + "," + y2 });
+        add(e, path, tocHead([b.l, y2], [1, 0]), false);
+        return;
+      }
+      var pts, tip, dir, lx, ly;
+      if (fl.route === "up") {
+        var my = (a.t + b.b) / 2;
+        tip = [b.cx, b.b]; dir = [0, -1];
+        pts = a.cx === b.cx ? [[a.cx, a.t], [b.cx, b.b + 7]] : [[a.cx, a.t], [a.cx, my], [b.cx, my], [b.cx, b.b + 7]];
+        lx = b.cx; ly = my;
+      } else if (fl.route === "rightUp") {
+        var gx = Math.max(a.r, b.r) + 18, sy = a.t + a.h * 0.3;
+        tip = [b.r, b.cy]; dir = [-1, 0];
+        pts = [[a.r, sy], [gx, sy], [gx, b.cy], [b.r + 7, b.cy]];
+      } else {
+        var y0 = fl.f === "S1" ? a.t + a.h * 0.7 : a.cy, ex = (a.r + b.l) / 2;
+        tip = [b.l, b.cy]; dir = [1, 0];
+        pts = Math.abs(y0 - b.cy) < 2 ? [[a.r, y0], [b.l - 7, y0]] : [[a.r, y0], [ex, y0], [ex, b.cy], [b.l - 7, b.cy]];
+        if (Math.abs(y0 - b.cy) < 2) tip[1] = y0;
+        lx = ex; ly = (y0 + b.cy) / 2;
+      }
+      var line = add(e, svgEl("path", { d: tocRoundPath(pts, 12) }), tocHead(tip, dir), true);
+      label(line, fl, lx, ly);
+    });
+    tocFocus(tocPinned);
+  }
+
+  // 亮起節點本身＋所有上游來源＋所有下游影響
+  function tocFocus(id) {
+    var up = {}, down = {};
+    if (id) {
+      up[id] = down[id] = true;
+      var grow = function (set, forward) {
+        var changed = true;
+        while (changed) {
+          changed = false;
+          TOC_GRAPH.forEach(function (e) {
+            var f = forward ? e.from : e.to, t = forward ? e.to : e.from;
+            if (set[f] && !set[t]) { set[t] = true; changed = true; }
+          });
+        }
+      };
+      grow(down, true);
+      grow(up, false);
+    }
+    tocStage.classList.toggle("has-focus", !!id);
+    Object.keys(tocEls).forEach(function (k) {
+      tocEls[k].classList.toggle("is-lit", !!(up[k] || down[k]));
+      tocEls[k].classList.toggle("is-pinned", k === tocPinned);
+    });
+    tocLines.forEach(function (ln) {
+      var lit = !!(id && ((down[ln.from] && down[ln.to]) || (up[ln.from] && up[ln.to])));
+      ln.els.forEach(function (el) { el.classList.toggle("is-lit", lit); });
+    });
+  }
+
+  function tocNodeOf(target) { return target && target.closest ? target.closest(".toc-node") : null; }
+  function tocTogglePin(id) { tocPinned = tocPinned === id ? null : id; tocFocus(tocPinned || id); }
+
+  tocStage.addEventListener("mouseover", function (e) {
+    var n = tocNodeOf(e.target);
+    tocFocus(n ? n.getAttribute("data-id") : tocPinned);
+  });
+  tocStage.addEventListener("mouseleave", function () { tocFocus(tocPinned); });
+  tocStage.addEventListener("click", function (e) {
+    var n = tocNodeOf(e.target);
+    if (n) tocTogglePin(n.getAttribute("data-id"));
+  });
+  tocStage.addEventListener("focusin", function (e) {
+    var n = tocNodeOf(e.target);
+    if (n) tocFocus(n.getAttribute("data-id"));
+  });
+  tocStage.addEventListener("focusout", function () { tocFocus(tocPinned); });
+  tocStage.addEventListener("keydown", function (e) {
+    var n = tocNodeOf(e.target);
+    if (!n) return;
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); tocTogglePin(n.getAttribute("data-id")); }
+    if (e.key === "Escape") { tocPinned = null; tocFocus(n.getAttribute("data-id")); }
+  });
+
+  var tocTimer = null;
+  window.addEventListener("resize", function () {
+    clearTimeout(tocTimer);
+    tocTimer = setTimeout(drawTocEdges, 120);
+  });
+
+  /* =======================================================================
+     Root why — Benchmark dialog
+     ======================================================================= */
+
+  var bmDialog = document.getElementById("benchmark-dialog");
+  document.getElementById("open-benchmark").addEventListener("click", function () {
+    if (typeof bmDialog.showModal === "function") bmDialog.showModal();
+    else bmDialog.setAttribute("open", "");
+  });
+  document.getElementById("close-benchmark").addEventListener("click", function () {
+    if (typeof bmDialog.close === "function") bmDialog.close();
+    else bmDialog.removeAttribute("open");
+  });
+  // 點背景（dialog 本身，而非內容）關閉
+  bmDialog.addEventListener("click", function (e) { if (e.target === bmDialog) bmDialog.close(); });
+
+  /* =======================================================================
+     Section nav highlighting
+     ======================================================================= */
+
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll(".section-nav a"));
+  if ("IntersectionObserver" in window) {
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        navLinks.forEach(function (a) {
+          a.classList.toggle("is-current", a.getAttribute("data-nav") === en.target.id);
+        });
+      });
+    }, { rootMargin: "-20% 0px -70% 0px" });
+    ["sec-tree", "sec-hypo", "sec-matrix", "sec-toc"].forEach(function (id) {
+      var s = document.getElementById(id);
+      if (s) obs.observe(s);
+    });
+  }
+
+  /* =======================================================================
+     Boot
+     ======================================================================= */
+
+  renderOutline();
+  renderHypotheses();
+  renderTree(true);
+  renderToc();
+  drawTocEdges();
+  // fonts land after first paint and change node heights — lay out again
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { renderTree(true); drawTocEdges(); });
+
+  loadMatrix(JSON.parse(document.getElementById("matrix-data").textContent));
+  var top = data.items.slice().sort(function (a, b) { return b.impact - a.impact; })[0];
+  selectedId = top ? top.id : null;
+  renderMatrix();
+})();
+</script>
+</body>
+</html>
