@@ -1,0 +1,824 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>勵馨數據治理 Ghost Deck（公開版）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600&display=swap">
+<style>
+/* ===== 1. tokens（= tokens.css，產出時整段貼入） ===== */
+:root {
+  color-scheme: light;
+  --plane:#eef1f5; --surface:#ffffff; --sunk:#f5f7fa; --sunk-2:#eaeef3;
+  --ink:#1f2a37; --ink-2:#4b5563; --ink-3:#79838f;
+  --rule:#e4e8ee; --rule-strong:#c8d0da; --axis:#aab4c0;
+  --root:#b5342a; --focus:#2b6cb0; --fact:#2f7d55; --hypo:#b06a12; --guess:#79838f;
+  --font-display:"Noto Serif TC","Songti TC",Georgia,serif;
+  --font-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --slide-w:1280px; --slide-h:720px; --pad-x:72px; --hd-top:44px; --body-top:160px;
+  --body-bottom-final:64px;
+  --fs-title:34px; --fs-lead:24px; --fs-body:18px; --fs-small:14px; --fs-source:12px;
+  --sticky:#fff3bf; --sticky-edge:#e6cf73; --sticky-ink:#5b4a0b; --gap:#b5342a;
+  --accent:var(--root);
+}
+
+/* ===== 2. 舞台、縮放、列印 ===== */
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--plane);color:var(--ink);font-family:var(--font-body);-webkit-font-smoothing:antialiased}
+.deck{position:fixed;inset:0;overflow:hidden}
+.slide{position:absolute;left:50%;top:50%;width:var(--slide-w);height:var(--slide-h);
+  margin-left:calc(var(--slide-w) / -2);margin-top:calc(var(--slide-h) / -2);
+  transform:scale(var(--s,1));background:var(--surface);overflow:hidden;display:none;
+  box-shadow:0 1px 2px rgba(31,42,55,.06)}
+.slide.active{display:block}
+@page{size:1280px 720px;margin:0}
+@media print{
+  html,body{height:auto;background:var(--surface)}
+  .toolbar,.notes-panel,.todo-panel{display:none!important}
+  .deck{position:static;overflow:visible}
+  .slide{display:block!important;position:relative;left:0;top:0;margin:0;transform:none;
+    box-shadow:none;break-after:page;page-break-after:always}
+}
+
+/* ===== 3. 投影片固定格線：標題區／內容區／便條列／來源列 ===== */
+.hd{position:absolute;left:var(--pad-x);right:var(--pad-x);top:var(--hd-top)}
+.kicker{display:flex;align-items:center;gap:14px;font:500 13px/1.4 var(--font-mono);color:var(--ink-3);letter-spacing:.04em}
+.title{font:600 var(--fs-title)/1.32 var(--font-display);margin:14px 0 0;color:var(--ink);letter-spacing:.01em}
+.body{position:absolute;left:var(--pad-x);right:var(--pad-x);top:var(--body-top);bottom:var(--body-bottom-final);
+  display:flex;flex-direction:column;justify-content:center}
+.ft{position:absolute;left:var(--pad-x);right:var(--pad-x);bottom:16px;height:30px;border-top:1px solid var(--rule);
+  display:flex;justify-content:space-between;align-items:flex-end;gap:24px;font-size:var(--fs-source);color:var(--ink-3)}
+.ft .src{white-space:nowrap;overflow:hidden;text-overflow:clip;max-width:1040px}
+.ft .pg{font-family:var(--font-mono)}
+.notes{display:none}
+.accent{color:var(--accent)}
+.num{font-family:var(--font-mono)}
+
+/* 證據強度圓點：一律「圓點＋文字」，不只靠顏色 */
+.ev{display:inline-flex;align-items:center;gap:5px;font:500 12px/1.45 var(--font-body);color:var(--ink-2);white-space:nowrap}
+.ev::before{font-size:13px;line-height:1.3}
+.ev[data-ev="fact"]::before{content:"●";color:var(--fact)}
+.ev[data-ev="hypo"]::before{content:"◐";color:var(--hypo)}
+.ev[data-ev="guess"]::before{content:"○";color:var(--guess)}
+
+/* 待補資料：每頁的 .need（pitch 前必須補）與 .gap（下一階段驗證）只當資料來源，
+   投影片上永遠不顯示；按 M 由上方抽屜 .todo-panel 列出（見第 5 節） */
+.ghost-notes{display:none}
+
+/* 通用方框：淡底 */
+.box{background:var(--sunk);border-radius:6px;padding:16px 20px}
+
+/* ===== 4. 版型 ===== */
+/* cover */
+.slide[data-layout="cover"] .cover{position:absolute;left:var(--pad-x);right:var(--pad-x);top:200px}
+.cover .org{font:500 14px/1.4 var(--font-mono);color:var(--ink-3);letter-spacing:.06em}
+.cover h1{font:600 48px/1.4 var(--font-display);margin:22px 0 0;max-width:1000px}
+.cover .sub{font-size:22px;color:var(--ink-2);margin-top:22px;line-height:1.5}
+.cover .meta{margin-top:40px;padding-top:14px;border-top:1px solid var(--rule);font:400 14px/1.6 var(--font-mono);color:var(--ink-3);max-width:640px}
+
+/* exec-summary（SCR） */
+.scr{display:grid;grid-template-columns:88px 1fr;row-gap:20px;column-gap:24px;align-items:baseline}
+.scr .lbl{font:500 15px/1.4 var(--font-mono);color:var(--ink-3);letter-spacing:.08em}
+.scr .txt{font-size:var(--fs-lead);line-height:1.45}
+.ask{margin-top:28px;border-left:4px solid var(--accent);padding:10px 20px;font-size:22px;font-weight:700;color:var(--accent)}
+
+/* compare（左右／前後對比） */
+.cmp{display:grid;grid-template-columns:96px 1fr 1fr;column-gap:20px;row-gap:14px;align-items:stretch}
+.cmp .h{font:500 14px/1.2 var(--font-mono);color:var(--ink-3);letter-spacing:.06em;padding:0 20px}
+.cmp .lbl{font:600 20px/1.3 var(--font-display);align-self:center}
+.cmp .cell{font-size:21px;line-height:1.5;display:flex;flex-direction:column;gap:8px;justify-content:center}
+.pair{display:grid;grid-template-columns:1fr 56px 1fr;align-items:stretch}
+.pair .arrow{display:flex;align-items:center;justify-content:center;font:400 30px/1 var(--font-mono);color:var(--ink-3)}
+.pair .tag{font:500 13px/1.4 var(--font-mono);color:var(--ink-3);letter-spacing:.08em;margin-bottom:10px}
+.pair .big{font-size:26px;line-height:1.4;font-weight:500}
+.pair .small{font-size:17px;line-height:1.5;color:var(--ink-2);margin-top:10px}
+.pair .blocked .big{text-decoration:line-through;text-decoration-color:var(--ink-3);color:var(--ink-2)}
+.cond{margin-top:22px;display:flex;gap:28px;font-size:17px;color:var(--ink-2);align-items:center;flex-wrap:wrap}
+
+/* tree（一頁樹，只畫到第一／二層） */
+.tree{display:flex;flex-direction:column;align-items:center}
+.tree .rootq{font:600 22px/1.4 var(--font-display);padding:12px 26px;border:1.5px solid var(--rule-strong);border-radius:6px;background:var(--surface)}
+.tree .stem{width:1.5px;height:22px;background:var(--rule-strong)}
+.tree .branches{position:relative;width:100%;display:grid;grid-template-columns:1fr 1fr;column-gap:32px;padding-top:22px}
+.tree .branches::before{content:"";position:absolute;top:0;height:1.5px;background:var(--rule-strong);
+  left:calc((100% - 32px) / 4);right:calc((100% - 32px) / 4)}
+.tree .br{position:relative;display:flex;flex-direction:column;align-items:center;gap:12px}
+.tree .br::before{content:"";position:absolute;top:-22px;left:50%;width:1.5px;height:22px;background:var(--rule-strong)}
+.tree .grp{font:600 24px/1.4 var(--font-display);text-align:center}
+.tree .grp small{display:block;font:400 14px/1.4 var(--font-body);color:var(--ink-3);text-align:center;margin-top:4px}
+.tree .leaves{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.tree .leaf{font-size:18px;padding:8px 14px}
+
+/* scatter（矩陣散佈圖：強調少數，其餘淡化） */
+.scatter{display:grid;grid-template-columns:720px 1fr;column-gap:36px;align-items:center}
+.scatter svg{display:block;overflow:visible}
+.scatter .gridline{stroke:var(--rule);stroke-width:1}
+.scatter .thr{stroke:var(--rule-strong);stroke-width:1}
+.scatter .tick{font:400 11px var(--font-mono);fill:var(--ink-3)}
+.scatter .axt{font:500 13px var(--font-body);fill:var(--ink-2)}
+.scatter .qlab{font:400 12px var(--font-body);fill:var(--ink-3)}
+.scatter .dot{fill:var(--axis);stroke:var(--surface);stroke-width:2}
+.scatter .dot.hi{fill:var(--accent)}
+.scatter .dlab{font:500 13px var(--font-mono);fill:var(--ink)}
+.scatter .hit{fill:transparent}
+.legend-list{display:flex;flex-direction:column;gap:18px}
+.legend-list .it{border-left:3px solid var(--accent);padding:4px 0 4px 14px}
+.legend-list .k{font-size:20px;font-weight:700}
+.legend-list .v{font:400 14px/1.5 var(--font-mono);color:var(--ink-3);margin-top:2px}
+.legend-list .muted{border-left-color:var(--axis);font-size:14px;color:var(--ink-3)}
+
+/* loop（迴路／ToC 簡圖） */
+.loops{display:grid;grid-template-columns:1fr 1fr;column-gap:40px}
+.loops figure{margin:0}
+.loops figcaption{font:500 14px/1.4 var(--font-mono);color:var(--ink-3);letter-spacing:.06em;margin-bottom:8px}
+.loops svg{display:block;width:100%;height:auto}
+.loops .n{fill:var(--sunk);stroke:var(--rule-strong);stroke-width:1.2}
+.loops .t{font:500 17px var(--font-body);fill:var(--ink);text-anchor:middle;dominant-baseline:middle}
+.loops .e{fill:none;stroke:var(--ink-3);stroke-width:1.5}
+.loops .e.good{stroke:var(--accent)}
+.loops .good-loop{color:var(--accent)}
+.loops .x{font:700 22px var(--font-body);fill:var(--ink-2);text-anchor:middle;dominant-baseline:middle}
+.steps{display:grid;grid-template-columns:1fr 40px 1fr 40px 1fr 40px 1.15fr;align-items:stretch}
+.steps .ar{display:flex;align-items:center;justify-content:center;color:var(--ink-3);font:400 24px/1 var(--font-mono)}
+.steps .st .no,.steps .out .no{font:500 14px/1.4 var(--font-mono);color:var(--ink-3)}
+.steps .st .k{font-size:22px;font-weight:700;line-height:1.35;margin-top:10px}
+.steps .st .v{font-size:15px;color:var(--ink-2);margin-top:10px;line-height:1.5}
+.steps .out{border:2px solid var(--accent);border-radius:6px;padding:16px 20px;display:flex;flex-direction:column;justify-content:center}
+.steps .out .k{font-size:21px;font-weight:700;color:var(--accent);line-height:1.4;margin-top:8px}
+
+/* table（狀態表；附錄用） */
+.tbl{width:100%;border-collapse:collapse;font-size:14px;line-height:1.45}
+.tbl th{font:500 12px/1.3 var(--font-mono);color:var(--ink-3);text-align:left;padding:6px 10px;border-bottom:1.5px solid var(--rule-strong);letter-spacing:.04em}
+.tbl td{padding:6px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+.tbl td.n{font-family:var(--font-mono);text-align:right;font-variant-numeric:tabular-nums}
+.tbl.dense{font-size:13px}
+.tbl.dense td,.tbl.dense th{padding:4px 10px}
+.flag{font:500 12px/1.4 var(--font-body);color:var(--root);border:1px solid var(--root);border-radius:3px;padding:2px 6px;white-space:nowrap}
+
+/* timeline-decision（時間軸＋決策清單） */
+.tl{display:grid;column-gap:4px;margin-bottom:30px}
+.tl .seg{background:var(--sunk);padding:12px 16px;border-top:3px solid var(--rule-strong)}
+.tl .w{font:500 13px/1.4 var(--font-mono);color:var(--ink-3)}
+.tl .k{font-size:19px;font-weight:700;margin-top:8px}
+.tl .v{font:400 13px/1.4 var(--font-mono);color:var(--ink-3);margin-top:6px}
+.dec{display:flex;flex-direction:column;gap:12px}
+.dec .dh{display:flex;align-items:center;gap:12px;font:500 14px/1.4 var(--font-mono);color:var(--ink-3);letter-spacing:.06em}
+.dec .draft{font:500 12px/1.4 var(--font-body);color:var(--ink-2);border:1px dashed var(--ink-3);border-radius:3px;padding:3px 7px;letter-spacing:0}
+.dec ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.dec li{display:flex;gap:14px;align-items:baseline;font-size:21px;line-height:1.4}
+.dec li::before{content:"";flex:0 0 16px;height:16px;border:1.5px solid var(--accent);border-radius:2px;transform:translateY(2px)}
+.dec li .num{color:var(--ink-3);font-size:16px}
+
+/* ===== 5. 工具列、上方待補抽屜（M）、下方講稿面板（N）：都不在投影片內，不列印 ===== */
+.toolbar{position:fixed;top:10px;right:12px;z-index:12;display:flex;gap:8px;align-items:center;font:500 12px var(--font-mono);color:var(--ink-3)}
+.toolbar button{font:500 12px var(--font-body);color:var(--ink);background:var(--surface);border:1px solid var(--rule-strong);border-radius:4px;padding:6px 10px;cursor:pointer}
+.toolbar button:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.toolbar button[aria-pressed="true"]{background:var(--sunk-2)}
+.notes-panel{position:fixed;left:0;right:0;bottom:0;z-index:9;max-height:38vh;overflow:auto;background:var(--surface);
+  border-top:1px solid var(--rule-strong);padding:14px 24px 18px;font-size:16px;line-height:1.7;display:none}
+.notes-panel.show{display:block}
+.notes-panel .nh{font:500 12px var(--font-mono);color:var(--ink-3);margin-bottom:4px}
+/* 上方抽屜：與講稿面板同樣式；最高 40vh＋講稿 38vh，兩者同時打開也不重疊 */
+.todo-panel{position:fixed;left:0;right:0;top:0;z-index:11;max-height:40vh;display:flex;flex-direction:column;overflow:hidden;background:var(--surface);
+  border-bottom:1px solid var(--rule-strong);box-shadow:0 2px 8px rgba(31,42,55,.08);padding:14px 24px 16px;
+  font-size:14px;line-height:1.6;transform:translateY(-100%);visibility:hidden;transition:transform .2s ease,visibility 0s linear .2s}
+.todo-panel.show{transform:none;visibility:visible;transition:transform .2s ease}
+.todo-panel .th{display:flex;align-items:baseline;gap:14px;padding-right:280px;margin-bottom:8px}
+.todo-panel .th b{font:600 17px/1.4 var(--font-display);color:var(--ink)}
+.todo-panel .th span{font:500 12px var(--font-mono);color:var(--ink-3)}
+.todo-panel .th{flex:none}
+/* 兩欄各自捲動：「全部」很長時，「本頁」仍留在眼前 */
+.todo-panel .cols{flex:1 1 auto;min-height:0;display:grid;grid-template-columns:1fr 1.3fr;grid-template-rows:minmax(0,1fr);column-gap:32px}
+.todo-panel .cols>section{overflow:auto;min-height:0;padding-right:6px}
+.todo-panel h3{font:500 12px/1.4 var(--font-mono);color:var(--ink-3);letter-spacing:.06em;margin:0 0 6px;padding-bottom:4px;border-bottom:1px solid var(--rule)}
+.todo-panel .cat{display:inline-block;font:500 12px/1.4 var(--font-body);padding:1px 8px;border-radius:3px;margin:6px 0 4px}
+.todo-panel .cat.need{background:var(--sticky);border-top:2px solid var(--sticky-edge);color:var(--sticky-ink)}
+.todo-panel .cat.gap{border:1px dashed var(--gap);color:var(--gap)}
+.todo-panel ul{margin:0;padding:0 0 0 18px}
+.todo-panel li{margin:2px 0;color:var(--ink)}
+.todo-panel li.none{list-style:none;margin-left:-18px;color:var(--ink-3)}
+.todo-panel li .pgs{font:400 11px var(--font-mono);color:var(--ink-3);margin-left:8px;white-space:nowrap}
+.todo-panel li.cur{font-weight:700}
+
+/* ===== v3 追加版型 ===== */
+.lock{margin-top:30px;border-left:4px solid var(--accent);padding:10px 20px;font-size:24px;font-weight:700;color:var(--accent)}
+.scr .lbl{white-space:nowrap}
+/* p2 用途 × 頻率／內容 */
+.use{display:grid;grid-template-columns:96px 220px 1fr 150px;column-gap:16px;row-gap:12px;align-items:stretch}
+.use .h{font:500 14px/1.2 var(--font-mono);color:var(--ink-3);letter-spacing:.06em;padding:0 20px}
+.use .lbl{font:600 22px/1.3 var(--font-display);align-self:center}
+.use .cell{font-size:21px;line-height:1.4;padding:12px 20px}
+.use .e{display:flex;align-items:center}
+.now{margin-top:22px;display:flex;align-items:center;gap:18px;border-top:1px solid var(--rule-strong);padding-top:16px}
+.now .k{font:500 14px/1.2 var(--font-mono);color:var(--ink-3);letter-spacing:.06em;width:96px}
+.now .v{font-size:24px;font-weight:700}
+/* p3 五根因一頁樹 */
+.tree5{display:flex;flex-direction:column;align-items:center}
+.tree5 .rootq{font:600 22px/1.4 var(--font-display);padding:12px 26px;border:1.5px solid var(--rule-strong);border-radius:6px;background:var(--surface)}
+.tree5 .stem{width:1.5px;height:24px;background:var(--rule-strong)}
+.tree5 .br5{position:relative;width:100%;display:grid;grid-template-columns:repeat(5,1fr);column-gap:16px;padding-top:24px}
+.tree5 .br5::before{content:"";position:absolute;top:0;height:1.5px;background:var(--rule-strong);left:calc((100% - 64px) / 10);right:calc((100% - 64px) / 10)}
+.tree5 .b{position:relative;text-align:center;padding:18px 10px;background:var(--sunk);border-radius:6px}
+.tree5 .b::before{content:"";position:absolute;top:-24px;left:50%;width:1.5px;height:24px;background:var(--rule-strong)}
+.tree5 .k{font:600 22px/1.4 var(--font-display)}
+.tree5 .v{font-size:17px;color:var(--ink-2);margin-top:6px}
+/* p4 散佈圖標籤 */
+.scatter{grid-template-columns:700px 1fr}
+.scatter .dlab{font:600 15px var(--font-body);fill:var(--ink)}
+.scatter .dlab.lo{fill:var(--ink-3);font-weight:500}
+.scatter .dlab.sc{font:400 12px var(--font-mono);fill:var(--ink-3)}
+.legend-list .it .v{font-family:var(--font-body)}
+/* p5 ToC 圖：縮放塞進內容區 */
+.slide[data-layout="loop"] .tocbody{top:136px;justify-content:center;align-items:center}
+.tocfig{margin:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.tocfig svg{display:block;width:100%;flex:1 1 0;min-height:0;height:auto}
+.tocfig .tocnote{flex:none;margin-top:8px;font-size:17px;line-height:1.4;color:var(--ink-2);text-align:center}
+/* p6 三個理由 */
+.rs{display:grid;grid-template-columns:repeat(3,1fr);column-gap:20px}
+.rs .r{display:flex;flex-direction:column;gap:10px;padding:20px 22px}
+.rs .no{font-size:14px;color:var(--ink-3)}
+.rs .k{font-size:24px;font-weight:700;color:var(--accent)}
+.rs .v{font-size:19px;line-height:1.5;color:var(--ink-2)}
+.pre{margin-bottom:22px;display:flex;align-items:center;gap:16px;font-size:21px;line-height:1.45;color:var(--ink-2);border-left:3px solid var(--rule-strong);padding:4px 0 4px 16px}
+.pre .ev{font-size:13px}
+/* p7 其他根因 */
+.oth{display:grid;grid-template-columns:120px 280px 1fr;column-gap:24px;row-gap:16px;align-items:center}
+.oth .pos{font:500 15px/1.3 var(--font-mono);color:var(--ink-3);letter-spacing:.06em}
+.oth .rc{font-size:22px;font-weight:700;padding:14px 20px}
+.oth .why{font-size:21px;line-height:1.45;color:var(--ink)}
+/* p8 下一步 */
+.flow{display:grid;grid-template-columns:1.4fr 48px 1fr;align-items:stretch}
+.flow .ar{display:flex;align-items:center;justify-content:center;font:400 28px/1 var(--font-mono);color:var(--ink-3)}
+.flow .no{font-size:14px;color:var(--ink-3)}
+.flow .k{font-size:26px;font-weight:700;margin-top:6px}
+.flow .v{font-size:18px;color:var(--ink-2);margin-top:6px}
+.site{margin-top:26px}
+.site .sh{display:flex;align-items:center;gap:14px;font-size:19px;font-weight:700}
+.site .draft{font:500 14px/1.4 var(--font-body);color:var(--ink-2);border:1px dashed var(--ink-3);border-radius:3px;padding:3px 8px}
+.site .opts{display:grid;grid-template-columns:1fr 1fr;column-gap:20px;margin-top:12px}
+.site .o{border-left:3px solid var(--rule-strong);padding:4px 0 4px 16px}
+.site .o .k{font-size:21px;font-weight:700}
+.site .o .v{font-size:17px;color:var(--ink-2);margin-top:2px}
+.site .inv{margin-top:12px;border-left:3px solid var(--accent);padding:6px 0 6px 16px;font-size:22px;line-height:1.45;font-weight:600}
+.rs .evs{display:flex;flex-wrap:wrap;gap:6px 12px}
+.oth .evs{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:6px}
+/* 講稿抽屜：頁別備註（不念出來） */
+.notes-panel .memo{margin:10px 0 0;padding-top:8px;border-top:1px dashed var(--rule-strong);font-size:.88em;color:var(--ink-2)}
+/* 連到 issue_tree-v7 的連結（低調；列印時顯示網址） */
+.ft a.more{flex:none;margin-left:auto;color:var(--ink-3);text-decoration:none;border-bottom:1px dotted var(--ink-3);font-size:var(--fs-source)}
+.ft a.more:hover,.tbl a.xl:hover{color:var(--accent);border-bottom-color:var(--accent)}
+.tbl a.xl{color:inherit;text-decoration:none;border-bottom:1px dotted var(--ink-3)}
+@media print{
+  .ft a.more{border-bottom:0;font-size:0}
+  .ft a.more::after{content:attr(href);font-size:10px}
+  .tbl a.xl{border-bottom:0}
+}
+/* 附錄 */
+.fn{font-size:13px;line-height:1.6;color:var(--ink-3);margin:14px 0 0}
+.tbl td.nodes{display:flex;flex-wrap:wrap;gap:6px 22px}
+.tbl td.nodes .ev{font-size:14px;color:var(--ink)}
+.a3wrap{display:grid;grid-template-columns:1fr 1fr;column-gap:28px;align-items:start}
+.tbl.a3{font-size:12.5px}
+.tbl.a3 td,.tbl.a3 th{padding:3px 8px}
+.tbl.a3 tr.grp td{background:var(--sunk);border-bottom:1px solid var(--rule-strong)}
+</style>
+</head>
+<body>
+<div class="toolbar"><span id="counter"></span><button id="todoBtn" type="button" aria-pressed="false" aria-controls="todoPanel">待補清單 (M)</button><button id="notesBtn" type="button" aria-pressed="false" aria-controls="notesPanel">講稿 (N)</button></div>
+<main class="deck" id="deck">
+<!-- 0 封面 -->
+<section class="slide" data-layout="cover" id="p0">
+  <div class="cover">
+    <div class="org">勵馨基金會 × School 28｜數據治理診斷</div>
+    <h1>為什麼總會收不到足夠的服務資料，以推動方案／倡議／研究的策略發展？</h1>
+    <div class="sub">Why Tree 階段報告：鎖定關鍵根因與下一步</div>
+    <div class="meta">2026 年 9 月｜Ghost Deck v3<br>公開版：內部訪談細節已略去</div>
+  </div>
+  <footer class="ft"><span class="src">公開版：內部訪談細節已略去</span><span class="pg">0 / 8</span></footer>
+  <aside class="notes">各位好。今天要報告的題目是：為什麼總會收不到足夠的服務資料，來推動方案、倡議和研究的策略發展？這一階段，我們做到找出原因、鎖定關鍵根因，最後說明接下來預計怎麼做。我們先從結論講起。</aside>
+</section>
+
+<!-- 1 執行摘要 -->
+<section class="slide" data-layout="exec" id="p1">
+  <header class="hd"><div class="kicker"><span>01　執行摘要</span><span class="ev" data-ev="hypo">診斷部份證實</span><span class="ev" data-ev="fact">規格卡住 IT 有訪談依據</span><span class="ev" data-ev="guess">鎖定為本專案判斷</span></div>
+    <h2 class="title">我們把問題拆成五大根因，並先鎖定業務規格</h2></header>
+  <div class="body">
+    <div class="scr">
+      <div class="lbl">拆解</div><div class="txt">五大根因：門禁、規格、IT、人力、組織與價值</div>
+      <div class="lbl">判斷</div><div class="txt">矩陣篩出三類，規格是主鏈的起點</div>
+      <div class="lbl">下一步</div><div class="txt">先做業務規格的 How Tree</div>
+    </div>
+    <div class="lock">關鍵根因：業務規格</div>
+  </div>
+  <div class="ghost-notes">
+    <div class="need"><b>pitch 前必須補</b><span class="it">改變理論的 11 條邊：使用者已確認，團隊仍要確認</span><span class="it">矩陣分數（0919）在 0925 五大根因架構下是否成立</span></div>
+    <div class="gap"><b>下一階段驗證</b><span class="it">（本頁無）</span></div>
+  </div>
+  <footer class="ft"><span class="src">來源：0925 議題樹；0919 影響力矩陣；改變理論 v3；執行長訪談（2026-09）</span><span class="pg">1 / 8</span></footer>
+  <aside class="notes">先講結論。我們把這個問題拆成五大根因：外部門禁、業務規格、IT 系統、人力產能，以及組織與價值。接著用兩個工具判斷先後：矩陣篩出其中三類，改變理論看出業務規格是主鏈的起點，也是總會能先動手的地方。所以我們先鎖定業務規格，下一步做它的 How Tree。先從「足夠」是什麼講起。</aside>
+</section>
+
+<!-- 2 足夠看用途 -->
+<section class="slide" data-layout="compare" id="p2">
+  <header class="hd"><div class="kicker"><span>02　定義</span><span class="ev" data-ev="fact">用途與現況出自訪談</span><span class="ev" data-ev="guess">頻率與內容為本專案整理</span></div>
+    <h2 class="title">「足夠」要看用途，而總會定期收到的只有一年一次的年報</h2></header>
+  <div class="body">
+    <div class="use">
+      <div></div><div class="h">頻率</div><div class="h">內容</div><div></div>
+      <div class="lbl">方案</div><div class="cell box">定期</div><div class="cell box">跨分所可比</div><div class="e"><span class="ev" data-ev="hypo">部份證實</span></div>
+      <div class="lbl">倡議</div><div class="cell box">數日內</div><div class="cell box">新興議題</div><div class="e"><span class="ev" data-ev="fact">訪談</span></div>
+      <div class="lbl">研究</div><div class="cell box">長期</div><div class="cell box">定義一致</div><div class="e"><span class="ev" data-ev="guess">待確認</span></div>
+    </div>
+    <div class="now"><span class="k">現況</span><span class="v"><span class="accent">定期收到的只有年報</span>；急用時只能臨時發問卷，靠分所幾天內趕出來</span><span class="ev" data-ev="fact">訪談</span></div>
+  </div>
+  <div class="ghost-notes">
+    <div class="need"><b>pitch 前必須補</b><span class="it">「研究」要什麼頻率與內容，尚無訪談依據，要向總會相關單位確認</span><span class="it">年報填報說明還沒拿到：現況欄位無法逐欄對照，業務規格的證據也缺這一塊</span></div>
+    <div class="gap"><b>下一階段驗證</b><span class="it">走政府系統的方案：通報表欄位與匯出限制，含新版是否已增列數位性暴力等新興議題</span></div>
+  </div>
+  <footer class="ft"><span class="src">來源：執行長訪談（2026-09）；0925 議題樹（收集流程錯位、範疇覆蓋限制）</span><span class="pg">2 / 8</span></footer>
+  <aside class="notes">要談收不到「足夠」的資料，得先說清楚什麼叫足夠，這要看用途。方案需要定期、跨分所能比較的資料，執行長說年報一年看一次不夠。倡議常要在幾天內回應，也需要新興議題的資料。研究需要什麼，待確認。但總會定期收到的只有年報，急用時只能臨時發問卷，靠分所幾天內趕出來。為什麼收不到？</aside>
+</section>
+
+<!-- 3 五大根因 -->
+<section class="slide" data-layout="tree" id="p3">
+  <header class="hd"><div class="kicker"><span>03　診斷</span><span class="ev" data-ev="hypo">17 節點：7 證實、6 部份、4 待驗證</span></div>
+    <h2 class="title">收不到足夠的資料，可以歸結到五大根因</h2></header>
+  <div class="body">
+    <div class="tree5">
+      <div class="rootq">為什麼收不到足夠資料？</div><div class="stem"></div>
+      <div class="br5">
+        <div class="b"><div class="k">外部門禁</div><div class="v">政府不給匯出</div></div>
+        <div class="b"><div class="k">業務規格</div><div class="v">規格沒有定義</div></div>
+        <div class="b"><div class="k">IT 系統</div><div class="v">缺系統與工具</div></div>
+        <div class="b"><div class="k">人力產能</div><div class="v">人力已飽和</div></div>
+        <div class="b"><div class="k">組織與價值</div><div class="v">回饋斷裂</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="ghost-notes">
+    <div class="need"><b>pitch 前必須補</b><span class="it">年報填報說明還沒拿到：現況欄位無法逐欄對照，業務規格的證據也缺這一塊</span></div>
+    <div class="gap"><b>下一階段驗證</b><span class="it">4 個待驗證節點：產出指引、戰略用途、制度激勵、心理防禦</span></div>
+  </div>
+  <footer class="ft"><span class="src">來源：0925 議題樹（5 根因、17 個第二層節點）；改變理論 v3｜完整樹見附錄 A2</span><span class="pg">3 / 8</span></footer>
+  <aside class="notes">為什麼收不到？拆成五大根因。外部門禁，是政府系統不給匯出；業務規格，是總會要什麼還沒定義；IT 系統，是缺系統和轉換工具；人力產能，是資訊人少、社工工時飽和；組織與價值，是總會不敢要、分所看不到用途。五類依原題拆，換成「足夠」來看，規格直接決定了總會能收到哪些內容。該先處理哪一個？<p class="memo">備註：業務規格目前的證據是法院服務處統合失敗的訪談；「產出指引缺失」仍是待驗證假說。</p></aside>
+</section>
+
+<!-- 4 矩陣 -->
+<section class="slide" data-layout="scatter" id="p4">
+  <header class="hd"><div class="kicker"><span>04　優先序</span><span class="ev" data-ev="hypo">評分為判斷，非量測</span><span class="ev" data-ev="fact">依矩陣原定義：兩軸都 ≥60</span></div>
+    <h2 class="title">矩陣上，兩軸都過 60 的是業務規格、IT 系統、組織與價值</h2></header>
+  <div class="body">
+    <div class="scatter">
+      <svg width="700" height="400" viewBox="0 0 700 400" role="img" aria-label="五大根因的平均影響力與可解性（矩陣原定義：兩軸都 ≥60 為核心突破口）：業務規格 70／74、IT 系統 88／75、組織與價值 77／79 為核心突破口；外部門禁 80／45、人力產能 60／40 為戰略槓桿點（高影響、低可解）">
+<line class="gridline" x1="56" y1="352.0" x2="684" y2="352.0"/>
+<text class="tick" x="48" y="356.0" text-anchor="end">50</text>
+<line class="gridline" x1="56" y1="284.8" x2="684" y2="284.8"/>
+<text class="tick" x="48" y="288.8" text-anchor="end">60</text>
+<line class="gridline" x1="56" y1="217.6" x2="684" y2="217.6"/>
+<text class="tick" x="48" y="221.6" text-anchor="end">70</text>
+<line class="gridline" x1="56" y1="150.4" x2="684" y2="150.4"/>
+<text class="tick" x="48" y="154.4" text-anchor="end">80</text>
+<line class="gridline" x1="56" y1="83.2" x2="684" y2="83.2"/>
+<text class="tick" x="48" y="87.2" text-anchor="end">90</text>
+<line class="gridline" x1="56" y1="16.0" x2="684" y2="16.0"/>
+<text class="tick" x="48" y="20.0" text-anchor="end">100</text>
+<text class="tick" x="56.0" y="370" text-anchor="middle">30</text>
+<text class="tick" x="160.7" y="370" text-anchor="middle">40</text>
+<text class="tick" x="265.3" y="370" text-anchor="middle">50</text>
+<text class="tick" x="370.0" y="370" text-anchor="middle">60</text>
+<text class="tick" x="474.7" y="370" text-anchor="middle">70</text>
+<text class="tick" x="579.3" y="370" text-anchor="middle">80</text>
+<text class="tick" x="684.0" y="370" text-anchor="middle">90</text>
+<line class="thr" x1="370.0" y1="16" x2="370.0" y2="352"/>
+<line class="thr" x1="56" y1="352" x2="684" y2="352"/>
+<line class="thr" x1="56" y1="284.8" x2="684" y2="284.8"/>
+<text class="qlab" x="680" y="278.8" text-anchor="end">影響力 60</text>
+<text class="qlab" x="362.0" y="30" text-anchor="end">戰略槓桿點（高影響、低可解）</text>
+<text class="qlab" x="378.0" y="30">核心突破口（兩軸都 ≥60）</text>
+<text class="axt" x="370.0" y="392" text-anchor="middle">平均可解性 →</text>
+<text class="axt" transform="translate(14 184.0) rotate(-90)" text-anchor="middle">平均影響力 →</text>
+<g><title>外部門禁（2 項平均）：影響力 80／可解性 45</title><circle class="hit" cx="213.0" cy="150.4" r="14"/><circle class="dot" cx="213.0" cy="150.4" r="7"/></g>
+<text class="dlab lo" x="225.0" y="148.4" text-anchor="start">外部門禁</text>
+<text class="dlab sc" x="225.0" y="165.4" text-anchor="start">80／45</text>
+<g><title>人力產能（4 項平均）：影響力 60／可解性 40</title><circle class="hit" cx="160.7" cy="284.8" r="14"/><circle class="dot" cx="160.7" cy="284.8" r="7"/></g>
+<text class="dlab lo" x="172.7" y="282.8" text-anchor="start">人力產能</text>
+<text class="dlab sc" x="172.7" y="299.8" text-anchor="start">60／40</text>
+<g><title>業務規格（4 項平均）：影響力 70／可解性 73.75</title><circle class="hit" cx="513.9" cy="217.6" r="14"/><circle class="dot hi" cx="513.9" cy="217.6" r="8"/></g>
+<text class="dlab hi" x="525.9" y="215.6" text-anchor="start">業務規格</text>
+<text class="dlab sc" x="525.9" y="232.6" text-anchor="start">70／74</text>
+<g><title>IT 系統（2 項平均）：影響力 87.5／可解性 75</title><circle class="hit" cx="527.0" cy="100.0" r="14"/><circle class="dot hi" cx="527.0" cy="100.0" r="8"/></g>
+<text class="dlab hi" x="539.0" y="98.0" text-anchor="start">IT 系統</text>
+<text class="dlab sc" x="539.0" y="115.0" text-anchor="start">88／75</text>
+<g><title>組織與價值（5 項平均）：影響力 77／可解性 79</title><circle class="hit" cx="568.9" cy="170.6" r="14"/><circle class="dot hi" cx="568.9" cy="170.6" r="8"/></g>
+<text class="dlab hi" x="556.9" y="168.6" text-anchor="end">組織與價值</text>
+<text class="dlab sc" x="556.9" y="185.6" text-anchor="end">77／79</text>
+</svg>
+      <div class="legend-list">
+        <div class="it"><div class="k">核心突破口</div><div class="v">業務規格・IT 系統・組織與價值</div></div>
+        <div class="it muted"><div class="k">戰略槓桿點</div><div class="v">門禁・人力：短期改不動，先當限制條件 <span class="ev" data-ev="guess">本專案判斷</span></div></div>
+        <div class="it muted"><div class="k">三類分數接近</div><div class="v">影響力 70～88・可解性 74～79</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="ghost-notes">
+    <div class="need"><b>pitch 前必須補</b><span class="it">矩陣分數（0919）在 0925 五大根因架構下是否成立</span></div>
+    <div class="gap"><b>下一階段驗證</b><span class="it">（本頁無）</span></div>
+  </div>
+  <footer class="ft"><span class="src">來源：0919 影響力 × 可解性矩陣（17 項，依根因標籤取平均；門檻依矩陣原定義：兩軸都 ≥60）｜17 項分數見附錄 A3</span><span class="pg">4 / 8</span></footer>
+  <aside class="notes">先看矩陣，分數是各項評分的平均。依矩陣原定義，影響力和可解性兩軸都過六十，是核心突破口：業務規格、IT 系統、組織與價值。門禁與人力影響高、可解性低，屬戰略槓桿點；本階段總會短期內改不動，所以先當限制條件處理。三類的分數其實很接近，矩陣分不出誰先誰後，得看誰卡住誰。<p class="memo">備註：矩陣分數是 0919 評分，事後才掛上 0925 五大根因標籤；各類題數不同（2～5 題）。</p></aside>
+</section>
+
+<!-- 5 改變理論 -->
+<section class="slide" data-layout="loop" id="p5">
+  <header class="hd"><div class="kicker"><span>05　因果位置</span><span class="ev" data-ev="hypo">邊：強 6、中 4、弱 1</span><span class="ev" data-ev="guess">主鏈末段為執行長判斷</span></div>
+    <h2 class="title">這三類中，業務規格是主鏈的起點，也是迴路中總會能先動手的一端</h2></header>
+  <div class="body tocbody">
+    <figure class="tocfig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 24 1240 584" preserveAspectRatio="xMidYMid meet" role="img" aria-label="改變理論：② 業務規格 → ③ IT 系統 → ⑤ 組織與價值 → 成果為主鏈（第三段為執行長判斷，未驗證）；② 與 ⑤、③ 與 ④ 互為迴路；① 外部門禁是外部限制，影響 ③ 與 ④。">
+<title>改變理論 v3：五大根因之間誰影響誰</title>
+<defs>
+<marker id="toc3-m-main" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:#b5342a"/></marker>
+<marker id="toc3-m-strong" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:#4b5563"/></marker>
+<marker id="toc3-m-mid" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:#79838f"/></marker>
+</defs>
+<rect fill="#ffffff"/>
+<g style="font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei','Heiti TC','Source Han Sans TC',system-ui,sans-serif">
+<path d="M296,140 L296,58 Q296,46 308,46 L894,46 Q906,46 906,58 L906,140" style="fill:none;stroke:#79838f;stroke-width:1.3" marker-end="url(#toc3-m-mid)"/>
+<path d="M846,140 L846,108 Q846,96 834,96 L388,96 Q376,96 376,108 L376,140" style="fill:none;stroke:#4b5563;stroke-width:2" marker-end="url(#toc3-m-strong)"/>
+<text x="606" y="38" text-anchor="middle" style="font-size:12.5px;fill:#4b5563;paint-order:stroke;stroke:#ffffff;stroke-width:4px;stroke-linejoin:round"><tspan style="font-weight:700;fill:#1f2a37">中｜</tspan>資料不一致，產不出能回饋分所的分析</text>
+<text x="606" y="88" text-anchor="middle" style="font-size:12.5px;fill:#4b5563;paint-order:stroke;stroke:#ffffff;stroke-width:4px;stroke-linejoin:round"><tspan style="font-weight:700;fill:#1f2a37">強｜</tspan>為了不打擾，以政府要的資料為主，用途沒轉成規格</text>
+<path d="M286,252 L286,458 Q286,470 298,470 L516,470" style="fill:none;stroke:#79838f;stroke-width:1.3" marker-end="url(#toc3-m-mid)"/>
+<text x="402" y="462" text-anchor="middle" style="font-size:12.5px;fill:#4b5563;paint-order:stroke;stroke:#ffffff;stroke-width:4px;stroke-linejoin:round"><tspan style="font-weight:700;fill:#1f2a37">中｜</tspan>沒有定義→格式不一、重工整理</text>
+<path d="M186,318 L544,318 Q556,318 556,306 L556,252" style="fill:none;stroke:#ffffff;stroke-width:9"/>
+<path d="M186,318 L544,318 Q556,318 556,306 L556,252" style="fill:none;stroke:#4b5563;stroke-width:2" marker-end="url(#toc3-m-strong)"/>
+<text x="424" y="309" text-anchor="middle" style="font-size:12.5px;fill:#4b5563;paint-order:stroke;stroke:#ffffff;stroke-width:4px;stroke-linejoin:round"><tspan style="font-weight:700;fill:#1f2a37">強｜</tspan>不給匯出→只能從分所端轉出</text>
+<path d="M101,402 L101,500 Q101,512 113,512 L516,512" style="fill:none;stroke:#4b5563;stroke-width:2" marker-end="url(#toc3-m-strong)"/>
+<text x="300" y="532" text-anchor="middle" style="font-size:12.5px;fill:#4b5563;paint-order:stroke;stroke:#ffffff;stroke-width:4px;stroke-linejoin:round"><tspan style="font-weight:700;fill:#1f2a37">強｜</tspan>拿不出來→重填、手動做報表</text>
+<path d="M586,430 L586,252" style="fill:none;stroke:#4b5563;stroke-width:2" marker-end="url(#toc3-m-strong)"/>
+<path d="M626,252 L626,430" style="fill:none;stroke:#79838f;stroke-width:1.3" marker-end="url(#toc3-m-mid)"/>
+<text x="576" y="372" text-anchor="end" style="font-size:12.5px;fill:#4b5563;paint-order:stroke;stroke:#ffffff;stroke-width:4px;stroke-linejoin:round"><tspan style="font-weight:700;fill:#1f2a37">強｜</tspan>Helpdesk 切碎</text>
+<text x="576" y="390" text-anchor="end" style="font-size:12.5px;fill:#4b5563;paint-order:stroke;stroke:#ffffff;stroke-width:4px;stroke-linejoin:round"><tspan style="font-weight:700;fill:#1f2a37"></tspan>沒空開發</text>
+<text x="636" y="372" text-anchor="start" style="font-size:12.5px;fill:#4b5563;paint-order:stroke;stroke:#ffffff;stroke-width:4px;stroke-linejoin:round"><tspan style="font-weight:700;fill:#1f2a37">中｜</tspan>自動化減負</text>
+<path d="M696,470 L834,470 Q846,470 846,458 L846,252" style="fill:none;stroke:#4b5563;stroke-width:2" marker-end="url(#toc3-m-strong)"/>
+<text x="770" y="462" text-anchor="middle" style="font-size:12.5px;fill:#4b5563;paint-order:stroke;stroke:#ffffff;stroke-width:4px;stroke-linejoin:round"><tspan style="font-weight:700;fill:#1f2a37">強｜</tspan>沒空回饋、不敢索取</text>
+<path d="M926,252 L926,512 Q926,524 914,524 L696,524" style="fill:none;stroke:#79838f;stroke-width:1.3;stroke-dasharray:5 4" marker-end="url(#toc3-m-mid)"/>
+<text x="812" y="544" text-anchor="middle" style="font-size:12.5px;fill:#4b5563;paint-order:stroke;stroke:#ffffff;stroke-width:4px;stroke-linejoin:round"><tspan style="font-weight:700;fill:#1f2a37">弱｜</tspan>人力短期內難以擴充→壓低產能</text>
+<path d="M426,196 L516,196" style="fill:none;stroke:#b5342a;stroke-width:3.6" marker-end="url(#toc3-m-main)"/>
+<path d="M696,196 L786,196" style="fill:none;stroke:#b5342a;stroke-width:3.6" marker-end="url(#toc3-m-main)"/>
+<path d="M966,196 L1046,196" style="fill:none;stroke:#b5342a;stroke-width:3.6" marker-end="url(#toc3-m-main)"/>
+<text x="471" y="170" text-anchor="middle" style="font-size:12px;fill:#4b5563">共同規格未定</text>
+<text x="471" y="185" text-anchor="middle" style="font-size:12px;fill:#4b5563">系統無從開發</text>
+<text x="471" y="216" text-anchor="middle" style="font-size:12px;font-weight:700;fill:#b5342a">強</text>
+<text x="741" y="170" text-anchor="middle" style="font-size:12px;fill:#4b5563">沒工具</text>
+<text x="741" y="185" text-anchor="middle" style="font-size:12px;fill:#4b5563">回饋太慢</text>
+<text x="741" y="216" text-anchor="middle" style="font-size:12px;font-weight:700;fill:#b5342a">中</text>
+<text x="1006" y="170" text-anchor="middle" style="font-size:12px;fill:#4b5563">分所願意</text>
+<text x="1006" y="185" text-anchor="middle" style="font-size:12px;fill:#4b5563">穩定回傳</text>
+<text x="1006" y="216" text-anchor="middle" style="font-size:12px;font-weight:700;fill:#b5342a">執行長判斷</text>
+<text x="1006" y="231" text-anchor="middle" style="font-size:12px;font-weight:700;fill:#b5342a">未驗證</text>
+<rect x="16" y="290" width="170" height="112" rx="16" style="fill:#f5f7fa;stroke:#79838f;stroke-width:1.2;stroke-dasharray:5 4"/>
+<text x="101" y="318" text-anchor="middle" style="font-size:12px;letter-spacing:.04em;fill:#79838f">① · 外部限制</text>
+<text x="101" y="343" text-anchor="middle" style="font-size:18px;font-weight:700;fill:#1f2a37">外部門禁</text>
+<text x="101" y="364" text-anchor="middle" style="font-size:13px;fill:#1f2a37">政府系統不給匯出</text>
+<text x="101" y="383" text-anchor="middle" style="font-size:13px;fill:#1f2a37">權限只到自己的個案</text>
+<rect x="246" y="140" width="180" height="112" rx="16" style="fill:#b5342a;stroke:#b5342a;stroke-width:1.2"/>
+<text x="336" y="168" text-anchor="middle" style="font-size:12px;letter-spacing:.04em;fill:rgba(255,255,255,.85)">②</text>
+<text x="336" y="193" text-anchor="middle" style="font-size:18px;font-weight:700;fill:#ffffff">業務規格</text>
+<text x="336" y="214" text-anchor="middle" style="font-size:13px;fill:#ffffff">總會要什麼沒定義</text>
+<text x="336" y="233" text-anchor="middle" style="font-size:13px;fill:#ffffff">統合不出共同表單</text>
+<rect x="516" y="140" width="180" height="112" rx="16" style="fill:#e5e6e8;stroke:#c8d0da;stroke-width:1.2"/>
+<text x="606" y="168" text-anchor="middle" style="font-size:12px;letter-spacing:.04em;fill:#79838f">③</text>
+<text x="606" y="193" text-anchor="middle" style="font-size:18px;font-weight:700;fill:#1f2a37">IT 系統</text>
+<text x="606" y="214" text-anchor="middle" style="font-size:13px;fill:#1f2a37">沒有按月接收的系統</text>
+<text x="606" y="233" text-anchor="middle" style="font-size:13px;fill:#1f2a37">缺少轉換工具</text>
+<rect x="786" y="140" width="180" height="112" rx="16" style="fill:#d0d3d6;stroke:#79838f;stroke-width:1.2"/>
+<text x="876" y="168" text-anchor="middle" style="font-size:12px;letter-spacing:.04em;fill:#4b5563">⑤</text>
+<text x="876" y="193" text-anchor="middle" style="font-size:18px;font-weight:700;fill:#1f2a37">組織與價值</text>
+<text x="876" y="214" text-anchor="middle" style="font-size:13px;fill:#1f2a37">為了不打擾、不敢索取</text>
+<text x="876" y="233" text-anchor="middle" style="font-size:13px;fill:#1f2a37">分所看不到用途</text>
+<rect x="516" y="430" width="180" height="112" rx="16" style="fill:#f4f4f5;stroke:#c8d0da;stroke-width:1.2"/>
+<text x="606" y="458" text-anchor="middle" style="font-size:12px;letter-spacing:.04em;fill:#79838f">④</text>
+<text x="606" y="483" text-anchor="middle" style="font-size:18px;font-weight:700;fill:#1f2a37">人力產能</text>
+<text x="606" y="504" text-anchor="middle" style="font-size:13px;fill:#1f2a37">資訊 4 人被切碎</text>
+<text x="606" y="523" text-anchor="middle" style="font-size:13px;fill:#1f2a37">社工工時飽和</text>
+<rect x="1046" y="128" width="180" height="136" rx="16" style="fill:#1f2a37;stroke:#1f2a37;stroke-width:1.2"/>
+<text x="1136" y="165.5" text-anchor="middle" style="font-size:12px;letter-spacing:.04em;fill:rgba(255,255,255,.75)">成果</text>
+<text x="1136" y="190.5" text-anchor="middle" style="font-size:18px;font-weight:700;fill:#ffffff">總會收到足夠的</text>
+<text x="1136" y="214.5" text-anchor="middle" style="font-size:18px;font-weight:700;fill:#ffffff">服務資料</text>
+<text x="1136" y="235.5" text-anchor="middle" style="font-size:13px;fill:#ffffff">→ 方案／倡議／研究</text>
+<line x1="16" y1="572" x2="1224" y2="572" style="stroke:#c8d0da;stroke-width:1"/>
+<path d="M16,592 L56,592" style="fill:none;stroke:#b5342a;stroke-width:3.6" marker-end="url(#toc3-m-main)"/>
+<text x="66" y="596" style="font-size:13px;fill:#4b5563">主鏈（② → ③ → ⑤ → 成果）</text>
+<path d="M303,592 L343,592" style="fill:none;stroke:#4b5563;stroke-width:2" marker-end="url(#toc3-m-strong)"/>
+<text x="353" y="596" style="font-size:13px;fill:#4b5563">強：訪談直接說出因果</text>
+<path d="M519,592 L559,592" style="fill:none;stroke:#79838f;stroke-width:1.3" marker-end="url(#toc3-m-mid)"/>
+<text x="569" y="596" style="font-size:13px;fill:#4b5563">中：事實有出處、因果為推論</text>
+<path d="M774,592 L814,592" style="fill:none;stroke:#79838f;stroke-width:1.3;stroke-dasharray:5 4" marker-end="url(#toc3-m-mid)"/>
+<text x="824" y="596" style="font-size:13px;fill:#4b5563">弱：邏輯成立、影響較小</text>
+</g></svg>
+<figcaption class="tocnote">為什麼從 ② 起步、不從 ④：④ → ③ 同樣是強邊，但人力短期改不動（第 7 頁）；⑤ 端直接開口要，會增加社工工時 <span class="ev" data-ev="guess">本專案判斷</span></figcaption></figure>
+  </div>
+  <div class="ghost-notes">
+    <div class="need"><b>pitch 前必須補</b><span class="it">改變理論的 11 條邊：使用者已確認，團隊仍要確認</span></div>
+    <div class="gap"><b>下一階段驗證</b><span class="it">價值回饋有沒有效、分所看到價值是否就願意穩定提供：目前是執行長判斷，未驗證（H-5）</span></div>
+  </div>
+  <footer class="ft"><span class="src">來源：改變理論 v3（邊、主鏈與迴路）；執行長訪談（2026-09）</span><a class="more" href="issue_tree-v7.html#sec-toc" target="_blank" rel="noopener">完整內容 →</a><span class="pg">5 / 8</span></footer>
+  <aside class="notes">誰卡住誰，要看改變理論。紅色粗線是主鏈：業務規格卡住 IT 系統，IT 系統再影響組織與價值；最後一段目前是執行長的判斷，還沒驗證。人力卡住 IT 同樣是強邊，但人力短期改不動；從分所端直接開口要，又會增加社工工時。上方迴路裡，總會能先動手的是定義規格，所以從規格下手。<p class="memo">備註：11 條邊中，特別要確認主鏈上的 ③ → ⑤（中邊：事實有出處、因果是推論）。</p></aside>
+</section>
+
+<!-- 6 鎖定業務規格 -->
+<section class="slide" data-layout="reasons" id="p6">
+  <header class="hd"><div class="kicker"><span>06　鎖定</span><span class="ev" data-ev="fact">規格卡住 IT 有訪談依據</span><span class="ev" data-ev="guess">鎖定為本專案判斷</span></div>
+    <h2 class="title">所以我們先鎖定業務規格，作為關鍵根因</h2></header>
+  <div class="body">
+    <div class="pre">三類都是核心突破口<span class="ev" data-ev="hypo">先後依改變理論：業務規格最優先</span></div>
+    <div class="rs">
+      <div class="r box"><div class="no num">①</div><div class="k">主鏈起點</div><div class="v">資訊與回饋都要等規格</div><div class="evs"><span class="ev" data-ev="fact">資訊：訪談</span><span class="ev" data-ev="guess">回饋：推論</span></div></div>
+      <div class="r box"><div class="no num">②</div><div class="k">總會可著力</div><div class="v">不受政府權限卡住，但歷來卡在縣市特規</div><div class="evs"><span class="ev" data-ev="guess">本專案判斷</span><span class="ev" data-ev="fact">特規：訪談</span></div></div>
+      <div class="r box"><div class="no num">③</div><div class="k">由總會定義</div><div class="v">政府欄位看不到新議題</div><div class="evs"><span class="ev" data-ev="fact">訪談</span></div></div>
+    </div>
+      </div>
+  <div class="ghost-notes">
+    <div class="need"><b>pitch 前必須補</b><span class="it">年報填報說明還沒拿到：現況欄位無法逐欄對照，業務規格的證據也缺這一塊</span></div>
+    <div class="gap"><b>下一階段驗證</b><span class="it">總會有沒有書面的用途清單：用途目前只來自執行長</span><span class="it">跨分所協調與縣市特規：How Tree 當設計限制處理</span></div>
+  </div>
+  <footer class="ft"><span class="src">來源：改變理論 v3（① → ② 已拿掉）；執行長訪談（2026-09）</span><span class="pg">6 / 8</span></footer>
+  <aside class="notes">所以先鎖定業務規格：三類都是核心突破口，改變理論顯示它最優先。第一，它是主鏈起點，規格沒定，資訊就沒辦法做，回饋也要等，屬推論。第二，總會可著力，不受政府權限卡住，但卡在縣市特規，法院服務處統合五到十年後放棄；How Tree 當設計限制。第三，政府欄位看不到新議題。其他根因呢？<p class="memo">備註：業務規格目前的證據是 7 個法院服務處統合 5～10 年後放棄的訪談（講稿已說出）。</p></aside>
+</section>
+
+<!-- 7 其他根因 -->
+<section class="slide" data-layout="others" id="p7">
+  <header class="hd"><div class="kicker"><span>07　其他根因</span><span class="ev" data-ev="hypo">位置依改變理論</span><span class="ev" data-ev="guess">排序為本專案判斷</span></div>
+    <h2 class="title">門禁與人力當限制條件，IT 與價值回饋排在規格之後</h2></header>
+  <div class="body">
+    <div class="oth">
+      <div class="pos">限制</div><div class="rc box">門禁、人力</div><div class="why">規格要四位資訊同仁做得來、不增社工工時<div class="evs"><span class="ev" data-ev="fact">資訊人力少：執行長診斷</span><span class="ev" data-ev="fact">門禁：政府不給匯出，執行長認可的匯出路線也會被卡住</span></div></div>
+      <div class="pos">接著</div><div class="rc box">IT 系統</div><div class="why">匯出只有政府欄位，其餘要總會定義<div class="evs"><span class="ev" data-ev="fact">政府欄位看不到新議題：訪談</span><span class="ev" data-ev="hypo">伊甸：九成匯出、一成另外收集（轉述，未經伊甸證實）</span></div></div>
+      <div class="pos">其後</div><div class="rc box">組織與價值</div><div class="why">索取卡在「不敢打擾」<div class="evs"><span class="ev" data-ev="hypo">執行長層級用途已明（其他單位層級待確認）</span><span class="ev" data-ev="guess">靠不增工時的規格解開：本專案判斷</span></div></div>
+    </div>
+  </div>
+  <div class="ghost-notes">
+    <div class="need"><b>pitch 前必須補</b><span class="it">（本頁無）</span></div>
+    <div class="gap"><b>下一階段驗證</b><span class="it">IT 技能盤點：4 名資訊人員能否支撐系統開發（H-1）</span><span class="it">價值回饋有沒有效、分所看到價值是否就願意穩定提供：目前是執行長判斷，未驗證（H-5）</span><span class="it">總會有沒有書面的用途清單：用途目前只來自執行長</span></div>
+  </div>
+  <footer class="ft"><span class="src">來源：改變理論 v3（外部限制、⑤ 的用途與索取）；執行長訪談（2026-09）</span><span class="pg">7 / 8</span></footer>
+  <aside class="notes">先看限制。資訊人力少，短期內難以擴充，規格要四位資訊同仁做得起來、不增社工工時。政府不給匯出，執行長認可的匯出路線也會被卡住；匯出也只拿得到政府欄位，剩下的那一成仍要總會先定義。組織與價值，執行長層級用途已明，索取卡在不敢打擾。接著說下一步。</aside>
+</section>
+
+<!-- 8 接下來 -->
+<section class="slide" data-layout="next" id="p8">
+  <header class="hd"><div class="kicker"><span>08　接下來</span><span class="ev" data-ev="guess">規劃，場域待盤點</span></div>
+    <h2 class="title">下一階段先做業務規格的 How Tree，再進到 IT 系統</h2></header>
+  <div class="body">
+    <div class="flow">
+      <div class="f box"><div class="no num">①</div><div class="k accent">業務規格 How Tree</div><div class="v">定義要什麼 <span class="ev" data-ev="guess">核心限制：新議題欄位與不增工時的取捨</span></div></div>
+      <div class="ar">→</div>
+      <div class="f box"><div class="no num">②</div><div class="k">IT 系統</div></div>
+    </div>
+    <div class="site">
+      <div class="sh">驗證場域</div>
+      <div class="inv">選驗證場域前，先盤點勵馨的方案分類，以及各方案的資料在政府系統還是自有系統</div>
+    </div>
+  </div>
+  <div class="ghost-notes">
+    <div class="need"><b>pitch 前必須補</b><span class="it">方案分類與資料分布盤點：勵馨有哪些方案分類、各方案資料在政府系統還是自有系統</span></div>
+    <div class="gap"><b>下一階段驗證</b><span class="it">走政府系統的方案：通報表欄位與匯出限制，含新版是否已增列數位性暴力等新興議題</span><span class="it">伊甸的資料流向（匯出或匯入，待向伊甸確認）</span></div>
+  </div>
+  <footer class="ft"><span class="src">來源：改變理論 v3；執行長訪談（2026-09）（青少女懷孕不在政府系統；家暴、性侵以政府系統為主）</span><span class="pg">8 / 8</span></footer>
+  <aside class="notes">最後是下一步：先做業務規格的 How Tree，再進到 IT 系統；新議題欄位與不增工時之間的取捨，是 How Tree 的核心限制。選驗證場域前，先盤點方案分類，和各方案資料在政府系統還是自有系統；已知青少女懷孕不在政府系統，家暴和性侵在。下一階段，就從總會要收什麼開始拆。</aside>
+</section>
+
+<!-- A1 假說總覽 -->
+<section class="slide appendix" data-layout="table" id="a1">
+  <header class="hd"><div class="kicker"><span>附錄 A1　假說總覽</span></div>
+    <h2 class="title">六組假說中一組證實，其餘仍是部份證實或待驗證</h2></header>
+  <div class="body" style="justify-content:flex-start">
+    <table class="tbl">
+      <thead><tr><th style="width:64px">編號</th><th style="width:380px">名稱</th><th style="width:290px">對應的 0925 第二層節點</th><th style="width:110px">0919 矩陣 ID</th><th>驗證結論</th></tr></thead>
+      <tbody>
+        <tr><td class="num">H-1</td><td>IT 團隊技能與 Helpdesk 耗能分流</td><td>IT 產能瓶頸</td><td class="num">A3</td><td><span class="ev" data-ev="hypo">部份證實／待技能盤點</span></td></tr>
+        <tr><td class="num">H-2</td><td>保護性系統資料取得路徑</td><td>系統出口限制、操作權限限制</td><td class="num">A1、C1</td><td><span class="ev" data-ev="guess">未驗證</span></td></tr>
+        <tr><td class="num">H-3</td><td>伊甸「只填一次」模式複製</td><td>轉換工具缺失</td><td class="num">C6</td><td><span class="ev" data-ev="guess">待驗證</span></td></tr>
+        <tr><td class="num">H-4</td><td>最小共通數據字典（Master Data）抽離</td><td>欄位規格缺失</td><td class="num">B2</td><td><span class="ev" data-ev="guess">待 POC（假說）</span></td></tr>
+        <tr><td class="num">H-5</td><td>雙向數據反饋消除「被騷擾感」</td><td>價值感知斷裂</td><td class="num">D2</td><td><span class="ev" data-ev="hypo">部份證實</span></td></tr>
+        <tr><td class="num">H-6</td><td>政府系統出口與操作權限</td><td>系統出口限制、操作權限限制</td><td class="num">A1、C1</td><td><span class="ev" data-ev="fact">證實（依訪談）</span></td></tr>
+      </tbody>
+    </table>
+    <p class="fn">H-2 與 H-6 的差異：H-6 是「門關著」這個限制本身（已證實；法規依據未查到）；H-2 是在這個限制下取得資料的路徑假說。A1、C1 等是矩陣編號，不是假說編號。假說名稱沿用 0924，不代表本階段採用。</p>
+  </div>
+  <footer class="ft"><span class="src">來源：0925 議題樹「假說編號對照表」；0924 假說驗證</span><a class="more" href="issue_tree-v7.html#sec-hypo" target="_blank" rel="noopener">完整內容 →</a><span class="pg">A1</span></footer>
+  <aside class="notes">問答時用。說明 A1、C1 這類是矩陣編號，不是假說編號。</aside>
+</section>
+
+<!-- A2 完整 Why Tree -->
+<section class="slide appendix" data-layout="table" id="a2">
+  <header class="hd"><div class="kicker"><span>附錄 A2　完整 Why Tree</span></div>
+    <h2 class="title">五大根因底下共 17 個節點，7 項已證實</h2></header>
+  <div class="body" style="justify-content:flex-start">
+    <table class="tbl">
+      <thead><tr><th style="width:150px">根因</th><th>第二層節點（狀態）</th></tr></thead>
+      <tbody>
+        <tr><td>外部門禁</td><td class="nodes"><span class="ev" data-ev="hypo">系統出口限制</span><span class="ev" data-ev="fact">操作權限限制</span></td></tr>
+        <tr><td>業務規格</td><td class="nodes"><span class="ev" data-ev="hypo">欄位規格缺失</span><span class="ev" data-ev="fact">外部特規拉力</span><span class="ev" data-ev="guess">產出指引缺失</span><span class="ev" data-ev="hypo">範疇覆蓋限制</span></td></tr>
+        <tr><td>IT 系統</td><td class="nodes"><span class="ev" data-ev="fact">接收中樞缺失</span><span class="ev" data-ev="hypo">轉換工具缺失</span></td></tr>
+        <tr><td>人力產能</td><td class="nodes"><span class="ev" data-ev="hypo">IT 產能瓶頸</span><span class="ev" data-ev="fact">社工工時飽和</span><span class="ev" data-ev="fact">替代人力失能</span><span class="ev" data-ev="fact">收集流程錯位</span></td></tr>
+        <tr><td>組織與價值</td><td class="nodes"><span class="ev" data-ev="fact">總會發起意願</span><span class="ev" data-ev="guess">戰略用途不明</span><span class="ev" data-ev="guess">制度激勵缺失</span><span class="ev" data-ev="hypo">價值感知斷裂</span><span class="ev" data-ev="guess">心理防禦機制</span></td></tr>
+      </tbody>
+    </table>
+    <p class="fn">圖例：● 已證實　◐ 部份證實　○ 待驗證。欄位規格缺失：問題本身已證實，解法 H-4 待 POC，計為部份證實。樹的節點仍依 0925 原題展開，0926 題目更新後節點內容不重寫。</p>
+  </div>
+  <footer class="ft"><span class="src">來源：0925 議題樹；issue tree v7</span><a class="more" href="issue_tree-v7.html#sec-tree" target="_blank" rel="noopener">完整內容 →</a><span class="pg">A2</span></footer>
+  <aside class="notes">問答時用。</aside>
+</section>
+
+<!-- A3 矩陣 17 項 -->
+<section class="slide appendix" data-layout="table" id="a3">
+  <header class="hd"><div class="kicker"><span>附錄 A3　矩陣分數</span></div>
+    <h2 class="title">矩陣 17 項分數，以及五大根因的平均</h2></header>
+  <div class="body" style="justify-content:flex-start">
+    <div class="a3wrap"><table class="tbl dense a3"><thead><tr><th style="width:52px">編號</th><th>項目</th><th style="width:70px;text-align:right">影響力</th><th style="width:70px;text-align:right">可解性</th></tr></thead><tbody><tr class="grp"><td colspan="2"><b class="accent">業務規格</b>（4 項平均）</td><td class="n"><b>70</b></td><td class="n"><b>74</b></td></tr>
+<tr><td class="num">A4</td><td>資訊方案缺乏明確規格需求</td><td class="n">80</td><td class="n">80</td></tr>
+<tr><td class="num">C2</td><td>分所缺乏產出資料 Know-how</td><td class="n">75</td><td class="n">85</td></tr>
+<tr><td class="num">B2</td><td>跨分所協調與溝通成本高</td><td class="n">65</td><td class="n">50</td></tr>
+<tr><td class="num">C3</td><td>交出資料品質參差不齊</td><td class="n">60</td><td class="n">80</td></tr>
+<tr class="grp"><td colspan="2"><b class="accent">IT 系統</b>（2 項平均）</td><td class="n"><b>88</b></td><td class="n"><b>75</b></td></tr>
+<tr><td class="num">C6</td><td>重複填報與不良流程耗能</td><td class="n">90</td><td class="n">75</td></tr>
+<tr><td class="num">A2</td><td>總會缺乏承接數據系統</td><td class="n">85</td><td class="n">75</td></tr>
+<tr class="grp"><td colspan="2"><b class="accent">組織與價值</b>（5 項平均）</td><td class="n"><b>77</b></td><td class="n"><b>79</b></td></tr>
+<tr><td class="num">D2</td><td>缺乏數據價值感知與反饋閉環</td><td class="n">90</td><td class="n">80</td></tr>
+<tr><td class="num">B1</td><td>體恤社工不願增加行政負擔</td><td class="n">85</td><td class="n">70</td></tr>
+<tr><td class="num">B3</td><td>總會數據運用戰略與目的未定</td><td class="n">75</td><td class="n">85</td></tr>
+<tr><td class="num">D3</td><td>個資洩漏疑慮與跨分所比較壓力</td><td class="n">70</td><td class="n">75</td></tr>
+<tr><td class="num">D1</td><td>缺少考核與監督驅動機制</td><td class="n">65</td><td class="n">85</td></tr></tbody></table><table class="tbl dense a3"><thead><tr><th style="width:52px">編號</th><th>項目</th><th style="width:70px;text-align:right">影響力</th><th style="width:70px;text-align:right">可解性</th></tr></thead><tbody><tr class="grp"><td colspan="2"><b>外部門禁</b>（2 項平均）</td><td class="n"><b>80</b></td><td class="n"><b>45</b></td></tr>
+<tr><td class="num">A1</td><td>政府系統權限封閉</td><td class="n">90</td><td class="n">35</td></tr>
+<tr><td class="num">C1</td><td>無法匯出政府系統現成統計</td><td class="n">70</td><td class="n">55</td></tr>
+<tr class="grp"><td colspan="2"><b>人力產能</b>（4 項平均）</td><td class="n"><b>60</b></td><td class="n"><b>40</b></td></tr>
+<tr><td class="num">C4</td><td>社工直接服務工時飽和</td><td class="n">95</td><td class="n">25</td></tr>
+<tr><td class="num">C5</td><td>行政助理補充機制失效</td><td class="n">55</td><td class="n">40</td></tr>
+<tr><td class="num">C7</td><td>考核天數限制致月內尖峰堆疊</td><td class="n">50</td><td class="n">65</td></tr>
+<tr><td class="num">A3</td><td>總會缺乏人工撈資料人力</td><td class="n">40</td><td class="n">30</td></tr></tbody></table></div>
+  </div>
+  <footer class="ft"><span class="src">來源：0919 影響力 × 可解性矩陣（0–100 分；依根因標籤分組取平均）</span><a class="more" href="issue_tree-v7.html#sec-matrix" target="_blank" rel="noopener">完整內容 →</a><span class="pg">A3</span></footer>
+  <aside class="notes">問答時用；是第 4 頁散佈圖的表格版。</aside>
+</section>
+
+<!-- A4 Benchmark -->
+<section class="slide appendix" data-layout="table" id="a4">
+  <header class="hd"><div class="kicker"><span>附錄 A4　Benchmark 查證摘要</span></div>
+    <h2 class="title">伊甸的做法目前只有訪談轉述，還要再查證</h2></header>
+  <div class="body" style="justify-content:flex-start">
+    <table class="tbl">
+      <thead><tr><th style="width:150px">項目</th><th style="width:360px">伊甸／對照</th><th style="width:320px">勵馨</th><th>狀態</th></tr></thead>
+      <tbody>
+        <tr><td>組織／資訊規模</td><td>3,000 多人；資訊人員 30 幾人</td><td>600 人；資訊人員 4 人</td><td><span class="ev" data-ev="hypo">轉述，未經伊甸證實</span></td></tr>
+        <tr><td>資料對接</td><td>社工只填一次，約九成重疊欄位免重填（資料流向待確認）</td><td>一年一次年度成果報表</td><td><span class="ev" data-ev="hypo">轉述，未經伊甸證實</span></td></tr>
+        <tr><td>政府系統開放</td><td>長照：自建系統可介接支付審核系統</td><td>保護資訊系統：公開介接清單未見民間系統</td><td><span class="flag">待開原文</span></td></tr>
+        <tr><td>國際數字</td><td colspan="2">Unit4／PAC（2025）：72% NPO 彙整決策數據需 2～7 天；BASW（2018）：每週 45 小時中 29 小時在電腦與文書</td><td><span class="flag">待開原文核對</span></td></tr>
+      </tbody>
+    </table>
+    <p class="fn">伊甸的公開資料未見「只填一次」的做法；上述伊甸數字都是轉述，未經伊甸證實。</p>
+  </div>
+  <footer class="ft"><span class="src">來源：執行長訪談（2026-09）；題目影響力與 Benchmark 分析；公開資料查證（2026-09）</span><span class="pg">A4</span></footer>
+  <aside class="notes">問答時用。伊甸的數字都是轉述，未經伊甸證實；國際數字待開原文核對。</aside>
+</section>
+
+<!-- A5 方法論與來源 -->
+<section class="slide appendix" data-layout="table" id="a5">
+  <header class="hd"><div class="kicker"><span>附錄 A5　方法論與來源</span></div>
+    <h2 class="title">從議題樹到改變理論，每一步都能追溯來源</h2></header>
+  <div class="body" style="justify-content:flex-start">
+    <table class="tbl">
+      <thead><tr><th style="width:96px">使用順序</th><th style="width:300px">產出</th><th style="width:330px">規模</th><th>在本 deck 的用途</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1</td><td><a class="xl" href="issue_tree-v7.html#sec-tree" target="_blank" rel="noopener">Why Tree（0925）</a></td><td>5 根因、17 節點</td><td>第 3 頁；附錄 A2</td></tr>
+        <tr><td class="num">2</td><td><a class="xl" href="issue_tree-v7.html#sec-hypo" target="_blank" rel="noopener">假說驗證（0924）</a></td><td>H-1～H-6</td><td>附錄 A1</td></tr>
+        <tr><td class="num">3</td><td><a class="xl" href="issue_tree-v7.html#sec-matrix" target="_blank" rel="noopener">影響力 × 可解性矩陣（0919）</a></td><td>17 項，0–100 分</td><td>第 4 頁；附錄 A3</td></tr>
+        <tr><td class="num">4</td><td><a class="xl" href="issue_tree-v7.html#sec-toc" target="_blank" rel="noopener">改變理論 v3（0926）</a></td><td>6 節點、11 條邊（強 6、中 4、弱 1）</td><td>第 5～7 頁</td></tr>
+      </tbody>
+    </table>
+    <table class="tbl" style="margin-top:14px">
+      <thead><tr><th style="width:150px">來源類型</th><th>來源</th></tr></thead>
+      <tbody>
+        <tr><td>訪談紀錄</td><td>執行長訪談（2026-09）</td></tr>
+        <tr><td>專案產出</td><td>0925 議題樹；0924 假說驗證；0919 影響力 × 可解性矩陣；改變理論 v3；題目影響力與 Benchmark 分析</td></tr>
+        <tr><td>查證</td><td>Benchmark 公開資料查證、錯誤掃描與修正（2026-09-26）</td></tr>
+      </tbody>
+    </table>
+    <p class="fn">產出名稱可點開 issue tree 的對應區塊。注意：上表是本 deck 的使用順序，不是推導先後；矩陣（0919）早於樹（0925），切法不同，版本尚未對齊；五大根因的平均是事後依標籤計算。</p>
+  </div>
+  <footer class="ft"><span class="src">來源：同上</span><span class="pg">A5</span></footer>
+  <aside class="notes">給評審看方法論。</aside>
+</section>
+
+</main>
+<aside class="todo-panel" id="todoPanel" aria-label="待釐清與補資料" aria-hidden="true">
+  <div class="th"><b>待釐清與補資料</b><span>M 開關・Esc 關閉</span></div>
+  <div class="cols">
+    <section><h3 id="todoHere">本頁</h3><div id="todoPage"></div></section>
+    <section><h3 id="todoAllHead">全部（去重）</h3><div id="todoAll"></div></section>
+  </div>
+</aside>
+<div class="notes-panel" id="notesPanel"><div class="nh" id="notesHead"></div><div id="notesBody"></div></div>
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var i=0;
+  var todoBtn=document.getElementById('todoBtn'), todo=document.getElementById('todoPanel');
+  var notesBtn=document.getElementById('notesBtn'), panel=document.getElementById('notesPanel');
+  var CATS=[['need','pitch 前必須補'],['gap','下一階段驗證']];
+  function fit(){
+    var s=Math.min(innerWidth/1280, innerHeight/720);
+    document.documentElement.style.setProperty('--s', s);
+  }
+  function esc(t){var d=document.createElement('div');d.textContent=t;return d.innerHTML}
+  function pgOf(el){var p=el.querySelector('.ft .pg');return p?p.textContent.split('/')[0].trim():''}
+  // 每頁 .ghost-notes 的 .need／.gap 是抽屜的資料來源：有 .it 就逐條取，沒有就取整格文字（去掉 <b> 標頭）
+  function itemsOf(el,cls){
+    var box=el.querySelector('.ghost-notes .'+cls); if(!box)return [];
+    var its=[].slice.call(box.querySelectorAll('.it')), out;
+    if(its.length) out=its.map(function(e){return e.textContent.trim()});
+    else { var c=box.cloneNode(true); [].forEach.call(c.querySelectorAll('b'),function(b){b.remove()}); out=[c.textContent.trim()]; }
+    return out.filter(function(t){return t && !/^[（(]本頁無[)）]$/.test(t) && t!=='…'});
+  }
+  var DATA=slides.map(function(el){var d={pg:pgOf(el)};CATS.forEach(function(c){d[c[0]]=itemsOf(el,c[0])});return d});
+  // 全部：依分類去重（同一句出現在多頁只列一次，後面標頁碼）
+  var ALL={};
+  CATS.forEach(function(c){
+    var seen={}, list=[];
+    DATA.forEach(function(d,k){d[c[0]].forEach(function(t){
+      if(!seen[t]){seen[t]={t:t,pgs:[],idx:[]};list.push(seen[t])}
+      if(seen[t].pgs.indexOf(d.pg)<0)seen[t].pgs.push(d.pg); seen[t].idx.push(k);
+    })});
+    ALL[c[0]]=list;
+  });
+  function renderTodo(){
+    var d=DATA[i], h='', n=0;
+    CATS.forEach(function(c){
+      h+='<div class="cat '+c[0]+'">'+c[1]+'</div><ul>';
+      if(d[c[0]].length){d[c[0]].forEach(function(t){h+='<li>'+esc(t)+'</li>';n++})}
+      else h+='<li class="none">（本頁無）</li>';
+      h+='</ul>';
+    });
+    document.getElementById('todoHere').textContent='本頁 · '+(/^\d+$/.test(d.pg)?'第 '+d.pg+' 頁':(d.pg||'—'))+'（'+n+' 項）';
+    document.getElementById('todoPage').innerHTML=h;
+    var a='', total=0;
+    CATS.forEach(function(c){
+      a+='<div class="cat '+c[0]+'">'+c[1]+'（'+ALL[c[0]].length+'）</div><ul>';
+      if(!ALL[c[0]].length)a+='<li class="none">（無）</li>';
+      ALL[c[0]].forEach(function(o){total++;a+='<li'+(o.idx.indexOf(i)>=0?' class="cur"':'')+'>'+esc(o.t)+'<span class="pgs">p. '+esc(o.pgs.join('、'))+'</span></li>'});
+      a+='</ul>';
+    });
+    document.getElementById('todoAllHead').textContent='全部（去重後 '+total+' 項）';
+    document.getElementById('todoAll').innerHTML=a;
+  }
+  function setTodo(on){
+    on = on===undefined ? !todo.classList.contains('show') : !!on;
+    todo.classList.toggle('show',on); todo.setAttribute('aria-hidden',on?'false':'true');
+    todoBtn.setAttribute('aria-pressed',on?'true':'false');
+  }
+  function setNotes(on){
+    on = on===undefined ? !panel.classList.contains('show') : !!on;
+    panel.classList.toggle('show',on); notesBtn.setAttribute('aria-pressed',on?'true':'false');
+  }
+  function show(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach(function(el,k){el.classList.toggle('active',k===i)});
+    document.getElementById('counter').textContent=(i+1)+' / '+slides.length;
+    var note=slides[i].querySelector('.notes');
+    document.getElementById('notesHead').textContent='講稿 · '+(slides[i].querySelector('.pg')||{}).textContent;
+    document.getElementById('notesBody').innerHTML=note?note.innerHTML:'（無講稿）';
+    renderTodo();
+    syncHash(i+1);
+  }
+  // 只在 http(s) 同步 hash：Claude app 預覽（about:srcdoc）等沙箱環境呼叫 replaceState 會丟 SecurityError
+  function canHash(){return location.protocol==='http:'||location.protocol==='https:'||location.protocol==='file:'}
+  function syncHash(n){
+    if(!canHash())return;
+    try{ if(location.hash!=='#'+n) history.replaceState(null,'','#'+n); }catch(e){}
+  }
+  function initialSlide(){
+    try{ return (parseInt(location.hash.slice(1),10)||1)-1; }catch(e){ return 0; }
+  }
+  todoBtn.addEventListener('click',function(){setTodo()});
+  notesBtn.addEventListener('click',function(){setNotes()});
+  addEventListener('keydown',function(e){
+    if(e.metaKey||e.ctrlKey||e.altKey)return;
+    if(e.target.tagName==='BUTTON'&&(e.key===' '||e.key==='Enter'))return;
+    if(['ArrowRight','PageDown',' '].indexOf(e.key)>=0){show(i+1);e.preventDefault()}
+    else if(['ArrowLeft','PageUp'].indexOf(e.key)>=0){show(i-1);e.preventDefault()}
+    else if(e.key==='Home')show(0);
+    else if(e.key==='End')show(slides.length-1);
+    else if(e.key==='n'||e.key==='N')setNotes();
+    else if(e.key==='m'||e.key==='M')setTodo();
+    else if(e.key==='Escape')setTodo(false);
+  });
+  addEventListener('resize',fit);
+  window.deck={show:show,count:slides.length,todo:setTodo,notes:setNotes,items:function(){return {pages:DATA,all:ALL}}};
+  fit(); show(initialSlide());
+})();
+</script>
+</body>
+</html>
